@@ -238,6 +238,8 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         {
             if(i == btnClassRightClick)
             {
+                classroomButtonList.remove(i);
+
                 createClassButton(temp.getId(), temp.getName(), index, index);
                 tableOfClassrooms.remove(i);
 
@@ -287,16 +289,35 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 {
                     if(kiemTraIDTonTai(idClass, nameClass) == 1)
                     {
+                        if(classroomButtonList.get(btnClassRightClick).equals(idClass))
+                        {
+                            Classroom temp = new Classroom(idClass, nameClass, teachClass);
+                            changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
+
+                            this.updatePanel(tableOfClassrooms);
+
+                            JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
+                        }
+
                         JOptionPane.showMessageDialog(null,"ID lop hoc nay da ton tai!","Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else if(kiemTraIDTonTai(idClass, nameClass) == 2)
                     {
-                        if(optionTitle.equals("Tao lop hoc"))
-                            JOptionPane.showMessageDialog(null,"Ten lop hoc nay da ton tai!","Error", JOptionPane.ERROR_MESSAGE);
-                        else
+                        if(ClassroomManager.findClassroomById(classroomButtonList.get(btnClassRightClick)).getName().equals(nameClass))
                         {
-                            
+                            Classroom temp = new Classroom(idClass, nameClass, teachClass);
+                            changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
+
+                            this.updatePanel(tableOfClassrooms);
+
+                            JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.INFORMATION_MESSAGE);
+
+                            break;
                         }
+                        
+                        JOptionPane.showMessageDialog(null,"Ten lop hoc nay da ton tai!","Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else if(kiemTraIDTonTai(idClass, nameClass) == 0)
                     {
@@ -322,7 +343,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
                         this.updatePanel(tableOfClassrooms);
 
-                        JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
                 }
@@ -363,6 +384,20 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                     
                     if(!TeacherManager.checkIDExist(textID))
                     {
+                        if(textID.equals(this.teacher.getId()))
+                        {
+                            Teacher temp = new Teacher(textID, textName);
+                            temp.setClassrooms(this.teacher.getClassRooms());
+                            TeacherManager.replaceTeacger(this.teacher.getId(), this.teacher, temp);
+                            this.teacher = temp;
+                            JOptionPane.showMessageDialog(null, "Thay doi thong tin thanh cong!", "Thong bao", JOptionPane.INFORMATION_MESSAGE);
+                            this.lblId.setText(textID);
+                            this.lblName.setText(textName);
+                            this.updatePanel(panelLeft);
+
+                            break;
+                        }
+
                         JOptionPane.showMessageDialog(null,"ID nay da ton tai!","Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else
