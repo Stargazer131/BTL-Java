@@ -94,6 +94,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
     {
         String idDeleteClass = classroomButtonList.get(btnClassRightClick);
         ClassroomManager.deleteClassroom(idDeleteClass);
+        classroomButtonList.remove(btnClassRightClick);
+
+        int index = 0;
 
         for(Classroom i: arrLClassroom)
         {
@@ -102,13 +105,30 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 arrLClassroom.remove(i);
                 break;
             }
+            index ++;
         }
-
-        TeacherManager.addTeacher(teacher);
+        
         this.tableOfClassrooms.remove(btnClassRightClick);
 
-        updatePanel(tableOfClassrooms);
+        Component[] arrComponents = tableOfClassrooms.getComponents();
+        
+        for(int i = index; i < arrComponents.length - 1; i++)
+        {
+            gbc.gridx = i % 5;
+            gbc.gridy = i / 5;
+            JButton btnNewClass = (JButton) arrComponents[i];
+            btnNewClass.setText(arrLClassroom.get(i).getId());
+            tableOfClassrooms.add(btnNewClass, gbc, i);
+        }
 
+        //Khởi tạo lại vị trí của nút tạo lớp mới
+        tableOfClassrooms.remove(btnCreateClass);
+        createNewClassButton();
+
+        this.teacher.setClassrooms(arrLClassroom);
+        TeacherManager.addTeacher(teacher);
+
+        updatePanel(tableOfClassrooms);
     }
 
     private void createClassButton(String id, String name, int i, int index)
@@ -120,7 +140,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         if(index != -1)
             tableOfClassrooms.add(btnClass,gbc,index);
         else
-        tableOfClassrooms.add(btnClass,gbc);
+            tableOfClassrooms.add(btnClass,gbc);
         classroomButtonList.put(btnClass, id);
     }
 
@@ -207,6 +227,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         btnChangeInfor.add(lblChangeInfor);
         btnChangeInfor.setBounds(0, 120, 250, 60);
         btnChangeInfor.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+        btnChangeInfor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnChangeInfor.addActionListener(this);
 
         ImageIcon iconLogOut = new ImageIcon("resources\\images\\Logo\\logout.png");
@@ -215,6 +236,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         btnLogOut.add(lbLogOut);
         btnLogOut.setBounds(0, 180, 250, 60);
         btnLogOut.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+        btnLogOut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnLogOut.addActionListener(this);
 
         panelLeft.add(lblId);
@@ -238,7 +260,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         {
             if(i == btnClassRightClick)
             {
-                classroomButtonList.remove(i);
+                classroomButtonList.remove(btnClassRightClick);
 
                 createClassButton(temp.getId(), temp.getName(), index, index);
                 tableOfClassrooms.remove(i);
@@ -253,6 +275,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
                 TeacherManager.addTeacher(teacher);
                 
+                break;
             }
             index ++;
         }
@@ -289,33 +312,41 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 {
                     if(kiemTraIDTonTai(idClass, nameClass) == 1)
                     {
-                        if(classroomButtonList.get(btnClassRightClick).equals(idClass))
+                        if(optionTitle.equals("Thay doi thong tin lop hoc"))
                         {
-                            Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                            changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
+                            if(classroomButtonList.get(btnClassRightClick).equals(idClass))
+                            {
+                                Classroom temp = new Classroom(idClass, nameClass, teachClass);
+                                changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
 
-                            this.updatePanel(tableOfClassrooms);
+                                this.updatePanel(tableOfClassrooms);
 
-                            JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.INFORMATION_MESSAGE);
 
-                            break;
+                                break;
+                            }
                         }
+                        
 
                         JOptionPane.showMessageDialog(null,"ID lop hoc nay da ton tai!","Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else if(kiemTraIDTonTai(idClass, nameClass) == 2)
                     {
-                        if(ClassroomManager.findClassroomById(classroomButtonList.get(btnClassRightClick)).getName().equals(nameClass))
+                        if(optionTitle.equals("Thay doi thong tin lop hoc"))
                         {
-                            Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                            changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
+                            if(ClassroomManager.findClassroomById(classroomButtonList.get(btnClassRightClick)).getName().equals(nameClass))
+                            {
+                                Classroom temp = new Classroom(idClass, nameClass, teachClass);
+                                changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
 
-                            this.updatePanel(tableOfClassrooms);
+                                this.updatePanel(tableOfClassrooms);
 
-                            JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null,"Thanh cong","Error", JOptionPane.INFORMATION_MESSAGE);
 
-                            break;
+                                break;
+                            }
                         }
+                        
                         
                         JOptionPane.showMessageDialog(null,"Ten lop hoc nay da ton tai!","Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -381,7 +412,13 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 {
                     String textID = tfIDTeacher.getText().toUpperCase(),
                            textName = tfNameTeacher.getText();
-                    
+
+                    if(textID.equals("") || textName.equals(""))
+                    {
+                        JOptionPane.showMessageDialog(null, "Thong tin khong duoc de trong!","Thong bao", JOptionPane.ERROR_MESSAGE);
+                        continue;
+                    }
+
                     if(!TeacherManager.checkIDExist(textID))
                     {
                         if(textID.equals(this.teacher.getId()))
