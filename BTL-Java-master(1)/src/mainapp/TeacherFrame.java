@@ -37,8 +37,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
     private ArrayList<Classroom> arrLClassroom;
 
-    private HashMap<JButton, String> classroomButtonList;
-
     private Teacher teacher;
 
     GridBagConstraints gbc;
@@ -49,7 +47,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
     public TeacherFrame(Teacher TEACHER)
     {
-        this.classroomButtonList = new HashMap<>();
         this.btnClassRightClick = new JButton();
         this.teacher = TEACHER;
         this.arrLClassroom = teacher.getClassRooms();
@@ -90,11 +87,15 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         return button;
     }
 
+    private String getIDofClassroomButton(JButton temp)
+    {
+        return ((JLabel) temp.getComponent(0)).getText();
+    }
+
     private void deleteClass()
     {
-        String idDeleteClass = classroomButtonList.get(btnClassRightClick);
+        String idDeleteClass = getIDofClassroomButton(btnClassRightClick);
         ClassroomManager.deleteClassroom(idDeleteClass);
-        classroomButtonList.remove(btnClassRightClick);
 
         int index = 0;
 
@@ -117,7 +118,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
             gbc.gridx = i % 5;
             gbc.gridy = i / 5;
             JButton btnNewClass = (JButton) arrComponents[i];
-            btnNewClass.setText(arrLClassroom.get(i).getId());
             tableOfClassrooms.add(btnNewClass, gbc, i);
         }
 
@@ -141,7 +141,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
             tableOfClassrooms.add(btnClass,gbc,index);
         else
             tableOfClassrooms.add(btnClass,gbc);
-        classroomButtonList.put(btnClass, id);
     }
 
     private void createNewClassButton()
@@ -260,8 +259,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         {
             if(i == btnClassRightClick)
             {
-                classroomButtonList.remove(btnClassRightClick);
-
                 createClassButton(temp.getId(), temp.getName(), index, index);
                 tableOfClassrooms.remove(i);
 
@@ -314,10 +311,10 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                     {
                         if(optionTitle.equals("Thay doi thong tin lop hoc"))
                         {
-                            if(classroomButtonList.get(btnClassRightClick).equals(idClass))
+                            if(getIDofClassroomButton(btnClassRightClick).equals(idClass))
                             {
                                 Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                                changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
+                                changeInforClass(temp, getIDofClassroomButton(btnClassRightClick));
 
                                 this.updatePanel(tableOfClassrooms);
 
@@ -334,10 +331,10 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                     {
                         if(optionTitle.equals("Thay doi thong tin lop hoc"))
                         {
-                            if(ClassroomManager.findClassroomById(classroomButtonList.get(btnClassRightClick)).getName().equals(nameClass))
+                            if(ClassroomManager.findClassroomById(getIDofClassroomButton(btnClassRightClick)).getName().equals(nameClass))
                             {
                                 Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                                changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
+                                changeInforClass(temp, getIDofClassroomButton(btnClassRightClick));
 
                                 this.updatePanel(tableOfClassrooms);
 
@@ -369,7 +366,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         else
                         {
                             Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                            changeInforClass(temp, classroomButtonList.get(btnClassRightClick));
+                            changeInforClass(temp, getIDofClassroomButton(btnClassRightClick));
                         }
 
                         this.updatePanel(tableOfClassrooms);
