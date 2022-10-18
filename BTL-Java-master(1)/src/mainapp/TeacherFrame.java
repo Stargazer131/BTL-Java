@@ -497,13 +497,13 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
     @Override
     public void mousePressed(MouseEvent e) 
     {
-        hienThiPopUpMenu(e);
+        showPopUpMenu(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) 
     {
-        hienThiPopUpMenu(e);
+        showPopUpMenu(e);
     }
 
     @Override
@@ -520,7 +520,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         
     }
 
-    private void hienThiPopUpMenu(MouseEvent e)
+    private void showPopUpMenu(MouseEvent e)
     {
         if(e.isPopupTrigger())
         {
