@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+import javax.swing.JOptionPane;
+
 import entity.Question;
 
 public class QuestionManager 
@@ -17,8 +19,15 @@ public class QuestionManager
     
     public static void addQuestion(Question q)
     {
-        questions.put(q.getID(),q);
-        writeData();
+        if(questions.size() < 999)
+        {
+            questions.put(q.getID(),q);
+            writeData();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "So luong cau hoi vuot qua cho 1000!", "Thong bao", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void removeQuestion(String id)
