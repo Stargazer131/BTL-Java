@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.swing.JOptionPane;
@@ -22,7 +22,7 @@ public class QuestionManager
         if(questions.size() < 999)
         {
             questions.put(q.getID(),q);
-            writeData();
+            writeData(null);
         }
         else
         {
@@ -33,7 +33,7 @@ public class QuestionManager
     public static void removeQuestion(String id)
     {
         questions.remove(id);
-        writeData();
+        writeData(null);
     }
 
     public static Question findQuestionByID(String id)
@@ -41,13 +41,15 @@ public class QuestionManager
         return questions.get(id);
     }
 
-    private static void writeData()
+    private static void writeData(ArrayList<Question>arr)
     {
         try 
         {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\question.data"));
-            oos.writeObject(questions);
-
+            if(arr == null)
+                oos.writeObject(questions);
+            else
+                oos.writeObject(arr);
             oos.close();
         } catch (FileNotFoundException e) 
         {
@@ -70,6 +72,7 @@ public class QuestionManager
             {
                 e.printStackTrace();
             }
+            ois.close();
 
             //In ra danh sách câu hỏi để check xem có thừa thiếu cái nào không
             for(String i: questions.keySet())

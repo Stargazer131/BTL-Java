@@ -1,6 +1,9 @@
 package mainapp;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -13,11 +16,19 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class QuestionBank extends JFrame
+import entity.Question;
+
+public class QuestionBank extends JFrame implements ActionListener
 {
     private JPanel panelMain;
 
     private GridBagConstraints gbc;
+
+    private JButton btnTurnBack,
+                    btnUpdateQuestion,
+                    btnCreateAnExcercise;
+
+    ArrayList<Question> questions;
 
     public QuestionBank()
     {
@@ -35,6 +46,21 @@ public class QuestionBank extends JFrame
         lbTitle.setBounds(350, 0, 1050, 40);
         this.add(lbTitle);
 
+        btnTurnBack = new JButton("Quay lai");
+        btnTurnBack.setBounds(10,10,120,30);
+        btnTurnBack.addActionListener(this);
+        this.add(btnTurnBack);
+
+        btnUpdateQuestion = new JButton("Cap nhat du lieu");
+        btnUpdateQuestion.setBounds(900,10,130,30);
+        btnUpdateQuestion.addActionListener(this);
+        this.add(btnUpdateQuestion);
+
+        btnCreateAnExcercise = new JButton("Tao bai tap");
+        btnCreateAnExcercise.setBounds(900,50,130,30);
+        btnCreateAnExcercise.addActionListener(this);
+        this.add(btnCreateAnExcercise);
+
         this.setBackground(Color.CYAN);
         this.setBounds(250, 100, 1050,650);
         this.setResizable(false);
@@ -49,6 +75,10 @@ public class QuestionBank extends JFrame
     {
         gbc.gridx = 0;
         gbc.gridy = index;
+
+        JLabel lbContainer = new JLabel("1");
+        lbContainer.setPreferredSize(new Dimension(620,300));
+        lbContainer.setLayout(new GridLayout(0,1));
 
         JPanel panelTemp = new JPanel();
         panelTemp.setLayout(null);
@@ -68,7 +98,15 @@ public class QuestionBank extends JFrame
         ButtonGroup bg = new ButtonGroup();
 
         panelTemp.add(tfQuestionTitle);
-        tfQuestionTitle.setBounds(70,20,300,20);
+        tfQuestionTitle.setBounds(80,20,300,20);
+
+        JLabel lbSelectThisQuestion = new JLabel("Chon cau hoi nay:");
+        lbSelectThisQuestion.setBounds(450,10,100,40);
+        panelTemp.add(lbSelectThisQuestion);
+
+        JRadioButton rSelectThisQuestion = new JRadioButton();
+        rSelectThisQuestion.setBounds(560,12,20,40);
+        panelTemp.add(rSelectThisQuestion);
 
         for(int i = 0 ; i < 4; i++)
         {
@@ -92,15 +130,14 @@ public class QuestionBank extends JFrame
         btnDeleteQuestion.setBounds(500,250,100,30);
         panelTemp.add(btnDeleteQuestion);
 
-        JLabel lbteJLabel = new JLabel(index + "");
-        panelMain.add(lbteJLabel,gbc);
-
-        panelMain.add(panelTemp, gbc);
+        lbContainer.add(panelTemp);
+        panelMain.add(lbContainer, gbc);
     }
 
     private void initmainPanel()
     {
         this.gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5,0,5,0);
         
         panelMain = new JPanel();
         panelMain.setOpaque(true);
@@ -129,6 +166,19 @@ public class QuestionBank extends JFrame
         Image image = imageIcon.getImage(); // transform it 
         Image newImage = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
+    }
+
+    private void collectData()
+    {
+        questions = new ArrayList<>();
+        Component listComponent[] = panelMain.getComponents();
+        for(int i = 0 ; i < )
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) 
+    {
+        
     }
 
     public static void main(String[] args) 
