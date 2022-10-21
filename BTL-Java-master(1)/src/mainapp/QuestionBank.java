@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -17,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import entity.Question;
+import manager.QuestionManager;
 
 public class QuestionBank extends JFrame implements ActionListener
 {
@@ -100,14 +103,6 @@ public class QuestionBank extends JFrame implements ActionListener
         panelTemp.add(tfQuestionTitle);
         tfQuestionTitle.setBounds(80,20,300,20);
 
-        JLabel lbSelectThisQuestion = new JLabel("Chon cau hoi nay:");
-        lbSelectThisQuestion.setBounds(450,10,100,40);
-        panelTemp.add(lbSelectThisQuestion);
-
-        JRadioButton rSelectThisQuestion = new JRadioButton();
-        rSelectThisQuestion.setBounds(560,12,20,40);
-        panelTemp.add(rSelectThisQuestion);
-
         for(int i = 0 ; i < 4; i++)
         {
             lbAnswer[i] = new JLabel( (char)('A' + i)  + ":");
@@ -125,6 +120,14 @@ public class QuestionBank extends JFrame implements ActionListener
 
             bg.add(rbtn[i]);
         }
+
+        JLabel lbSelectThisQuestion = new JLabel("Chon cau hoi nay:");
+        lbSelectThisQuestion.setBounds(450,10,100,40);
+        panelTemp.add(lbSelectThisQuestion);
+
+        JRadioButton rSelectThisQuestion = new JRadioButton();
+        rSelectThisQuestion.setBounds(560,12,20,40);
+        panelTemp.add(rSelectThisQuestion);
 
         JButton btnDeleteQuestion = new JButton("Xoa cau hoi");
         btnDeleteQuestion.setBounds(500,250,100,30);
@@ -170,19 +173,54 @@ public class QuestionBank extends JFrame implements ActionListener
 
     private void collectData()
     {
+        ArrayList<Question> questions = new ArrayList<>();
+
         questions = new ArrayList<>();
         Component listComponent[] = panelMain.getComponents();
-        for(int i = 0 ; i < )
+        for(int i = 0 ; i < listComponent.length; i++)
+        {
+            Component panelComponent = ((JLabel) listComponent[i]).getComponent(0),
+                      elementList[] = ((JPanel) panelComponent).getComponents();
+            
+            String questionID = ( (JLabel) elementList[0] ).getText(),
+                   questionTitle = ( (JTextField) elementList[1] ).getText(),
+                   questionAnswer[] = new String[4],
+                   questionAnswerKey = "";
+
+            HashMap<String,Boolean>answerKeys = new HashMap<>();
+            int index = 2;
+            
+            for(int x = 0 ; x < 4 ; x++)
+            {
+                boolean isChoose = ( (JRadioButton) elementList[index] ).isSelected();
+                index += 2;
+                questionAnswer[x] = ( (JTextField) elementList[index++] ) .getText();
+
+                if(isChoose)
+                {
+                    answerKeys.put(questionAnswer[x], true);
+                    questionAnswerKey = questionAnswer[x];
+                }    
+                else
+                    answerKeys.put(questionAnswer[x],false);
+            }
+            questions.add(new Question(questionID, questionTitle, answerKeys, questionAnswerKey));
+        }
+        QuestionManager.writeData(questions);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        
+        if(e.getSource() == btnUpdateQuestion)
+        {
+            collectData();
+        }
     }
 
     public static void main(String[] args) 
     {
+        QuestionManager.readData();
         new QuestionBank();
     }
 }

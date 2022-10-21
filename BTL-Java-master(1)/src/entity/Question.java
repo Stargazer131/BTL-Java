@@ -2,22 +2,23 @@ package entity;
 
 import java.util.HashMap;
 
-import generic.Pair;
-
 public class Question
 {
     private String questionID,
-                   questionTitle;
+                   questionTitle,
+                   questionAnswerKey;
 
     private HashMap<String, Boolean> answerList;
 
-    public Question(String QUESTION_ID,String QUESTION_TITLE, HashMap<String, Boolean> answerList)
+    public Question(String QUESTION_ID,String QUESTION_TITLE, HashMap<String, Boolean> answerList, String QUESTION_ANSWER_KEY)
     {
         this.questionID = QUESTION_ID;
 
         this.questionTitle = QUESTION_TITLE;
 
         this.answerList = answerList;
+        
+        this.questionAnswerKey = QUESTION_ANSWER_KEY;
     }
 
     public boolean checkAnswer(String answerKey)

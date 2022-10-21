@@ -41,11 +41,11 @@ public class QuestionManager
         return questions.get(id);
     }
 
-    private static void writeData(ArrayList<Question>arr)
+    public static void writeData(ArrayList<Question>arr)
     {
         try 
         {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\question.data"));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\question.dat"));
             if(arr == null)
                 oos.writeObject(questions);
             else
@@ -60,30 +60,15 @@ public class QuestionManager
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void readData()
     {
-        try 
+        String filename = "resources\\data\\question.dat";
+        try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename)))
         {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("resources\\data\\question.data"));
-            try 
-            {
-                questions = (TreeMap<String, Question>) ois.readObject();
-            } catch (ClassNotFoundException e) 
-            {
-                e.printStackTrace();
-            }
-            ois.close();
-
-            //In ra danh sách câu hỏi để check xem có thừa thiếu cái nào không
-            for(String i: questions.keySet())
-            {
-                System.out.println(i + " " + questions.get(i));
-            }
-
-        } catch (FileNotFoundException e) 
-        {
-            e.printStackTrace();
-        } catch (IOException e) 
+            
+        }
+        catch(Exception e)
         {
             e.printStackTrace();
         }
