@@ -4,10 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import entity.Classroom;
 import entity.Teacher;
 
 public class TeacherManager 
@@ -57,10 +55,9 @@ public class TeacherManager
         {
             output.writeObject(teachers);
         }
-
         catch(Exception e)
         {
-
+            System.out.println("Loi");
         }
     }
 

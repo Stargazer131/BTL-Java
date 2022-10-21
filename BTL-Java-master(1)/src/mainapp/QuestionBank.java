@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -173,9 +174,6 @@ public class QuestionBank extends JFrame implements ActionListener
 
     private void collectData()
     {
-        ArrayList<Question> questions = new ArrayList<>();
-
-        questions = new ArrayList<>();
         Component listComponent[] = panelMain.getComponents();
         for(int i = 0 ; i < listComponent.length; i++)
         {
@@ -204,9 +202,8 @@ public class QuestionBank extends JFrame implements ActionListener
                 else
                     answerKeys.put(questionAnswer[x],false);
             }
-            questions.add(new Question(questionID, questionTitle, answerKeys, questionAnswerKey));
+            QuestionManager.addQuestion(new Question(questionID, questionTitle, answerKeys, questionAnswerKey));
         }
-        QuestionManager.writeData(questions);
     }
     
     @Override
@@ -220,7 +217,14 @@ public class QuestionBank extends JFrame implements ActionListener
 
     public static void main(String[] args) 
     {
-        QuestionManager.readData();
+        HashMap<String, Boolean> map = new HashMap<>();
+        map.put("A", true);
+        map.put("B", false);
+        map.put("C", false);
+        map.put("D", false);
+        Question temp = new Question("1", "2", map, "1");
+        QuestionManager.addQuestion(temp);
+        QuestionManager.writeData();
         new QuestionBank();
     }
 }

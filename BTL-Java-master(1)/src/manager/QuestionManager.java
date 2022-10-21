@@ -9,31 +9,23 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import javax.swing.JOptionPane;
-
 import entity.Question;
 
 public class QuestionManager 
 {
-    private static TreeMap<String, Question> questions;
+    private static TreeMap<String, Question> questions = new TreeMap<>();
     
+
     public static void addQuestion(Question q)
     {
-        if(questions.size() < 999)
-        {
-            questions.put(q.getID(),q);
-            writeData(null);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "So luong cau hoi vuot qua cho 1000!", "Thong bao", JOptionPane.ERROR_MESSAGE);
-        }
+        questions.put(q.getID(),q);
+        writeData();
     }
 
     public static void removeQuestion(String id)
     {
         questions.remove(id);
-        writeData(null);
+        writeData();
     }
 
     public static Question findQuestionByID(String id)
@@ -41,16 +33,14 @@ public class QuestionManager
         return questions.get(id);
     }
 
-    public static void writeData(ArrayList<Question>arr)
+    public static void writeData()
     {
+        ObjectOutputStream oos;
         try 
         {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\question.dat"));
-            if(arr == null)
-                oos.writeObject(questions);
-            else
-                oos.writeObject(arr);
-            oos.close();
+            oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\question.dat"));
+            oos.writeObject(questions);
+            oos.flush();
         } catch (FileNotFoundException e) 
         {
             e.printStackTrace();
@@ -58,19 +48,33 @@ public class QuestionManager
         {
             e.printStackTrace();
         }
+        
     }
 
-    @SuppressWarnings("unchecked")
     public static void readData()
     {
-        String filename = "resources\\data\\question.dat";
-        try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename)))
+        try 
         {
-            
-        }
-        catch(Exception e)
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("resources\\data\\question.dat"));
+            try 
+            {
+                questions = (TreeMap<String, Question>) ois.readObject();
+            } catch (ClassNotFoundException e) 
+            {
+            }
+            for(String i: questions.keySet())
+            {
+                System.out.println(i);
+            }
+
+            ois.close();
+        }catch (IOException e) 
         {
-            e.printStackTrace();
         }
+    }
+
+    public static void setMap(TreeMap<String, Question> map)
+    {
+        questions = map;
     }
 }

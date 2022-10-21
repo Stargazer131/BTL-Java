@@ -44,4 +44,15 @@ public class Question
     {
         return this.answerList;
     }
+
+    public String toString()
+    {
+        String outPut = "";
+        for(String i: answerList.keySet())
+        {
+            outPut += i + "\n";
+        }
+        return questionID + " " + questionTitle + "\n" +
+               outPut;
+    }
 }
