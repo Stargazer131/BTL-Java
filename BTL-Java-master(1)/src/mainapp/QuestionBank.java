@@ -217,14 +217,8 @@ public class QuestionBank extends JFrame implements ActionListener
 
     public static void main(String[] args) 
     {
-        HashMap<String, Boolean> map = new HashMap<>();
-        map.put("A", true);
-        map.put("B", false);
-        map.put("C", false);
-        map.put("D", false);
-        Question temp = new Question("1", "2", map, "1");
-        QuestionManager.addQuestion(temp);
-        QuestionManager.writeData();
+        QuestionManager.readData();
+
         new QuestionBank();
     }
 }

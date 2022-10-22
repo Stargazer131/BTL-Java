@@ -1,9 +1,12 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Question
+public class Question implements Serializable
 {
+    private static final long serialVersionUID = 13012002L;
+
     private String questionID,
                    questionTitle,
                    questionAnswerKey;

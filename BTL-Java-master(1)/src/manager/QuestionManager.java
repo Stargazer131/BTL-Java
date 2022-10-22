@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 import entity.Question;
@@ -15,7 +14,6 @@ public class QuestionManager
 {
     private static TreeMap<String, Question> questions = new TreeMap<>();
     
-
     public static void addQuestion(Question q)
     {
         questions.put(q.getID(),q);
@@ -61,10 +59,12 @@ public class QuestionManager
                 questions = (TreeMap<String, Question>) ois.readObject();
             } catch (ClassNotFoundException e) 
             {
+
             }
+
             for(String i: questions.keySet())
             {
-                System.out.println(i);
+                System.out.println(i + " " + questions.get(i).toString()) ;
             }
 
             ois.close();
