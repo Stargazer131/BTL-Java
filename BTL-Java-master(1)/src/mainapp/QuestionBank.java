@@ -4,12 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import entity.Question;
+import generic.Pair;
 import manager.QuestionManager;
 
 public class QuestionBank extends JFrame implements ActionListener
@@ -33,6 +33,8 @@ public class QuestionBank extends JFrame implements ActionListener
                     btnCreateAnExcercise;
 
     ArrayList<Question> questions;
+
+    private JButton btnCreateQuestion;
 
     public QuestionBank()
     {
@@ -75,7 +77,7 @@ public class QuestionBank extends JFrame implements ActionListener
         this.setIconImage(icon.getImage());
     }
 
-    private void createQuestionPanel(int index)
+    private void createQuestionPanel(int index, Question temp, int indexAdd)
     {
         gbc.gridx = 0;
         gbc.gridy = index;
@@ -93,7 +95,7 @@ public class QuestionBank extends JFrame implements ActionListener
 
         JRadioButton rbtn[] = new JRadioButton [4];
 
-        JTextField tfQuestionTitle = new JTextField(),
+        JTextField tfQuestionTitle = new JTextField(temp.getQuestionTitle()),
                    tfAnswer [] = new JTextField [4];
 
         lbQuestionID.setBounds(10,10,70,40);
@@ -106,13 +108,25 @@ public class QuestionBank extends JFrame implements ActionListener
 
         for(int i = 0 ; i < 4; i++)
         {
+            rbtn[i] = new JRadioButton();
+
+            if(temp.getAnswerList().size() != 0)
+            {
+                if(temp.getAnswerList().get(i).getSecond())
+                    rbtn[i].setSelected(true);
+
+                tfAnswer[i] = new JTextField(temp.getAnswerList().get(i).getFirst());
+            }
+            else
+            {
+                tfAnswer[i] = new JTextField();
+            }
+
             lbAnswer[i] = new JLabel( (char)('A' + i)  + ":");
             lbAnswer[i].setBounds(30, 50 * (i + 1),30,20);
-
-            rbtn[i] = new JRadioButton();
+            
             rbtn[i].setBounds(10, 50 * (i + 1),20,20);
-
-            tfAnswer[i] = new JTextField();
+            
             tfAnswer[i].setBounds(50, 50 * (i + 1), 200,20);
 
             panelTemp.add(rbtn[i]);
@@ -135,7 +149,27 @@ public class QuestionBank extends JFrame implements ActionListener
         panelTemp.add(btnDeleteQuestion);
 
         lbContainer.add(panelTemp);
-        panelMain.add(lbContainer, gbc);
+        if(indexAdd == -1)
+            panelMain.add(lbContainer, gbc);
+        else
+            panelMain.add(lbContainer,gbc,indexAdd);
+    }
+
+    private void initCreateQuestion()
+    {
+        gbc.gridx = 0;
+        gbc.gridy = panelMain.getComponents().length;
+
+        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\add.png");
+
+        JLabel lbCreateQuestion = new JLabel("Them cau hoi", resizeImage(icon), JLabel.CENTER);
+
+        btnCreateQuestion = new JButton();
+        btnCreateQuestion.add(lbCreateQuestion);
+        btnCreateQuestion.setPreferredSize(new Dimension(620,100));
+        btnCreateQuestion.addActionListener(this);
+
+        this.panelMain.add(btnCreateQuestion,gbc);
     }
 
     private void initmainPanel()
@@ -148,8 +182,12 @@ public class QuestionBank extends JFrame implements ActionListener
         panelMain.setBackground(Color.white);
         panelMain.setLayout(new GridBagLayout());
 
-        for(int i = 0 ; i < 10; i++)
-            createQuestionPanel(i);
+        for(int i = 0 ; i < QuestionManager.questions.size(); i++)
+        {
+            createQuestionPanel(i , QuestionManager.questions.get(i), -1);
+        }
+
+        initCreateQuestion();
 
         JScrollPane scrollPane = new JScrollPane(panelMain, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBounds(175, 40, 700, 570);
@@ -174,8 +212,10 @@ public class QuestionBank extends JFrame implements ActionListener
 
     private void collectData()
     {
+        ArrayList<Question> questions = new ArrayList<>();
+
         Component listComponent[] = panelMain.getComponents();
-        for(int i = 0 ; i < listComponent.length; i++)
+        for(int i = 0 ; i < listComponent.length - 1; i++)
         {
             Component panelComponent = ((JLabel) listComponent[i]).getComponent(0),
                       elementList[] = ((JPanel) panelComponent).getComponents();
@@ -185,7 +225,7 @@ public class QuestionBank extends JFrame implements ActionListener
                    questionAnswer[] = new String[4],
                    questionAnswerKey = "";
 
-            HashMap<String,Boolean>answerKeys = new HashMap<>();
+            ArrayList< Pair<String, Boolean>>answerKeys = new ArrayList<>();
             int index = 2;
             
             for(int x = 0 ; x < 4 ; x++)
@@ -196,14 +236,22 @@ public class QuestionBank extends JFrame implements ActionListener
 
                 if(isChoose)
                 {
-                    answerKeys.put(questionAnswer[x], true);
+                    answerKeys.add(new Pair<String,Boolean>(questionAnswer[x], true));
                     questionAnswerKey = questionAnswer[x];
                 }    
                 else
-                    answerKeys.put(questionAnswer[x],false);
+                    answerKeys.add(new Pair<String,Boolean>(questionAnswer[x], false));
             }
-            QuestionManager.addQuestion(new Question(questionID, questionTitle, answerKeys, questionAnswerKey));
+            Question temp = new Question(questionID, questionTitle, answerKeys, questionAnswerKey);
+            System.out.println(temp);
+            questions.add(temp);
         }
+        QuestionManager.questions = questions;
+        QuestionManager.writeData();
+
+        updatePanel(panelMain);
+
+        System.out.println(QuestionManager.questions.size());
     }
     
     @Override
@@ -212,6 +260,13 @@ public class QuestionBank extends JFrame implements ActionListener
         if(e.getSource() == btnUpdateQuestion)
         {
             collectData();
+        }
+        else if(e.getSource() == btnCreateQuestion)
+        {
+            createQuestionPanel(panelMain.getComponents().length - 1, new Question(), panelMain.getComponents().length - 1);
+            panelMain.remove(btnCreateQuestion);
+            initCreateQuestion();
+            updatePanel(panelMain);
         }
     }
 

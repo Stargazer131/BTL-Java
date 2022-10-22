@@ -6,17 +6,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 import entity.Question;
 
 public class QuestionManager 
 {
-    private static TreeMap<String, Question> questions = new TreeMap<>();
+    public static ArrayList< Question> questions = new ArrayList<>();
     
     public static void addQuestion(Question q)
     {
-        questions.put(q.getID(),q);
+        questions.add(q);
         writeData();
     }
 
@@ -24,11 +24,6 @@ public class QuestionManager
     {
         questions.remove(id);
         writeData();
-    }
-
-    public static Question findQuestionByID(String id)
-    {
-        return questions.get(id);
     }
 
     public static void writeData()
@@ -56,25 +51,20 @@ public class QuestionManager
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("resources\\data\\question.dat"));
             try 
             {
-                questions = (TreeMap<String, Question>) ois.readObject();
+                questions = (ArrayList<Question>) ois.readObject();
             } catch (ClassNotFoundException e) 
             {
 
             }
 
-            for(String i: questions.keySet())
+            for(Question i: questions)
             {
-                System.out.println(i + " " + questions.get(i).toString()) ;
+                System.out.println(i);
             }
 
             ois.close();
         }catch (IOException e) 
         {
         }
-    }
-
-    public static void setMap(TreeMap<String, Question> map)
-    {
-        questions = map;
     }
 }

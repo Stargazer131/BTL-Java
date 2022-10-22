@@ -1,7 +1,11 @@
 package generic;
 
-public class Pair<U, V>
+import java.io.Serializable;
+
+public class Pair<U, V> implements Serializable
 {
+    private static final long serialVersionUID = 1312002L;
+
     private U first;
     private V second;
 

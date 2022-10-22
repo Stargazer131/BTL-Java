@@ -1,7 +1,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import generic.Pair;
 
 public class Question implements Serializable
 {
@@ -11,9 +14,17 @@ public class Question implements Serializable
                    questionTitle,
                    questionAnswerKey;
 
-    private HashMap<String, Boolean> answerList;
+    private ArrayList<Pair< String, Boolean>> answerList;
 
-    public Question(String QUESTION_ID,String QUESTION_TITLE, HashMap<String, Boolean> answerList, String QUESTION_ANSWER_KEY)
+    public Question()
+    {
+        questionID = "";
+        questionTitle = "";
+        questionAnswerKey = "";
+        answerList = new ArrayList<>();
+    }
+
+    public Question(String QUESTION_ID,String QUESTION_TITLE, ArrayList<Pair< String, Boolean>> answerList, String QUESTION_ANSWER_KEY)
     {
         this.questionID = QUESTION_ID;
 
@@ -22,15 +33,6 @@ public class Question implements Serializable
         this.answerList = answerList;
         
         this.questionAnswerKey = QUESTION_ANSWER_KEY;
-    }
-
-    public boolean checkAnswer(String answerKey)
-    {
-        if(answerList.get(answerKey))
-        {
-            return true;
-        }
-        return false;
     }
 
     public String getID()
@@ -43,7 +45,7 @@ public class Question implements Serializable
         return this.questionTitle;
     }
 
-    public HashMap<String, Boolean> getAnswerList()
+    public ArrayList<Pair< String, Boolean>> getAnswerList()
     {
         return this.answerList;
     }
@@ -51,9 +53,9 @@ public class Question implements Serializable
     public String toString()
     {
         String outPut = "";
-        for(String i: answerList.keySet())
+        for(Pair<String, Boolean> i: answerList)
         {
-            outPut += i + "\n";
+            outPut += i.getFirst() + "\n";
         }
         return questionID + " " + questionTitle + "\n" +
                outPut;
