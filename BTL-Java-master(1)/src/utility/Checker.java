@@ -29,7 +29,7 @@ public class Checker
     public static boolean isValidId(String id)        // check valid student id
     { 
         id = id.toUpperCase();
-        String major = "(CN|AT|PT|VT|DT|QT|KT|MR|TM)";           // must start with B + number from 17->22 + DC + valid major + 3 digits 
+        String major = "(CN|AT|PT|VT|DT|QT|KT|MR|TM)";           // must start with B + number from 16->22 + DC + valid major + 3 digits 
         String regex = "^B(1[6-9]|2[0-2])DC"+major+"\\d{3}$";    // such as: B20DCCN228
         return id.matches(regex);
     }
@@ -37,13 +37,16 @@ public class Checker
     public static boolean isValidGender(String gender)  // check valid gender
     {
         gender = gender.toLowerCase();
-        if(gender.equals("female") || gender.equals("male")) return true;
+        if(gender.equals("nam") || gender.equals("nu")) return true;
         return false;
     }
 
-    public static boolean isValidGroup(String group)
+    public static boolean isValidGroup(String group) // check valid group
     {
-        return true;
+        group = group.toUpperCase();
+        String major = "(CN|AT|PT|VT|DT|QT|KT|MR|TM)";           // must start with D or E + number from 16->22 + CQ + valid major + 2 digits + B or N
+        String regex = "^(D|E)(1[6-9]|2[0-2])CQ"+major+"\\d{2}-(B|N)$";    // such as: D20CQCN12-B
+        return group.matches(regex);
     }
 
     public static boolean isValidBirthday(String date)            // check valid birthday

@@ -64,7 +64,9 @@ public class StudentFrame extends JFrame implements ActionListener
 
     private void initAvatar()
     {
-        ImageIcon icon = new ImageIcon(String.format("resources\\images\\Avatar\\%s.png", StudentManager.findStudentById(studentId).getGender()));    // create avatar for student
+        String gender = StudentManager.findStudentById(studentId).getGender(); // create avatar for student
+        gender = (gender.equals("Nam")) ? "Male" : "Female";
+        ImageIcon icon = new ImageIcon(String.format("resources\\images\\Avatar\\%s.png", gender));    
         lblAvatar = new JLabel(icon, JLabel.CENTER);
         lblAvatar.setBounds(0, 0, 200, 200);
         lblAvatar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -81,28 +83,28 @@ public class StudentFrame extends JFrame implements ActionListener
         Border border = BorderFactory.createRaisedSoftBevelBorder();
         
         ImageIcon iconId = new ImageIcon("resources\\images\\ProfileIcon\\Id.png");         // display student information
-        lblId = new JLabel("Id: " + StudentManager.findStudentById(studentId).getId(), resizeImage(iconId), JLabel.CENTER);                  
+        lblId = new JLabel("Ma SV: " + StudentManager.findStudentById(studentId).getId(), resizeImage(iconId), JLabel.CENTER);                  
         lblId.setVerticalTextPosition(JLabel.BOTTOM);
         lblId.setHorizontalTextPosition(JLabel.CENTER);
         lblId.setBorder(border);
         
 
         ImageIcon iconName = new ImageIcon("resources\\images\\ProfileIcon\\Name.png");
-        lblName = new JLabel("Name: " + StudentManager.findStudentById(studentId).getName(), resizeImage(iconName), JLabel.CENTER); 
+        lblName = new JLabel("Ho ten: " + StudentManager.findStudentById(studentId).getName(), resizeImage(iconName), JLabel.CENTER); 
         lblName.setVerticalTextPosition(JLabel.BOTTOM);
         lblName.setHorizontalTextPosition(JLabel.CENTER);
         lblName.setBorder(border);
         
         
         ImageIcon iconGender = new ImageIcon("resources\\images\\ProfileIcon\\Gender.png");
-        lblGender = new JLabel("Gender: " + StudentManager.findStudentById(studentId).getGender(), resizeImage(iconGender), JLabel.CENTER);
+        lblGender = new JLabel("Gioi tinh: " + StudentManager.findStudentById(studentId).getGender(), resizeImage(iconGender), JLabel.CENTER);
         lblGender.setVerticalTextPosition(JLabel.BOTTOM);
         lblGender.setHorizontalTextPosition(JLabel.CENTER);
         lblGender.setBorder(border);
 
         
         ImageIcon iconAddress = new ImageIcon("resources\\images\\ProfileIcon\\Address.png");
-        lblAddress = new JLabel("Address: " + StudentManager.findStudentById(studentId).getAddress(), resizeImage(iconAddress), JLabel.CENTER);
+        lblAddress = new JLabel("Dia chi: " + StudentManager.findStudentById(studentId).getAddress(), resizeImage(iconAddress), JLabel.CENTER);
         lblAddress.setVerticalTextPosition(JLabel.BOTTOM);
         lblAddress.setHorizontalTextPosition(JLabel.CENTER);
         lblAddress.setBorder(border);
@@ -116,21 +118,21 @@ public class StudentFrame extends JFrame implements ActionListener
 
 
         ImageIcon iconGroup = new ImageIcon("resources\\images\\ProfileIcon\\Group.png");
-        lblGroup = new JLabel("Group: " + StudentManager.findStudentById(studentId).getGroup(), resizeImage(iconGroup), JLabel.CENTER);
+        lblGroup = new JLabel("Lop: " + StudentManager.findStudentById(studentId).getGroup(), resizeImage(iconGroup), JLabel.CENTER);
         lblGroup.setVerticalTextPosition(JLabel.BOTTOM);
         lblGroup.setHorizontalTextPosition(JLabel.CENTER);
         lblGroup.setBorder(border);
 
         
         ImageIcon iconBirthday = new ImageIcon("resources\\images\\ProfileIcon\\Birthday.png");
-        lblBirthday = new JLabel("Birthday: " + StudentManager.findStudentById(studentId).getBirthday(), resizeImage(iconBirthday), JLabel.CENTER);
+        lblBirthday = new JLabel("Ngay sinh: " + StudentManager.findStudentById(studentId).getBirthday(), resizeImage(iconBirthday), JLabel.CENTER);
         lblBirthday.setVerticalTextPosition(JLabel.BOTTOM);
         lblBirthday.setHorizontalTextPosition(JLabel.CENTER);
         lblBirthday.setBorder(border);
 
 
         ImageIcon iconPhoneNumber = new ImageIcon("resources\\images\\ProfileIcon\\PhoneNumber.png");        
-        lblPhoneNumber = new JLabel("Phone: " + StudentManager.findStudentById(studentId).getPhoneNumber(), resizeImage(iconPhoneNumber), JLabel.CENTER);
+        lblPhoneNumber = new JLabel("SDT: " + StudentManager.findStudentById(studentId).getPhoneNumber(), resizeImage(iconPhoneNumber), JLabel.CENTER);
         lblPhoneNumber.setVerticalTextPosition(JLabel.BOTTOM);
         lblPhoneNumber.setHorizontalTextPosition(JLabel.CENTER);
         lblPhoneNumber.setBorder(border);                             // end of display
@@ -179,7 +181,7 @@ public class StudentFrame extends JFrame implements ActionListener
 
     private void initButtons() // create the refresh and join buttons
     {
-        btnJoin = new JButton("Join");  // join button
+        btnJoin = new JButton("Tham gia");  // join button
         btnJoin.setFocusable(false);
         btnJoin.setBounds(20, 350, 100, 30);
         btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -215,7 +217,7 @@ public class StudentFrame extends JFrame implements ActionListener
     {
         if(e.getSource() == btnJoin) // when click button join
         {
-            String input = JOptionPane.showInputDialog(this, "Enter a Classroom Id", 
+            String input = JOptionPane.showInputDialog(this, "Nhap ma lop hoc", 
             "E-Classroom", JOptionPane.INFORMATION_MESSAGE);
             
             if(input != null && !input.equals(""))

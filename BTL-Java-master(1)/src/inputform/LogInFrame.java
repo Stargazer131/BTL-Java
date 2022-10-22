@@ -61,10 +61,10 @@ public class LogInFrame extends JFrame implements ActionListener
         logo.setBounds(130, 10, 90, 90);
         panelUp.add(logo);
 
-        lblUserName = new JLabel("Username");      // create label
+        lblUserName = new JLabel("Tai khoan");      // create label
         lblUserName.setBounds(50, 120, 60, 20);
         
-        lblPassWord = new JLabel("Password");    
+        lblPassWord = new JLabel("Mat khau");    
         lblPassWord.setBounds(50, 160, 60, 20);
                
 
@@ -91,14 +91,14 @@ public class LogInFrame extends JFrame implements ActionListener
         panelDown.setLayout(null);
         
 
-        btnLogIn = new JButton("Log in");   // create button Log in
+        btnLogIn = new JButton("Dang nhap");   // create button Log in
         btnLogIn.setFocusable(false);
         btnLogIn.addActionListener(this);
         btnLogIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));      
         btnLogIn.setBounds(20, 15, 120, 30);
        
         
-        btnCreateNewAccount = new JButton("New account"); // create button New account
+        btnCreateNewAccount = new JButton("Tai khoan moi"); // create button New account
         btnCreateNewAccount.setFocusable(false);
         btnCreateNewAccount.addActionListener(this);
         btnCreateNewAccount.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -135,7 +135,7 @@ public class LogInFrame extends JFrame implements ActionListener
 
             else   // display the error message                
             {
-                JOptionPane.showMessageDialog(this, "Username or Password is incorrect!",
+                JOptionPane.showMessageDialog(this, "Tai khoan hoac Mat khau khong dung",
                 "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

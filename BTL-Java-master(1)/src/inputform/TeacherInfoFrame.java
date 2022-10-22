@@ -40,7 +40,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
     private void initFrame()    // create the main window
     {
         this.setBounds(600, 200, 350, 300);
-        this.setTitle("Setting Information");
+        this.setTitle("Thong tin ca nhan");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -51,14 +51,14 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
     private void initComponents()
     {
         ImageIcon iconId = new ImageIcon("resources\\images\\ProfileIcon\\Id.png");   // Id label    
-        lblId = new JLabel("Id", resizeImage(iconId), JLabel.LEFT);
+        lblId = new JLabel("Ma GV", resizeImage(iconId), JLabel.LEFT);
         lblId.setHorizontalTextPosition(JLabel.RIGHT);                 
-        lblId.setBounds(60, 60, 70, 30);
+        lblId.setBounds(50, 60, 80, 30);
         
         ImageIcon iconName = new ImageIcon("resources\\images\\ProfileIcon\\Name.png");   // Name label      
-        lblName = new JLabel("Name", resizeImage(iconName), JLabel.LEFT);
+        lblName = new JLabel("Ho ten", resizeImage(iconName), JLabel.LEFT);
         lblName.setHorizontalTextPosition(JLabel.RIGHT);
-        lblName.setBounds(60, 110, 70, 30);
+        lblName.setBounds(50, 110, 80, 30);
 
         txtId = new JTextField();    // create text field for Id     
         txtId.setBorder(BorderFactory.createLoweredBevelBorder());  
@@ -70,8 +70,8 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
         txtName.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtName.setBorder(BorderFactory.createLoweredBevelBorder());
 
-        btnFinish = new JButton("Finish");     // create finish button
-        btnFinish.setBounds(130, 180, 80, 30);
+        btnFinish = new JButton("Hoan thanh");     // create finish button
+        btnFinish.setBounds(110, 190, 120, 30);
         btnFinish.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));  // change the cursor
         btnFinish.setFocusable(false);
         btnFinish.addActionListener(this);
@@ -101,7 +101,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
 
         if(id.equals("") || name.equals("")) // if don't type anything
         {
-            JOptionPane.showMessageDialog(this, "Can't leave any field blank!",
+            JOptionPane.showMessageDialog(this, "Khong duoc de trong bat ky o nao!",
             "Error", JOptionPane.WARNING_MESSAGE);
         }
 
@@ -112,7 +112,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
             
             if(TeacherManager.findTeacherById(id) != null) // if the id has already been registered
             {
-                JOptionPane.showMessageDialog(this, "This id has already been registered",
+                JOptionPane.showMessageDialog(this, "Ma GV nay da duoc dang ky",
                 "Error", JOptionPane.ERROR_MESSAGE);
             }
     
@@ -121,7 +121,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
                 AccountManager.addAccount(new Account(username, password, id)); // add account to database
                 TeacherManager.addTeacher(new Teacher(id, name)); // add teacher to database
     
-                JOptionPane.showMessageDialog(this, "Registration is completed!", // show message
+                JOptionPane.showMessageDialog(this, "Dang ky thanh cong!", // show message
                 "Successful", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }

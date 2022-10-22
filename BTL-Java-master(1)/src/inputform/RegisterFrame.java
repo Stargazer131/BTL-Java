@@ -40,7 +40,7 @@ public class RegisterFrame extends JFrame implements ActionListener
     private void initFrame() // create the main window
     {
         this.setBounds(600, 200, 350, 300);
-        this.setTitle("Log up");
+        this.setTitle("Dang ky");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -56,25 +56,25 @@ public class RegisterFrame extends JFrame implements ActionListener
 
         
         ImageIcon iconUserName = new ImageIcon("resources\\images\\ProfileIcon\\UserName.png");  // create label and add icon to it
-        lblUserName = new JLabel("Username", resizeImage(iconUserName), JLabel.CENTER);                              
+        lblUserName = new JLabel("Tai khoan", resizeImage(iconUserName), JLabel.CENTER);                              
         lblUserName.setHorizontalTextPosition(JLabel.RIGHT);
         lblUserName.setBounds(40, 80, 100, 30);
         
 
         ImageIcon iconPassword = new ImageIcon("resources\\images\\ProfileIcon\\Password.png");
-        lblPassWord = new JLabel("Password", resizeImage(iconPassword), JLabel.CENTER);    
+        lblPassWord = new JLabel("Mat khau", resizeImage(iconPassword), JLabel.CENTER);    
         lblPassWord.setHorizontalTextPosition(JLabel.RIGHT);
         lblPassWord.setBounds(40, 130, 100, 30);
                
 
         txtUserName = new JTextField();      // create text field and add tool tip text 
-        txtUserName.setToolTipText("A valid user name must contain only letters and numbers and it's length must be within 4-20");
+        txtUserName.setToolTipText("Chi co chu so va chu cai, do dai tu 4 den 20");
         txtUserName.setBorder(BorderFactory.createLoweredBevelBorder()); 
         txtUserName.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtUserName.setBounds(150, 80, 150, 30);
         
         txtPassWord = new JPasswordField();
-        txtPassWord.setToolTipText("A valid password must contain at least one uppercase, one lowercase, one number, length must be at least 6 and no special character");
+        txtPassWord.setToolTipText("Co it nhat 1 chu cai thuong, 1 chu cai hoa, 1 chu so, do dai lon hon 5 va khong co ky tu dac biet");
         txtPassWord.setBorder(BorderFactory.createLoweredBevelBorder());
         txtPassWord.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtPassWord.setBounds(150, 130, 150, 30);
@@ -93,7 +93,7 @@ public class RegisterFrame extends JFrame implements ActionListener
         panelDown.setBounds(0, 200, 350, 100);
         panelDown.setLayout(null);
         
-        btnNext = new JButton("Next");                                     // create the button
+        btnNext = new JButton("Tiep");                                     // create the button
         btnNext.setFocusable(false);
         btnNext.setBounds(115, 15, 100, 30);
         btnNext.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));   // change the cursor
@@ -120,25 +120,25 @@ public class RegisterFrame extends JFrame implements ActionListener
         String password = String.valueOf(txtPassWord.getPassword());
         if(username.equals("") || password.equals(""))  // when don't type anything
         {
-            JOptionPane.showMessageDialog(this, "Username or Password can't not be empty!",
+            JOptionPane.showMessageDialog(this, "Tai khoan hoac Mat khau khong duoc de trong!",
             "Error", JOptionPane.WARNING_MESSAGE);
         }
 
         else if(!Checker.isUsernameValid(username)) // if username is invalid
         {
-            JOptionPane.showMessageDialog(this, "Invalid Username!",
+            JOptionPane.showMessageDialog(this, "Tai khoan khong hop le!",
             "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         else if(!Checker.isPasswordValid(password)) // if password is invalid
         {
-            JOptionPane.showMessageDialog(this, "Invalid Password!",
+            JOptionPane.showMessageDialog(this, "Mat khau khong hop le!",
             "Error", JOptionPane.ERROR_MESSAGE);
         }
     
         else if(AccountManager.hasUser(username))        // the user is already existed
         {
-            JOptionPane.showMessageDialog(this, "Username has already existed!",
+            JOptionPane.showMessageDialog(this, "Ten tai khoan da ton tai!",
             "Error", JOptionPane.ERROR_MESSAGE);
         }
 
