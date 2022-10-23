@@ -4,11 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,6 +31,8 @@ public class QuestionBank extends JFrame implements ActionListener
                     btnCreateAnExcercise;
 
     ArrayList<Question> questions;
+
+    ArrayList<JButton> btnListDelete = new ArrayList<>();
 
     private JButton btnCreateQuestion;
 
@@ -76,6 +76,20 @@ public class QuestionBank extends JFrame implements ActionListener
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\questionBank.png");
         this.setIconImage(icon.getImage());
     }
+
+    private void deleteQuestion(int index)
+    {
+        System.out.println(panelMain.getComponents().length);
+        Component lisComponent[] = panelMain.getComponents();
+        for(int i = index ; i < lisComponent.length - 1 ; i ++)
+        {
+            Component temp = lisComponent[i];
+            panelMain.remove(i);
+            gbc.gridy = i;
+            ((JLabel) ((JPanel) ((JLabel) temp).getComponent(0)).getComponent(0)).setText(String.format("Cau hoi %d:", i + 1));
+            panelMain.add(temp,gbc,i);
+        }
+    }   
 
     private void createQuestionPanel(int index, Question temp, int indexAdd)
     {
@@ -146,6 +160,8 @@ public class QuestionBank extends JFrame implements ActionListener
 
         JButton btnDeleteQuestion = new JButton("Xoa cau hoi");
         btnDeleteQuestion.setBounds(500,250,100,30);
+        btnDeleteQuestion.addActionListener(this);
+        btnListDelete.add(btnDeleteQuestion);
         panelTemp.add(btnDeleteQuestion);
 
         lbContainer.add(panelTemp);
@@ -267,6 +283,20 @@ public class QuestionBank extends JFrame implements ActionListener
             panelMain.remove(btnCreateQuestion);
             initCreateQuestion();
             updatePanel(panelMain);
+        }
+        else if(e.getActionCommand().equals("Xoa cau hoi"))
+        {
+            for(int i = 0 ; i < btnListDelete.size(); i++)
+            {
+                if( e.getSource() == btnListDelete.get(i))
+                {
+                    panelMain.remove(i);
+                    deleteQuestion(i);
+                    btnListDelete.remove(i);
+                    updatePanel(panelMain);
+                    break;
+                }
+            }
         }
     }
 
