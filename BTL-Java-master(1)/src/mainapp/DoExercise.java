@@ -83,8 +83,7 @@ public class DoExercise extends JFrame implements ActionListener
         pnQuestion.setLayout(new GridBagLayout());
 
         pnQuestionList = new JPanel();
-        pnQuestionList.setBounds(11,150,199,questions.size() / 5 * 50);
-        
+        pnQuestionList.setBounds(15,150,199,(questions.size() / 5 + 1 ) * 50);
         pnQuestionList.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -101,11 +100,14 @@ public class DoExercise extends JFrame implements ActionListener
             initQuestionFrame(i, questions.get(i));
         }
 
+        System.out.println(pnQuestionList);
+
         this.add(pnQuestionList);
         this.add(pnQuestion);
 
         questionShow.get(indexOfQuestionDisplay).setVisible(true);
         currentQuestion = questionShow.get(indexOfQuestionDisplay);
+
     }
 
     private void initLeftFrame()
