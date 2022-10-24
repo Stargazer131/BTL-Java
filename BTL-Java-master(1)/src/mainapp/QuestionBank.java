@@ -11,13 +11,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import entity.Exercise;
 import entity.Question;
 import generic.Pair;
+import manager.ExerciseManager;
 import manager.QuestionManager;
 
 public class QuestionBank extends JFrame implements ActionListener
@@ -28,13 +31,12 @@ public class QuestionBank extends JFrame implements ActionListener
 
     private JButton btnTurnBack,
                     btnUpdateQuestion,
-                    btnCreateAnExcercise;
+                    btnCreateAnExcercise,
+                    btnCreateQuestion;
 
     ArrayList<Question> questions;
 
     ArrayList<JButton> btnListDelete = new ArrayList<>();
-
-    private JButton btnCreateQuestion;
 
     public QuestionBank()
     {
@@ -226,9 +228,10 @@ public class QuestionBank extends JFrame implements ActionListener
         return new ImageIcon(newImage);
     }
 
-    private void collectData()
+    private void collectData(String option)
     {
         ArrayList<Question> questions = new ArrayList<>();
+        ArrayList<Question> questionsOfAnExercise = new ArrayList<>();
 
         Component listComponent[] = panelMain.getComponents();
         for(int i = 0 ; i < listComponent.length - 1; i++)
@@ -260,10 +263,35 @@ public class QuestionBank extends JFrame implements ActionListener
             }
             Question temp = new Question(questionID, questionTitle, answerKeys, questionAnswerKey);
             System.out.println(temp);
+            if( ((JRadioButton) elementList[elementList.length - 2]).isSelected() && option.equals("Tao bai tap"))
+                questionsOfAnExercise.add(temp);
+
             questions.add(temp);
         }
-        QuestionManager.questions = questions;
-        QuestionManager.writeData();
+
+        if(option.equals("Tao bai tap"))
+        {
+            JTextField tfExerciseTitle = new JTextField(),
+                       tfExerciseTime = new JTextField();
+
+            Object[] inputObject = {
+                "Tên bài tập:", tfExerciseTitle,
+                "Thời gian làm bài: ", tfExerciseTime
+            };
+
+            int optionCreateExercise = JOptionPane.showConfirmDialog(null,inputObject,"Thông báo", JOptionPane.OK_CANCEL_OPTION);
+        
+            if(optionCreateExercise == JOptionPane.OK_OPTION)
+            {
+                Exercise temp = new Exercise(tfExerciseTitle.getText(), Integer.parseInt(tfExerciseTime.getText()), questionsOfAnExercise);
+                ExerciseManager.addExerCise(temp);
+            }
+        }
+        else
+        {
+            QuestionManager.questions = questions;
+            QuestionManager.writeData();
+        }
 
         updatePanel(panelMain);
 
@@ -275,7 +303,7 @@ public class QuestionBank extends JFrame implements ActionListener
     {
         if(e.getSource() == btnUpdateQuestion)
         {
-            collectData();
+            collectData(null);
         }
         else if(e.getSource() == btnCreateQuestion)
         {
@@ -297,6 +325,10 @@ public class QuestionBank extends JFrame implements ActionListener
                     break;
                 }
             }
+        }
+        else if(e.getSource() == btnCreateAnExcercise)
+        {
+            collectData("Tao bai tap");
         }
     }
 

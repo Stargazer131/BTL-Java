@@ -1,10 +1,13 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Exercise 
+public class Exercise implements Serializable
 {
+    private static final long serialVersionUID = 1312002L;
+
     private String exerciseTitle;
 
     private Date timeStart,
@@ -43,4 +46,5 @@ public class Exercise
     {
         return exerciseFinish;
     }
+
 }
