@@ -303,7 +303,7 @@ public class QuestionBank extends JFrame implements ActionListener
     {
         if(e.getSource() == btnUpdateQuestion)
         {
-            collectData(null);
+            collectData("");
         }
         else if(e.getSource() == btnCreateQuestion)
         {

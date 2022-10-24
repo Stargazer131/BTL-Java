@@ -38,7 +38,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
     private Teacher teacher;
 
-    GridBagConstraints gbc;
+    private GridBagConstraints gbc;
 
     private JPopupMenu pmClassRightClick;
     private JMenuItem mnChinhSuaLopHoc;
