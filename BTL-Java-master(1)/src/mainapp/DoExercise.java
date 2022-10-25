@@ -56,6 +56,8 @@ public class DoExercise extends JFrame implements ActionListener
                     btnPreQuestion,
                     btnNextQuestion;
 
+    private Component[] questionPanel;
+
     private void readData()
     {
         this.questions = exercise.getQuestions();
@@ -74,14 +76,52 @@ public class DoExercise extends JFrame implements ActionListener
         initLeftFrame();
 
         this.setVisible(true);
+
+        checkTimeRemain();
     }
 
     private void checkTimeRemain()
     {
-        if(exerciseTimeRemain == 0)
+        while(exerciseTimeRemain > 0)
         {
+            exerciseTimeRemain --;
 
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) 
+            {
+                e.printStackTrace();
+            }
+
+            lbtimeRemain.setText("Thời gian còn lại: " + exerciseTimeRemain);
         }
+
+        JOptionPane.showConfirmDialog(null, "Đã hết thời gian làm bài!", " Thông báo", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        collectData();
+    }
+
+    private void countQuestionFinished()
+    {
+        questionsFinish = 0;
+
+        for(int i = 0; i < questions.size(); i++)
+        {
+            Component arrTemp[] = ((JPanel) questionPanel[i]).getComponents();
+
+            int index = 2;
+            for(int j = 0 ; j < 4; j++)
+            {
+                if( ((JRadioButton) arrTemp[index]).isSelected())
+                {
+                    questionsFinish++;
+                    break;
+                }
+                index += 3;
+            }
+            
+        }
+
+        lbQuestionFinished.setText("Số câu hỏi đã hoàn thành: " + questionsFinish + "/" + questions.size());
     }
 
     private void initQuestionListPanel()
@@ -118,6 +158,7 @@ public class DoExercise extends JFrame implements ActionListener
         questionShow.get(indexOfQuestionDisplay).setVisible(true);
         currentQuestion = questionShow.get(indexOfQuestionDisplay);
 
+        questionPanel = pnQuestion.getComponents();//Lấy các Jpanel chứa câu hỏi
     }
 
     private void initLeftFrame()
@@ -175,6 +216,7 @@ public class DoExercise extends JFrame implements ActionListener
         {
             rbtnAnswer[i] = new JRadioButton();
             rbtnAnswer[i].setBounds(10, 50 * (i + 1),20,15);
+            rbtnAnswer[i].addActionListener(this);
             
             JLabel temp = new JLabel( (char) ('A' + i) + ":");
             temp.setBounds(30,50 * ( i + 1), 40,15);
@@ -242,7 +284,7 @@ public class DoExercise extends JFrame implements ActionListener
         double diem = 0;
         int soCauDung = 0;
 
-        Component questionPanel[] = pnQuestion.getComponents();
+        questionPanel = pnQuestion.getComponents();
 
         for(int i = 0 ; i < questions.size(); i++)
         {
@@ -267,6 +309,12 @@ public class DoExercise extends JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) 
     {
+        //Nếu bấm vào 1 JRadioButton thì sẽ đếm số câu hỏi đã click
+        if(e.getSource().getClass().equals(javax.swing.JRadioButton.class))
+        {
+            countQuestionFinished();
+        }
+
         if(e.getSource() == btnSubmit)
         {
             if(exerciseTimeRemain > 0)
