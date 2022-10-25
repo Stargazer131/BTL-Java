@@ -37,7 +37,6 @@ public class DoExercise extends JFrame implements ActionListener
                    lbQuestionFinished;
 
     private int questionsFinish,
-                questionSum,
                 exerciseTime,
                 exerciseTimeRemain,
                 indexOfQuestionDisplay = 0;
@@ -45,6 +44,8 @@ public class DoExercise extends JFrame implements ActionListener
     private ArrayList<Question> questions;
 
     private ArrayList<JPanel> questionShow = new ArrayList<>();
+
+    private ArrayList<Pair<Integer, Integer>> answersOfExercise;
 
     private JPanel pnleftFrame,
                    pnQuestion = new JPanel(),
@@ -58,12 +59,10 @@ public class DoExercise extends JFrame implements ActionListener
     private void readData()
     {
         this.questions = exercise.getQuestions();
-        this.exerciseTime = 5 * 60;
+        this.exerciseTime = 60 * exercise.getTime();
         this.questionsFinish = 0;
         this.exerciseTimeRemain = exerciseTime;
-        //this.questions = exercise.getQuestions();
-        //this.questionSum = questions.size();
-        this.questionSum = 0;
+        this.answersOfExercise = exercise.getAnswerOfExercise();
     }
     
     public DoExercise(Exercise temp)
@@ -75,6 +74,14 @@ public class DoExercise extends JFrame implements ActionListener
         initLeftFrame();
 
         this.setVisible(true);
+    }
+
+    private void checkTimeRemain()
+    {
+        if(exerciseTimeRemain == 0)
+        {
+
+        }
     }
 
     private void initQuestionListPanel()
@@ -120,10 +127,10 @@ public class DoExercise extends JFrame implements ActionListener
         pnleftFrame.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnleftFrame.setLayout(null);
 
-        lbtimeRemain = new JLabel("Thời gian còn lại: ");
+        lbtimeRemain = new JLabel("Thời gian còn lại: " + exerciseTimeRemain);
         lbtimeRemain.setBounds(10,0,180,100);
         
-        lbQuestionFinished = new JLabel("Số câu hỏi đã hoàn thành: " + questionsFinish + "/" + questionSum);
+        lbQuestionFinished = new JLabel("Số câu hỏi đã hoàn thành: " + questionsFinish + "/" + questions.size());
         lbQuestionFinished.setBounds(10,50,180,100);
 
         btnSubmit = new JButton("Nộp bài sớm");
@@ -230,6 +237,33 @@ public class DoExercise extends JFrame implements ActionListener
         updatePanel(pnQuestion);
     }
 
+    private void collectData()
+    {
+        double diem = 0;
+        int soCauDung = 0;
+
+        Component questionPanel[] = pnQuestion.getComponents();
+
+        for(int i = 0 ; i < questions.size(); i++)
+        {
+            Component arrTemp[] = ((JPanel) questionPanel[i]).getComponents();
+
+            int index = 2;
+            for(int j = 0 ; j < 4; j++)
+            {
+                if( ((JRadioButton) arrTemp[index]).isSelected() && j == answersOfExercise.get(i).getSecond())
+                {
+                    System.out.println("Cau " +  (i + 1));
+                    soCauDung++;
+                    break;
+                }
+                index += 3;
+            }
+        }
+
+        System.out.println("So cau dung: " + soCauDung);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) 
     {
@@ -238,6 +272,10 @@ public class DoExercise extends JFrame implements ActionListener
             if(exerciseTimeRemain > 0)
             {
                 int option = JOptionPane.showConfirmDialog(null, "Chưa hết thời gian làm bài, bạn có muốn nộp bài sớm ?","Thông báo", JOptionPane.OK_CANCEL_OPTION);
+                if(option == JOptionPane.OK_OPTION)
+                {
+                    collectData();
+                }
             }
         }   
         else if(e.getSource() == btnPreQuestion)

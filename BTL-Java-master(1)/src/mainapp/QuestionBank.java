@@ -232,6 +232,9 @@ public class QuestionBank extends JFrame implements ActionListener
     {
         ArrayList<Question> questions = new ArrayList<>();
         ArrayList<Question> questionsOfAnExercise = new ArrayList<>();
+        ArrayList<Pair<Integer, Integer>>answerKeyOfExercise = new ArrayList<>();
+
+        int indexOfQuestion = 0;
 
         Component listComponent[] = panelMain.getComponents();
         for(int i = 0 ; i < listComponent.length - 1; i++)
@@ -245,7 +248,9 @@ public class QuestionBank extends JFrame implements ActionListener
                    questionAnswerKey = "";
 
             ArrayList< Pair<String, Boolean>>answerKeys = new ArrayList<>();
-            int index = 2;
+
+            int index = 2,
+                trueAnswer = 0;
             
             for(int x = 0 ; x < 4 ; x++)
             {
@@ -255,13 +260,15 @@ public class QuestionBank extends JFrame implements ActionListener
 
                 if(isChoose)
                 {
+                    trueAnswer = indexOfQuestion;
                     answerKeys.add(new Pair<String,Boolean>(questionAnswer[x], true));
                     questionAnswerKey = questionAnswer[x];
+                    answerKeyOfExercise.add(new Pair<Integer,Integer>(indexOfQuestion++, x));
                 }    
                 else
                     answerKeys.add(new Pair<String,Boolean>(questionAnswer[x], false));
             }
-            Question temp = new Question(questionID, questionTitle, answerKeys, questionAnswerKey);
+            Question temp = new Question(questionID, questionTitle, answerKeys, questionAnswerKey, trueAnswer);
             System.out.println(temp);
             if( ((JRadioButton) elementList[elementList.length - 2]).isSelected() && option.equals("Tao bai tap"))
                 questionsOfAnExercise.add(temp);
@@ -283,7 +290,7 @@ public class QuestionBank extends JFrame implements ActionListener
         
             if(optionCreateExercise == JOptionPane.OK_OPTION)
             {
-                Exercise temp = new Exercise(tfExerciseTitle.getText(), Integer.parseInt(tfExerciseTime.getText()), questionsOfAnExercise);
+                Exercise temp = new Exercise(tfExerciseTitle.getText(), Integer.parseInt(tfExerciseTime.getText()), questionsOfAnExercise,answerKeyOfExercise);
                 ExerciseManager.addExerCise(temp);
             }
         }

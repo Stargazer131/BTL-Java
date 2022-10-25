@@ -14,6 +14,8 @@ public class Question implements Serializable
                    questionTitle,
                    questionAnswerKey;
 
+    private int trueAnswer;
+
     private ArrayList<Pair< String, Boolean>> answerList;
 
     public Question()
@@ -24,7 +26,7 @@ public class Question implements Serializable
         answerList = new ArrayList<>();
     }
 
-    public Question(String QUESTION_ID,String QUESTION_TITLE, ArrayList<Pair< String, Boolean>> answerList, String QUESTION_ANSWER_KEY)
+    public Question(String QUESTION_ID,String QUESTION_TITLE, ArrayList<Pair< String, Boolean>> answerList, String QUESTION_ANSWER_KEY, int TRUE_ANSWER)
     {
         this.questionID = QUESTION_ID;
 
@@ -33,6 +35,8 @@ public class Question implements Serializable
         this.answerList = answerList;
         
         this.questionAnswerKey = QUESTION_ANSWER_KEY;
+
+        this.trueAnswer = TRUE_ANSWER;
     }
 
     public String getID()

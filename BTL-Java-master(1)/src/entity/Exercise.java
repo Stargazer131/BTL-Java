@@ -2,7 +2,8 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+
+import generic.Pair;
 
 public class Exercise implements Serializable
 {
@@ -10,21 +11,21 @@ public class Exercise implements Serializable
 
     private String exerciseTitle;
 
-    private Date timeStart,
-                 timeEnd;
-
     private int exerciseTime;
 
     private ArrayList<Question> questions;
 
     private boolean exerciseFinish;
 
-    public Exercise(String EXERCISE_TITLE, int EXERCISE_TIME, ArrayList<Question> QUESTIONS)
+    private ArrayList<Pair<Integer, Integer>> answerKey;
+
+    public Exercise(String EXERCISE_TITLE, int EXERCISE_TIME, ArrayList<Question> QUESTIONS, ArrayList<Pair<Integer,Integer>> ANSWER_KEY)
     {
         this.exerciseTitle = EXERCISE_TITLE;
         this.exerciseTime =EXERCISE_TIME;
         this.questions = QUESTIONS;
         this.exerciseFinish = false;
+        this.answerKey = ANSWER_KEY;
     }
 
     public String getTitle()
@@ -47,4 +48,8 @@ public class Exercise implements Serializable
         return exerciseFinish;
     }
 
+    public ArrayList<Pair<Integer, Integer>> getAnswerOfExercise()
+    {
+        return this.answerKey;
+    }
 }
