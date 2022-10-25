@@ -11,7 +11,6 @@ import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +19,7 @@ import javax.swing.JRadioButton;
 
 import java.awt.GridBagConstraints;
 import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -98,12 +98,12 @@ public class DoExercise extends JFrame implements ActionListener
             btnTemp.setFont(new Font("Arial",100,10));
             btnTemp.setPreferredSize(new Dimension(40,40));
             btnTemp.setMargin(new Insets(5,5,5,5));
+            btnTemp.addActionListener(this);
+            btnTemp.setFocusable(false);
             pnQuestionList.add(btnTemp, gbc);
 
             initQuestionFrame(i, questions.get(i));
         }
-
-        System.out.println(pnQuestionList);
 
         this.add(pnQuestionList);
         this.add(pnQuestion);
@@ -208,19 +208,7 @@ public class DoExercise extends JFrame implements ActionListener
         btnNextQuestion.setBounds(900,500,100,30);
         btnNextQuestion.addActionListener(this);
 
-        if(indexOfQuestionDisplay == 0)
-        {
-            btnPreQuestion.setVisible(false);
-        }
-        else
-            btnPreQuestion.setVisible(true);
-
-        if(indexOfQuestionDisplay == questions.size() - 1)
-        {
-            btnNextQuestion.setVisible(false);
-        }
-        else
-            btnNextQuestion.setVisible(true);
+        hideOrShowPreAndNextButton();
 
         this.setBounds(250, 100, 1050,650);
         this.setResizable(false);
@@ -232,6 +220,14 @@ public class DoExercise extends JFrame implements ActionListener
         this.setLayout(null);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\questionBank.png");
         this.setIconImage(icon.getImage());
+    }
+
+    private void displayNextOrPreQuestion()
+    {
+        currentQuestion.setVisible(false);
+        currentQuestion = questionShow.get(indexOfQuestionDisplay);
+        currentQuestion.setVisible(true);
+        updatePanel(pnQuestion);
     }
 
     @Override
@@ -247,26 +243,30 @@ public class DoExercise extends JFrame implements ActionListener
         else if(e.getSource() == btnPreQuestion)
         {
             indexOfQuestionDisplay--;
-            currentQuestion.setVisible(false);
-            currentQuestion = questionShow.get(indexOfQuestionDisplay);
-            currentQuestion.setVisible(true);
-            updatePanel(pnQuestion);
+            displayNextOrPreQuestion();
         }
         else if(e.getSource() == btnNextQuestion)
         {
             indexOfQuestionDisplay++;
-            currentQuestion.setVisible(false);
-            currentQuestion = questionShow.get(indexOfQuestionDisplay);
-            currentQuestion.setVisible(true);
-            updatePanel(pnQuestion);
+            displayNextOrPreQuestion();
+        }
+        else
+        {
+            Component arTemp[] = pnQuestionList.getComponents();
+            for(int i = 0 ; i < arTemp.length; i++)
+            {
+                if(arTemp[i] == e.getSource())
+                {
+                    indexOfQuestionDisplay = i;
+                    displayNextOrPreQuestion();
+                    break;
+                }
+            }
         }
     }
 
-    private void updatePanel(JPanel temp)
+    private void hideOrShowPreAndNextButton()
     {
-        this.revalidate(); 
-        this.repaint();
-
         if(indexOfQuestionDisplay == 0)
         {
             btnPreQuestion.setVisible(false);
@@ -280,6 +280,14 @@ public class DoExercise extends JFrame implements ActionListener
         }
         else
             btnNextQuestion.setVisible(true);
+    }
+
+    private void updatePanel(JPanel temp)
+    {
+        this.revalidate(); 
+        this.repaint();
+
+        hideOrShowPreAndNextButton();
     }
     
     public static void main(String[] args) 

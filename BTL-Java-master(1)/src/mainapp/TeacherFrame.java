@@ -539,7 +539,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
                 //Dùng để test, sau này gộp file lại có thể bỏ đi
                 TeacherManager.readData();
-                Teacher temp = TeacherManager.findTeacherById("TUAN123");//Do idsau khi tạo tài khoản sẽ tự động viết hoa tất cả
+                Teacher temp = TeacherManager.findTeacherById("HAO1234");//Do idsau khi tạo tài khoản sẽ tự động viết hoa tất cả
                 new TeacherFrame(temp);
             }
         });
