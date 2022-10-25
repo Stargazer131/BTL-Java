@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -83,7 +84,7 @@ public class DoExercise extends JFrame implements ActionListener
         pnQuestion.setLayout(new GridBagLayout());
 
         pnQuestionList = new JPanel();
-        pnQuestionList.setBounds(15,150,199,(questions.size() / 5 + 1 ) * 50);
+        pnQuestionList.setBounds(10,150,200,(questions.size() / 5 + 1 ) * 50);
         pnQuestionList.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -94,7 +95,9 @@ public class DoExercise extends JFrame implements ActionListener
             gbc.gridy = i / 5;
 
             JButton btnTemp = new JButton(i + 1 + "");
-            btnTemp.setPreferredSize(new Dimension(50,50));
+            btnTemp.setFont(new Font("Arial",100,10));
+            btnTemp.setPreferredSize(new Dimension(40,40));
+            btnTemp.setMargin(new Insets(5,5,5,5));
             pnQuestionList.add(btnTemp, gbc);
 
             initQuestionFrame(i, questions.get(i));
@@ -113,7 +116,7 @@ public class DoExercise extends JFrame implements ActionListener
     private void initLeftFrame()
     {
         pnleftFrame = new JPanel();
-        pnleftFrame.setBounds(10,10,205,600);
+        pnleftFrame.setBounds(9,10,205,600);
         pnleftFrame.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnleftFrame.setLayout(null);
 
