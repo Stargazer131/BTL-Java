@@ -52,7 +52,7 @@ public class ClassroomManager
 
         for(String i: classrooms.keySet())
         {
-            System.out.println(i + classrooms.get(i).getName());
+            System.out.println(i);
         }
     }
 

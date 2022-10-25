@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
+import entity.Classroom;
 import entity.Student;
 
 /** Manager for student Database
@@ -29,9 +30,9 @@ public class StudentManager
         return students.get(id);
     }
 
-    public static void addNewClassroom(String studentId, String classroomId) // add new classroom id to a student
+    public static void addNewClassroom(Student studentTemp, Classroom classroomTemp) // add new classroom id to a student
     {
-        students.get(studentId).addClassroomId(classroomId);
+        studentTemp.addClassroomId(classroomTemp.getId(), classroomTemp);
         writeData();
     }
 
@@ -48,6 +49,11 @@ public class StudentManager
         catch(Exception e)
         {
             students = new HashMap<>();
+        }
+
+        for(String i: students.keySet())
+        {
+            System.out.println(i + students.get(i));
         }
     }
 

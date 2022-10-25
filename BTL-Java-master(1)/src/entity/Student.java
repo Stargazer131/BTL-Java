@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.io.Serializable;
 
 public class Student implements Serializable
@@ -9,7 +10,8 @@ public class Student implements Serializable
     
     private String id, name, gender, birthday;
     private String address, group, email, phoneNumber;
-    private ArrayList<String> classroomIds;
+
+    private TreeMap<String, Classroom> classroomIds;
     
     public Student(String id, String name, String gender, String birthday, String address, String group, String email, String phoneNumber) 
     {
@@ -21,7 +23,7 @@ public class Student implements Serializable
         this.group = group;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        classroomIds = new ArrayList<>();
+        classroomIds = new TreeMap<>();
     }
 
     public String getId()   // start of getters
@@ -64,14 +66,14 @@ public class Student implements Serializable
         return phoneNumber;
     }                             // end of getters
 
-    public ArrayList<String> getListClassroom()
+    public TreeMap<String, Classroom> getListClassroom()
     {
         return classroomIds;
     }
 
-    public void addClassroomId(String classroomId) // add a new classroom 
+    public void addClassroomId(String classroomId, Classroom temp) // add a new classroom 
     {
-        classroomIds.add(classroomId);
+        classroomIds.put(classroomId, temp);
     }
 
     public void deleteClassroomId(String classroomId) // delete a classroom 

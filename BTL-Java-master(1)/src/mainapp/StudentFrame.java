@@ -9,7 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TreeMap;
+import java.awt.GridBagLayout;
 
+import java.awt.GridBagConstraints;
+import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,31 +22,45 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
+import java.awt.Font;
 
+import entity.Classroom;
+import entity.Student;
 import generic.Triplet;
+import manager.ClassroomManager;
 import manager.StudentManager;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class StudentFrame extends JFrame implements ActionListener
+public class StudentFrame extends JFrame implements ActionListener, MouseListener
 {
     private JPanel infoPanel; 
     private JLabel lblAvatar, lblId, lblName, lblGender, lblBirthday;
     private JLabel lblAddress, lblGroup, lblEmail, lblPhoneNumber;
-
-
     private JScrollPane scrollPane;
     private JPanel tableOfClassrooms;
-    private ArrayList<Triplet<JButton, String, String>> classroomButtonList;
+
+    private Student student;
+
+    private TreeMap<String,Classroom> arrLClassroom;
 
     private JButton btnJoin, btnRefresh;
     private String studentId;
 
+    GridBagConstraints gbc = new GridBagConstraints();
+
+    private void readData()
+    {
+        this.arrLClassroom = student.getListClassroom();
+    }
 
     public StudentFrame(String studentId)
     {
-        this.studentId = studentId;
-        StudentManager.readData();
-        classroomButtonList = new ArrayList<>();
+        this.student = StudentManager.findStudentById(studentId);
+        readData();
+        
         initFrame();
         initAvatar();
         initInfoPanel();
@@ -150,33 +168,59 @@ public class StudentFrame extends JFrame implements ActionListener
         this.add(infoPanel);
     }
 
+    private JButton createBackGroundButton(String url, String name)
+    {
+        JButton button = new JButton();
+        button.setLayout(new BorderLayout());
+        ImageIcon imgCreateClass = new ImageIcon(url);
+        JLabel lbCreateClass = new JLabel(name,resizeImage(imgCreateClass), JLabel.CENTER);
+        lbCreateClass.setVerticalTextPosition(JLabel.BOTTOM);
+        lbCreateClass.setHorizontalTextPosition(JLabel.CENTER);
+        button.add(lbCreateClass, BorderLayout.CENTER);
+        button.setPreferredSize(new Dimension(130, 130));
+        button.addActionListener(this);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        return button;
+    }
+
+    private void createClassButton(String id, String name, int i, int index)
+    {
+        gbc.gridx = i % 5;
+        gbc.gridy = i / 5;
+        JButton btnClass = createBackGroundButton("resources\\images\\Logo\\Classroom.png", id);
+        btnClass.addMouseListener(this);
+        if(index != -1)
+            tableOfClassrooms.add(btnClass,gbc,index);
+        else
+            tableOfClassrooms.add(btnClass,gbc);
+    }
+
+    private void initClassroomButtons()
+    {
+        for(int i = 0 ; i < arrLClassroom.size() ; i++)
+        {
+            createClassButton(arrLClassroom.get(i).getId(), arrLClassroom.get(i).getName(), i,-1);
+        }
+    }
+
     private void initTable()  // create the table of classroom
     {
+        JLabel lbLopHoc = new JLabel("Danh sach lop hoc:");
+        lbLopHoc.setFont(new Font("Arial",100,40));
+        lbLopHoc.setBounds(250,0,790,75);
+        this.add(lbLopHoc);
+
         tableOfClassrooms = new JPanel();
-        tableOfClassrooms.setLayout(new GridLayout(0,5, 50, 50));
+        tableOfClassrooms.setLayout(new GridBagLayout());
         
         initClassroomButtons();
 
-        scrollPane = new JScrollPane(tableOfClassrooms, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane = new JScrollPane(tableOfClassrooms,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(250, 80, 780, 520);
         scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        scrollPane.setBounds(150, 200, 1040, 465);
 
         this.add(scrollPane);
-    }
-
-    private void initClassroomButtons() // classroom button setting
-    {
-        for(String id : StudentManager.findStudentById(studentId).getListClassroom())
-        {
-            newButton(id);
-        }
-
-        Collections.sort(classroomButtonList);
-        for(Triplet<JButton, String, String> btn : classroomButtonList)
-        {
-            tableOfClassrooms.add(btn.getFirst());
-        }
     }
 
     private void initButtons() // create the refresh and join buttons
@@ -197,47 +241,29 @@ public class StudentFrame extends JFrame implements ActionListener
         this.add(btnRefresh);
     }
 
-    private void newButton(String id) // create a new button
-    {
-        String name = "test";
-        JButton btn = new JButton(id);                                
-        btn.setFocusable(false);
-        btn.setPreferredSize(new Dimension(0, 150));
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btn.addActionListener(this);
-        
-        btn.setIcon(resizeImage(new ImageIcon("resources\\images\\Logo\\Classroom.png")));
-        btn.setHorizontalTextPosition(JButton.CENTER);
-        btn.setVerticalTextPosition(JButton.TOP);
-        classroomButtonList.add(new Triplet<>(btn, name, id));
-    }
-
     @Override
     public void actionPerformed(ActionEvent e)  // when clicked
     {
         if(e.getSource() == btnJoin) // when click button join
         {
-            String input = JOptionPane.showInputDialog(this, "Nhap ma lop hoc", 
-            "E-Classroom", JOptionPane.INFORMATION_MESSAGE);
-            
-            if(input != null && !input.equals(""))
+            JTextField tfIDclassroom = new JTextField();
+
+            Object[] input = {
+                "Id của lớp học:", tfIDclassroom
+            };
+
+            int option = JOptionPane.showConfirmDialog(null, input, "Tìm kiếm lớp học", JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
+
+            String idClassroom = tfIDclassroom.getText();
+            Classroom classroomTemp = ClassroomManager.findClassroomById(idClassroom);
+            if(classroomTemp != null)
             {
-                StudentManager.addNewClassroom(studentId, input);
+                StudentManager.addNewClassroom(this.student, classroomTemp);
+
+                System.out.println(idClassroom);
             }
-        }
-
-        else if(e.getSource() == btnRefresh) // when click button refresh
-        {
-            tableOfClassrooms.removeAll(); // delete all
-            classroomButtonList.clear();
-            initClassroomButtons(); // add all again
-            tableOfClassrooms.revalidate(); 
-            tableOfClassrooms.repaint();
-        }
-        
-        else
-        {
-
+            else
+                System.out.println("Khong tim thay");
         }
     } 
 
@@ -248,11 +274,46 @@ public class StudentFrame extends JFrame implements ActionListener
         return new ImageIcon(newImage);
     }
 
-    public static void main(String[] args) { // start the frame directly
-        java.awt.EventQueue.invokeLater(new Runnable() {
-              public void run() {   
-                new StudentFrame("B20DCCN228");
-              }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public static void main(String[] args) 
+    { // start the frame directly
+        java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {   
+                StudentManager.readData();
+                ClassroomManager.readData();
+                new StudentFrame("B20DCCN503");
+            }
         });
     }
 }
