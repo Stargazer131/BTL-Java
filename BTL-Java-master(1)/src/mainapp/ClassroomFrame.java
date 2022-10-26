@@ -23,6 +23,9 @@ public class ClassroomFrame extends JFrame implements ActionListener
     protected ArrayList<Pair<String, Integer>> rankingOfStudent; // bang xep hang
 
     protected JPanel pnListOfExercises;  // panel chua cac exercise
+    protected JScrollPane spForPanel; 
+    protected JLabel lblListOfExercises; 
+
 
     protected JTable rankingOfStudentTable; // bang xep hang
     protected JScrollPane spForTable; 
@@ -31,8 +34,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
     protected GridBagConstraints gbc;
 
     protected JButton btnListOfStudent, 
-                      btnPendingStudents,
-                      btnSort;
+                      btnPendingStudents;
 
     public ClassroomFrame()
     {
@@ -42,7 +44,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
         initFrame();
         initTopLeftButtons();
 
-
+        initListOfExercises();
         initRakingOfStudentTable();
         this.setVisible(true);
     }
@@ -58,7 +60,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
         this.setIconImage(icon.getImage());
     }
 
-    private void initRakingOfStudentTable()
+    private void initRakingOfStudentTable()  // tao bang bang xep hang
     {
         int n = 100; // test data
         
@@ -93,33 +95,79 @@ public class ClassroomFrame extends JFrame implements ActionListener
                 return this.types[columnIndex];
             }
         });
-        
+
+        rankingOfStudentTable.setEnabled(false);  
         //////////
 
         spForTable = new JScrollPane(rankingOfStudentTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        spForTable.setBounds(0, 250, 350, 450);
+        spForTable.setBounds(0, 250, 390, 450);
         spForTable.getVerticalScrollBar().setUnitIncrement(15);
         spForTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.add(spForTable);
+
+        sortRankingByColumn(2);
     }
 
-    private void initTopLeftButtons()
+    private void initTopLeftButtons()  // tao cac nut goc tren cung ben trai
     {
         btnListOfStudent = new JButton("Danh sach lop");
         btnListOfStudent.setBounds(20, 20, 200, 30);
-        this.add(btnListOfStudent);
         btnListOfStudent.addActionListener(this);
+        btnListOfStudent.setFocusable(false);
+        btnListOfStudent.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.add(btnListOfStudent);
+
 
         btnPendingStudents = new JButton("Danh sach cho gia nhap");
         btnPendingStudents.setBounds(20, 80, 200, 30);
-        this.add(btnPendingStudents);
         btnPendingStudents.addActionListener(this);
-
-        btnSort = new JButton("Sort");
-        btnSort.setBounds(20, 140, 200, 30);
-        this.add(btnSort);
-        btnSort.addActionListener(this);
+        btnPendingStudents.setFocusable(false);
+        btnPendingStudents.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.add(btnPendingStudents);
     }
+
+
+    private void initListOfExercises() // tao panel chua cac bai tap
+    {
+        lblListOfExercises = new JLabel("Danh sach bai tap");
+        lblListOfExercises.setFont(new Font("Arial",100,30));
+        lblListOfExercises.setBounds(400, 10, 400, 40);
+        this.add(lblListOfExercises);
+
+        pnListOfExercises = new JPanel();
+        pnListOfExercises.setLayout(new GridBagLayout());
+
+        initExercisButtons();
+
+        spForPanel = new JScrollPane(pnListOfExercises, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        spForPanel.setBounds(400, 60, 785, 650);
+        spForPanel.getVerticalScrollBar().setUnitIncrement(15);
+        spForPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        this.add(spForPanel);
+    }
+
+    private void initExercisButtons() // tao cac nut bai tap
+    {
+        int len = 24;
+        for(int i = 0; i < len; i++)
+        {
+            createExerciseButton(String.format("%d", i), String.format("TEST%03d", i), i, -1);
+        }
+    }
+
+
+    private void createExerciseButton(String id, String name, int i, int index) // tao mot nut bai tap
+    {
+        gbc.gridx = i % 5;
+        gbc.gridy = i / 5;
+        JButton btnClass = createBackGroundButton("resources\\images\\Logo\\exercise.png", id);
+        if(index != -1) 
+            { pnListOfExercises.add(btnClass,gbc,index); }
+        else
+            { pnListOfExercises.add(btnClass,gbc); }
+    }
+
 
     private JButton createBackGroundButton(String url, String name)  // tao button voi background tuy chon
     {
@@ -181,11 +229,6 @@ public class ClassroomFrame extends JFrame implements ActionListener
         else if(e.getSource() == btnPendingStudents)
         {
 
-        }
-
-        else if(e.getSource() == btnSort)
-        {
-            sortRankingByColumn(2);
         }
     }
     public static void main(String[] args) 
