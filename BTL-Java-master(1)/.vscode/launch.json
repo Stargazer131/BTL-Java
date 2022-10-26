@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch ListOfStudent",
+            "request": "launch",
+            "mainClass": "mainapp.ListOfStudent",
+            "projectName": "BTL-Java-master(1)_f34ca507"
+        },
+        {
+            "type": "java",
             "name": "Launch ClassroomFrame",
             "request": "launch",
             "mainClass": "mainapp.ClassroomFrame",

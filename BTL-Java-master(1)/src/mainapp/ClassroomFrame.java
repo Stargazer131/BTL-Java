@@ -223,7 +223,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnListOfStudent)
         {  
-
+            new ListOfStudent(listOfStudent);
         }
 
         else if(e.getSource() == btnPendingStudents)
