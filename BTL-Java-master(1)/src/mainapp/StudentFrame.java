@@ -47,7 +47,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
     private TreeMap<String,Classroom> arrLClassroom;
 
     private JButton btnJoin, btnRefresh;
-    private String studentId;
 
     GridBagConstraints gbc = new GridBagConstraints();
 
@@ -58,6 +57,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     public StudentFrame(String studentId)
     {
+        StudentManager.readData();
+        ClassroomManager.readData();
         this.student = StudentManager.findStudentById(studentId);
         readData();
         
@@ -82,7 +83,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initAvatar()
     {
-        String gender = StudentManager.findStudentById(studentId).getGender(); // create avatar for student
+        String gender = student.getGender(); // create avatar for student
         gender = (gender.equals("Nam")) ? "Male" : "Female";
         ImageIcon icon = new ImageIcon(String.format("resources\\images\\Avatar\\%s.png", gender));    
         lblAvatar = new JLabel(icon, JLabel.CENTER);
@@ -101,56 +102,56 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         Border border = BorderFactory.createRaisedSoftBevelBorder();
         
         ImageIcon iconId = new ImageIcon("resources\\images\\ProfileIcon\\Id.png");         // display student information
-        lblId = new JLabel("Ma SV: " + StudentManager.findStudentById(studentId).getId(), resizeImage(iconId), JLabel.CENTER);                  
+        lblId = new JLabel("Ma SV: " + student.getId(), resizeImage(iconId), JLabel.CENTER);                  
         lblId.setVerticalTextPosition(JLabel.BOTTOM);
         lblId.setHorizontalTextPosition(JLabel.CENTER);
         lblId.setBorder(border);
         
 
         ImageIcon iconName = new ImageIcon("resources\\images\\ProfileIcon\\Name.png");
-        lblName = new JLabel("Ho ten: " + StudentManager.findStudentById(studentId).getName(), resizeImage(iconName), JLabel.CENTER); 
+        lblName = new JLabel("Ho ten: " + student.getName(), resizeImage(iconName), JLabel.CENTER); 
         lblName.setVerticalTextPosition(JLabel.BOTTOM);
         lblName.setHorizontalTextPosition(JLabel.CENTER);
         lblName.setBorder(border);
         
         
         ImageIcon iconGender = new ImageIcon("resources\\images\\ProfileIcon\\Gender.png");
-        lblGender = new JLabel("Gioi tinh: " + StudentManager.findStudentById(studentId).getGender(), resizeImage(iconGender), JLabel.CENTER);
+        lblGender = new JLabel("Gioi tinh: " + student.getGender(), resizeImage(iconGender), JLabel.CENTER);
         lblGender.setVerticalTextPosition(JLabel.BOTTOM);
         lblGender.setHorizontalTextPosition(JLabel.CENTER);
         lblGender.setBorder(border);
 
         
         ImageIcon iconAddress = new ImageIcon("resources\\images\\ProfileIcon\\Address.png");
-        lblAddress = new JLabel("Dia chi: " + StudentManager.findStudentById(studentId).getAddress(), resizeImage(iconAddress), JLabel.CENTER);
+        lblAddress = new JLabel("Dia chi: " + student.getAddress(), resizeImage(iconAddress), JLabel.CENTER);
         lblAddress.setVerticalTextPosition(JLabel.BOTTOM);
         lblAddress.setHorizontalTextPosition(JLabel.CENTER);
         lblAddress.setBorder(border);
 
 
         ImageIcon iconEmail = new ImageIcon("resources\\images\\ProfileIcon\\Email.png");
-        lblEmail = new JLabel("Email: " + StudentManager.findStudentById(studentId).getEmail(), resizeImage(iconEmail), JLabel.CENTER);
+        lblEmail = new JLabel("Email: " + student.getEmail(), resizeImage(iconEmail), JLabel.CENTER);
         lblEmail.setVerticalTextPosition(JLabel.BOTTOM);
         lblEmail.setHorizontalTextPosition(JLabel.CENTER);
         lblEmail.setBorder(border);
 
 
         ImageIcon iconGroup = new ImageIcon("resources\\images\\ProfileIcon\\Group.png");
-        lblGroup = new JLabel("Lop: " + StudentManager.findStudentById(studentId).getGroup(), resizeImage(iconGroup), JLabel.CENTER);
+        lblGroup = new JLabel("Lop: " + student.getGroup(), resizeImage(iconGroup), JLabel.CENTER);
         lblGroup.setVerticalTextPosition(JLabel.BOTTOM);
         lblGroup.setHorizontalTextPosition(JLabel.CENTER);
         lblGroup.setBorder(border);
 
         
         ImageIcon iconBirthday = new ImageIcon("resources\\images\\ProfileIcon\\Birthday.png");
-        lblBirthday = new JLabel("Ngay sinh: " + StudentManager.findStudentById(studentId).getBirthday(), resizeImage(iconBirthday), JLabel.CENTER);
+        lblBirthday = new JLabel("Ngay sinh: " + student.getBirthday(), resizeImage(iconBirthday), JLabel.CENTER);
         lblBirthday.setVerticalTextPosition(JLabel.BOTTOM);
         lblBirthday.setHorizontalTextPosition(JLabel.CENTER);
         lblBirthday.setBorder(border);
 
 
         ImageIcon iconPhoneNumber = new ImageIcon("resources\\images\\ProfileIcon\\PhoneNumber.png");        
-        lblPhoneNumber = new JLabel("SDT: " + StudentManager.findStudentById(studentId).getPhoneNumber(), resizeImage(iconPhoneNumber), JLabel.CENTER);
+        lblPhoneNumber = new JLabel("SDT: " + student.getPhoneNumber(), resizeImage(iconPhoneNumber), JLabel.CENTER);
         lblPhoneNumber.setVerticalTextPosition(JLabel.BOTTOM);
         lblPhoneNumber.setHorizontalTextPosition(JLabel.CENTER);
         lblPhoneNumber.setBorder(border);                             // end of display
@@ -310,8 +311,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         {
             public void run() 
             {   
-                StudentManager.readData();
-                ClassroomManager.readData();
                 new StudentFrame("B20DCCN503");
             }
         });

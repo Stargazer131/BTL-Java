@@ -18,7 +18,9 @@ import javax.swing.JTextField;
 
 import entity.Account;
 import mainapp.StudentFrame;
+import mainapp.TeacherFrame;
 import manager.AccountManager;
+import manager.TeacherManager;
 
 public class LogInFrame extends JFrame implements ActionListener
 {
@@ -123,7 +125,9 @@ public class LogInFrame extends JFrame implements ActionListener
             {
                 if(username.startsWith("gvptit"))  // teacher account
                 {
-
+                    TeacherManager.readData();
+                    this.dispose();
+                    new TeacherFrame(TeacherManager.findTeacherById(account.getId()));
                 }
 
                 else  // student account

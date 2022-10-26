@@ -46,6 +46,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
     public TeacherFrame(Teacher TEACHER)
     {
+        ClassroomManager.readData();
+        TeacherManager.readData();
+        
         this.btnClassRightClick = new JButton();
         this.teacher = TEACHER;
         this.arrLClassroom = teacher.getClassRooms();
