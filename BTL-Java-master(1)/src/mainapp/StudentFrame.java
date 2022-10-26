@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ import entity.Student;
 import generic.Triplet;
 import manager.ClassroomManager;
 import manager.StudentManager;
+import manager.TeacherManager;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -198,18 +201,35 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initClassroomButtons()
     {
-        for(int i = 0 ; i < arrLClassroom.size() ; i++)
+        int index = 0 ;
+        
+        ArrayList<String> indexOfClassroomDeleted = new ArrayList<>();
+
+        for(String i: arrLClassroom.keySet())
         {
-            createClassButton(arrLClassroom.get(i).getId(), arrLClassroom.get(i).getName(), i,-1);
+            if(ClassroomManager.findClassroomById(i) == null)
+            {
+                indexOfClassroomDeleted.add(i);
+                continue;
+            }
+            else
+            {
+                createClassButton(i, arrLClassroom.get(i).getName(), index, -1);
+                index ++;
+            }
         }
+
+        for(String i: indexOfClassroomDeleted)
+        {
+            arrLClassroom.remove(i);
+        }
+        if(indexOfClassroomDeleted.size() > 0)
+            StudentManager.writeData();
     }
 
     private void initTable()  // create the table of classroom
     {
-        JLabel lbLopHoc = new JLabel("Danh sach lop hoc:");
-        lbLopHoc.setFont(new Font("Arial",100,40));
-        lbLopHoc.setBounds(250,0,790,75);
-        this.add(lbLopHoc);
+        gbc.insets = new Insets(0,5,10, 15);
 
         tableOfClassrooms = new JPanel();
         tableOfClassrooms.setLayout(new GridBagLayout());
@@ -217,7 +237,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         initClassroomButtons();
 
         scrollPane = new JScrollPane(tableOfClassrooms,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(250, 80, 780, 520);
+        scrollPane.setBounds(200, 210, 960, 440);
         scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -247,6 +267,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
     {
         if(e.getSource() == btnJoin) // when click button join
         {
+            ClassroomManager.readData();
+
             JTextField tfIDclassroom = new JTextField();
 
             Object[] input = {
@@ -259,14 +281,32 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             Classroom classroomTemp = ClassroomManager.findClassroomById(idClassroom);
             if(classroomTemp != null)
             {
-                StudentManager.addNewClassroom(this.student, classroomTemp);
-
-                System.out.println(idClassroom);
+                if(arrLClassroom.containsKey(idClassroom))
+                {
+                    JOptionPane.showMessageDialog(null, "Bạn đã than gia lớp học này", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Gửi yêu cầu tham gia lớp học thành công", "Thông báo", JOptionPane.PLAIN_MESSAGE);
+                    
+                    createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size(), -1);
+                    arrLClassroom.put(idClassroom, classroomTemp);
+                    StudentManager.addNewClassroom(this.student, classroomTemp);
+                    updatePanel(tableOfClassrooms);
+                }
             }
             else
                 System.out.println("Khong tim thay");
         }
     } 
+
+    private void updatePanel(JPanel temp)
+    {
+        System.out.println("Success");
+
+        temp.revalidate(); 
+        temp.repaint();
+    }
 
     private static ImageIcon resizeImage(ImageIcon imageIcon)  // resize icon to fit in the frame
     {
@@ -311,6 +351,9 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         {
             public void run() 
             {   
+                // TreeMap<String, Classroom> temp = StudentManager.findStudentById("B20DCCN503").getListClassroom();
+                // temp = new TreeMap<>();
+                // TeacherManager.writeData();
                 new StudentFrame("B20DCCN503");
             }
         });

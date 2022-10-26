@@ -169,10 +169,10 @@ public class DoExercise extends JFrame implements ActionListener
         pnleftFrame.setLayout(null);
 
         lbtimeRemain = new JLabel("Thời gian còn lại: " + exerciseTimeRemain);
-        lbtimeRemain.setBounds(10,0,180,100);
+        lbtimeRemain.setBounds(10,0,180,20);
         
         lbQuestionFinished = new JLabel("Số câu hỏi đã hoàn thành: " + questionsFinish + "/" + questions.size());
-        lbQuestionFinished.setBounds(10,50,180,100);
+        lbQuestionFinished.setBounds(10,50,180,40);
 
         btnSubmit = new JButton("Nộp bài sớm");
         btnSubmit.setBounds(10,550,180,30);
