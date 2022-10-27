@@ -1,7 +1,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import generic.Pair;
 
@@ -9,7 +11,8 @@ public class Exercise implements Serializable
 {
     private static final long serialVersionUID = 1312002L;
 
-    private String exerciseTitle;
+    private String exerciseTitle,
+                   messageTime;
 
     private int exerciseTime;
 
@@ -19,6 +22,9 @@ public class Exercise implements Serializable
 
     private ArrayList<Pair<Integer, Integer>> answerKey;
 
+    private static SimpleDateFormat sdfDay = new SimpleDateFormat("dd/MM/YYYY"),
+                                    sdfHour = new SimpleDateFormat("HH:mm");
+
     public Exercise(String EXERCISE_TITLE, int EXERCISE_TIME, ArrayList<Question> QUESTIONS, ArrayList<Pair<Integer,Integer>> ANSWER_KEY)
     {
         this.exerciseTitle = EXERCISE_TITLE;
@@ -26,6 +32,9 @@ public class Exercise implements Serializable
         this.questions = QUESTIONS;
         this.exerciseFinish = false;
         this.answerKey = ANSWER_KEY;
+
+        Date d = new Date();
+        this.messageTime = String.format("%s ngày %s", sdfHour.format(d), sdfDay.format(d));
     }
 
     public String getTitle()
@@ -51,5 +60,10 @@ public class Exercise implements Serializable
     public ArrayList<Pair<Integer, Integer>> getAnswerOfExercise()
     {
         return this.answerKey;
+    }
+
+    public String getMessageTime()
+    {
+        return this.messageTime;
     }
 }

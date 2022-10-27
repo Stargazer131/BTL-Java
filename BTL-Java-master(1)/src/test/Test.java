@@ -7,8 +7,12 @@ import manager.*;
 import java.io.*;
 import entity.*;
 import mainapp.ClassroomFrame;
+import mainapp.DoExercise;
 
 import java.util.*;
 
-// test file, nothing special
-
+public class Test{
+    public static void main(String[] args) {
+        DoExercise.main(args);
+    }
+}

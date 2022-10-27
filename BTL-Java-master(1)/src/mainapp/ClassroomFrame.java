@@ -9,9 +9,10 @@ import javax.swing.table.*;
 import generic.EventMessage;
 import generic.Pair;
 import manager.ClassroomManager;
+import manager.ExerciseManager;
 import entity.*;
 
-public class ClassroomFrame extends JFrame implements ActionListener
+public class ClassroomFrame extends JFrame implements ActionListener, MouseListener
 {
     private Classroom classroom;
 
@@ -29,15 +30,11 @@ public class ClassroomFrame extends JFrame implements ActionListener
 
     protected ArrayList<JPanel> pnOfThisClassroom = new ArrayList<>();
 
-    protected JPanel pnListOfExercises,  // panel chua cac exercise
-                     pnMain, //Panel chứa các panel chính
+    protected JPanel pnMain, //Panel chứa các panel chính
                      pnLeft,
                      pnCurrentDisplay; 
 
-    protected JScrollPane spForPanel; 
-
-    protected JLabel lblListOfExercises; 
-
+    protected JScrollPane spForPanel;
 
     protected JTable rankingOfStudentTable; // bang xep hang
     protected JScrollPane spForTable; 
@@ -64,6 +61,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
     protected void readDataOfClassroom()
     {
         this.event_Messages = classroom.getEventMessage();
+        this.listOfExercises = classroom.getExercise();
     }
 
     public ClassroomFrame(Classroom classroom)
@@ -89,7 +87,6 @@ public class ClassroomFrame extends JFrame implements ActionListener
 
         //initTopLeftButtons();
 
-       // initListOfExercises();
         //initRakingOfStudentTable();
         this.setVisible(true);
     }
@@ -183,7 +180,8 @@ public class ClassroomFrame extends JFrame implements ActionListener
         scrollTemp.getVerticalScrollBar().setUnitIncrement(15);
         scrollTemp.setBorder(null);
 
-        scrollTemp.setVisible(false);
+        scrollTemp.setVisible(true);
+
         pnMain.add(scrollTemp, gbc);
 
         pnOfThisClassroom.add(pnTemp);
@@ -215,27 +213,46 @@ public class ClassroomFrame extends JFrame implements ActionListener
         scrollCurrent = scroll.get(indexOfPanelDisplay);
     }
 
-    protected void initMessageFrame(JPanel temp, int index,String content, String date)
+    protected void initMessageFrame(JPanel temp, int index,String content, String date,String option)
     {
         gbc2.gridx = 0;
         gbc2.gridy = index;
-        JLabel lbTemp = new JLabel("Test");
-        lbTemp.setPreferredSize( new Dimension(900,100));
-        lbTemp.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        JLabel lbContent = new JLabel(content);
+        lbContent.setBounds(10,5,1000,40);
+        
 
         JLabel lbTime = new JLabel(date);
         lbTime.setFont(new Font("Arial",100,10));
         lbTime.setBounds(770,75,200,20);
+ 
+        JLabel lbTemp = new JLabel();
+        lbTemp.setPreferredSize( new Dimension(900,100));
+        lbTemp.setBorder(BorderFactory.createLineBorder(Color.black));
+        lbTemp.add(lbContent);
         lbTemp.add(lbTime);
-
+        if(!option.equals("Message"))
+        {
+            lbTemp.addMouseListener(this);
+        }    
         temp.add(lbTemp,gbc2);
     }
 
-    protected void initEventFrame()
+    protected void initEventFrame(String option)
     {
-        for(int i = 0; i < event_Messages.size(); i++)
+        if(option.equals("Message"))
         {
-            initMessageFrame(pnOfThisClassroom.get(0), i, event_Messages.get(i).getContent(), event_Messages.get(i).getTime());
+            for(int i = 0; i < event_Messages.size(); i++)
+            {
+                initMessageFrame(pnOfThisClassroom.get(0), i, event_Messages.get(i).getContent(), event_Messages.get(i).getTime(),option);
+            }
+        }
+        else 
+        {
+            for(int i = 0 ; i < listOfExercises.size(); i++)
+            {
+                initMessageFrame(pnOfThisClassroom.get(1), i, listOfExercises.get(i).getTitle(), listOfExercises.get(i).getMessageTime(), option);
+            }
         }
     }
 
@@ -243,7 +260,8 @@ public class ClassroomFrame extends JFrame implements ActionListener
     {
         gbc2 = new GridBagConstraints();
         gbc2.insets = new Insets(0,0,50,0);
-        initEventFrame();
+        initEventFrame("Message");
+        initEventFrame("Exercise");
     }
 
     private void initRakingOfStudentTable()  // tao bang bang xep hang
@@ -294,83 +312,6 @@ public class ClassroomFrame extends JFrame implements ActionListener
         sortRankingByColumn(2);
     }
 
-    private void initTopLeftButtons()  // tao cac nut goc tren cung ben trai
-    {
-        btnListOfStudent = new JButton("Danh sach lop");
-        btnListOfStudent.setBounds(20, 20, 200, 30);
-        btnListOfStudent.addActionListener(this);
-        btnListOfStudent.setFocusable(false);
-        btnListOfStudent.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.add(btnListOfStudent);
-
-
-        btnPendingStudents = new JButton("Danh sach cho gia nhap");
-        btnPendingStudents.setBounds(20, 80, 200, 30);
-        btnPendingStudents.addActionListener(this);
-        btnPendingStudents.setFocusable(false);
-        btnPendingStudents.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.add(btnPendingStudents);
-    }
-
-
-    private void initListOfExercises() // tao panel chua cac bai tap
-    {
-        lblListOfExercises = new JLabel("Danh sach bai tap");
-        lblListOfExercises.setFont(new Font("Arial",100,30));
-        lblListOfExercises.setBounds(400, 10, 400, 40);
-        this.add(lblListOfExercises);
-
-        pnListOfExercises = new JPanel();
-        pnListOfExercises.setLayout(new GridBagLayout());
-
-        initExercisButtons();
-
-        spForPanel = new JScrollPane(pnListOfExercises, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        spForPanel.setBounds(400, 60, 785, 650);
-        spForPanel.getVerticalScrollBar().setUnitIncrement(15);
-        spForPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        this.add(spForPanel);
-    }
-
-    private void initExercisButtons() // tao cac nut bai tap
-    {
-        int len = 24;
-        for(int i = 0; i < len; i++)
-        {
-            createExerciseButton(String.format("%d", i), String.format("TEST%03d", i), i, -1);
-        }
-    }
-
-
-    private void createExerciseButton(String id, String name, int i, int index) // tao mot nut bai tap
-    {
-        gbc.gridx = i % 5;
-        gbc.gridy = i / 5;
-        JButton btnClass = createBackGroundButton("resources\\images\\Logo\\exercise.png", id);
-        if(index != -1) 
-            { pnListOfExercises.add(btnClass,gbc,index); }
-        else
-            { pnListOfExercises.add(btnClass,gbc); }
-    }
-
-
-    private JButton createBackGroundButton(String url, String name)  // tao button voi background tuy chon
-    {
-        JButton button = new JButton();
-        button.setLayout(new BorderLayout());
-        ImageIcon imgCreateClass = new ImageIcon(url);
-        JLabel lbCreateClass = new JLabel(name,resizeImage(imgCreateClass), JLabel.CENTER);
-        lbCreateClass.setVerticalTextPosition(JLabel.BOTTOM);
-        lbCreateClass.setHorizontalTextPosition(JLabel.CENTER);
-        button.add(lbCreateClass, BorderLayout.CENTER);
-        button.setPreferredSize(new Dimension(130, 130));
-        button.addActionListener(this);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        return button;
-    }
-
-
     private void insertNewRow(Object[] data, int index) // chen them 1 dong vao bang xep hang
     {
         DefaultTableModel model = (DefaultTableModel)rankingOfStudentTable.getModel();
@@ -407,16 +348,13 @@ public class ClassroomFrame extends JFrame implements ActionListener
 
     protected void hideAndShowAnPanel()
     {
-        // pnCurrentDisplay.setVisible(false);
-        // pnOfThisClassroom.get(indexOfPanelDisplay).setVisible(true);
-        // pnCurrentDisplay = pnOfThisClassroom.get(indexOfPanelDisplay);
-        
         scrollCurrent.setVisible(false);
         scroll.get(indexOfPanelDisplay).setVisible(true);
         scrollCurrent = scroll.get(indexOfPanelDisplay);
+        //updatePanel(scrollCurrent);
     }
 
-    private void updatePanel(JScrollPane temp)
+    private void updatePanel(JPanel temp)
     {
         temp.revalidate(); 
         temp.repaint();
@@ -441,6 +379,49 @@ public class ClassroomFrame extends JFrame implements ActionListener
             hideAndShowAnPanel();
         }
     }
+
+    //Làm bài tập
+    protected void doExercise(String exerciseID)
+    {
+        ExerciseManager.readData();
+        this.dispose();
+        new DoExercise(ExerciseManager.getExerciseByTitle(exerciseID));
+    }
+
+    //Lắng nghe sự kiện chuột
+    @Override
+    public void mouseClicked(MouseEvent e) 
+    {
+        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) 
+    {
+        JLabel temp = (JLabel) e.getSource();
+        String exerciseTitle = ((JLabel) temp.getComponent(0)).getText();
+
+        doExercise(exerciseTitle);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) 
+    {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) 
+    {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) 
+    {
+        
+    }
+
     public static void main(String[] args) 
     {
         ClassroomManager.readData();

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Test",
+            "request": "launch",
+            "mainClass": "test.Test",
+            "projectName": "BTL-Java-master(1)_f7a3635c"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClassroomOfStudent",
+            "request": "launch",
+            "mainClass": "mainapp.ClassroomOfStudent",
+            "projectName": "BTL-Java-master(1)_f7a3635c"
+        },
+        {
+            "type": "java",
             "name": "Launch EventMessage",
             "request": "launch",
             "mainClass": "generic.EventMessage",

@@ -77,7 +77,7 @@ public class DoExercise extends JFrame implements ActionListener
 
         this.setVisible(true);
 
-        checkTimeRemain();
+        //checkTimeRemain();
     }
 
     private void checkTimeRemain()
@@ -86,12 +86,14 @@ public class DoExercise extends JFrame implements ActionListener
         {
             exerciseTimeRemain --;
 
-            try {
+            try 
+            {
                 Thread.sleep(1000);
             } catch (InterruptedException e) 
             {
                 e.printStackTrace();
             }
+            System.out.println(1);
 
             lbtimeRemain.setText("Thời gian còn lại: " + exerciseTimeRemain);
         }
@@ -270,6 +272,7 @@ public class DoExercise extends JFrame implements ActionListener
         this.setLayout(null);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\questionBank.png");
         this.setIconImage(icon.getImage());
+
     }
 
     private void displayNextOrPreQuestion()

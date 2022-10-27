@@ -9,24 +9,14 @@ import generic.EventMessage;
 import manager.ClassroomManager;
 import manager.ExerciseManager;
 
-public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
+public class ClassroomOfStudent extends ClassroomFrame implements ActionListener
 {
     private JButton btnListStudent ;
 
-    public ClassroomOfTeacher(Classroom classroom) 
+    public ClassroomOfStudent(Classroom classroom) 
     {
         super(classroom);
         
-    }
-
-    protected void initLeftFrame() 
-    {
-        btnListStudent = new JButton();
-
-        super.initLeftFrame();
-
-        initButtonOfLeftPanel(btnListStudent, "Danh sách học sinh", 230);
-        initButtonOfLeftPanel(btnScoreBoard, "Bảng xếp hạng", 270);
     }
 
     protected void initMainFrame()
@@ -69,9 +59,8 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
         temp.addAnEventMessage(new EventMessage("Thông báo 4"));
 
         temp.addAnExercise(ExerciseManager.getExerciseByTitle("123"));
-        //temp.addAnExercise(ExerciseManager.getExerciseByTitle("1"));
 
-        new ClassroomOfTeacher(temp);
+        new ClassroomOfStudent(temp);
     }
 
 }
