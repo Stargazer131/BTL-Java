@@ -3,26 +3,31 @@ package mainapp;
 import javax.swing.*;
 import java.util.*;
 import java.awt.*;
+import java.awt.event.*;
 import entity.Student;
 
-public class ListOfStudent extends JFrame
+public class PendingStudent extends JFrame implements ActionListener
 {
-    private ArrayList<Student> students;
+    private TreeMap<String, Student> pendingStudents;
 
     private JPanel mainPanel;
     private JScrollPane spForPanel;
-    private JLabel lblListOfStudent;
+    private JLabel lblPendingStudents;
+
+    private JButton btnAcceptStudent, 
+                    btnRejectStudent;
 
     private GridBagConstraints gbc;
 
-    public ListOfStudent(ArrayList<Student> listOfStudent)
+    public PendingStudent(TreeMap<String, Student> pendingStudents)
     {
-        this.students = listOfStudent;
+        this.pendingStudents = pendingStudents;
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 0,5, 0);
 
         initFrame();
 
+        initButtons();
         initMainPanel();
         this.setVisible(true);
     }
@@ -39,13 +44,35 @@ public class ListOfStudent extends JFrame
         this.setIconImage(icon.getImage());
     }
 
+    
+    private void initButtons()
+    {
+        ImageIcon acceptIcon = new ImageIcon("resources\\images\\Logo\\accept.png");
+        btnAcceptStudent = new JButton("Chap nhan vao lop");
+        btnAcceptStudent.setIcon(resizeImage(acceptIcon));
+        btnAcceptStudent.addActionListener(this);
+        btnAcceptStudent.setFocusable(false);
+        btnAcceptStudent.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnAcceptStudent.setBounds(600, 20, 200, 40);
+        this.add(btnAcceptStudent);
+
+        ImageIcon rejectIcon = new ImageIcon("resources\\images\\Logo\\reject.png");
+        btnRejectStudent = new JButton("Tu choi vao lop");
+        btnRejectStudent.setIcon(resizeImage(rejectIcon));
+        btnRejectStudent.addActionListener(this);
+        btnRejectStudent.setFocusable(false);
+        btnRejectStudent.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnRejectStudent.setBounds(900, 20, 200, 40);
+        this.add(btnRejectStudent);
+
+    }
 
     private void initMainPanel() // tao main panel
     {
-        lblListOfStudent = new JLabel("Danh sach hoc sinh");
-        lblListOfStudent.setFont(new Font("Arial",100,30));
-        lblListOfStudent.setBounds(0, 20, 400, 40);
-        this.add(lblListOfStudent);
+        lblPendingStudents = new JLabel("Danh sach hoc sinh cho gia nhap");
+        lblPendingStudents.setFont(new Font("Arial",100,30));
+        lblPendingStudents.setBounds(0, 20, 600, 40);
+        this.add(lblPendingStudents);
 
 
         mainPanel = new JPanel();
@@ -76,11 +103,10 @@ public class ListOfStudent extends JFrame
         
         JPanel temp = new JPanel();
         temp.setPreferredSize(new Dimension(1185, 50));
-        temp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         temp.setLayout(null);
         
-        JLabel lblAvatar = createLabel("resources\\images\\Avatar\\Male.png", ""); // avatar gioi tinh
-        lblAvatar.setBounds(0, 0, 50, 50);
+        JRadioButton radioButton = new JRadioButton();
+        radioButton.setBounds(15, 15, 20, 20);
 
         JLabel lblId = createLabel("resources\\images\\ProfileIcon\\Id.png", String.format("B20DCCN%03d", index)); // ma sinh vien
         lblId.setBounds(50, 0, 200, 50);
@@ -98,7 +124,7 @@ public class ListOfStudent extends JFrame
         lblEmail.setBounds(875, 0, 325, 50);
 
 
-        temp.add(lblAvatar);
+        temp.add(radioButton);
         temp.add(lblId);
         temp.add(lblName);
         temp.add(lblGroup);
@@ -121,11 +147,23 @@ public class ListOfStudent extends JFrame
     private static ImageIcon resizeImage(ImageIcon imageIcon)  // resize icon to fit in the frame
     {
         Image image = imageIcon.getImage(); // transform it 
-        Image newImage = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH); // scale it the smooth way  
+        Image newImage = image.getScaledInstance(35, 35, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
     }
-    
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnAcceptStudent)
+        {
+
+        }
+        
+        else if(e.getSource() == btnRejectStudent)
+        {
+
+        }
+    }    
     public static void main(String[] args) {
-        new ListOfStudent(null);    
+        new PendingStudent(null);    
     }
 }
