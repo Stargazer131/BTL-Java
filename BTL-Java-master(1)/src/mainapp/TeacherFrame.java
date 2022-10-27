@@ -65,10 +65,11 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
     private void initFrame()             // create the main frame
     {
-        this.setBounds(250, 100, 1050,650);
+        this.setBounds(250, 100, 1200,750);
         this.setResizable(false);
         this.setTitle("E-Classroom");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.setLayout(null);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
         this.setIconImage(icon.getImage());
@@ -176,7 +177,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         initClassroomButtons();
 
         scrollPane = new JScrollPane(tableOfClassrooms,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(250, 80, 780, 520);
+        scrollPane.setBounds(255, 80, 920, 620);
         scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 

@@ -126,7 +126,7 @@ public class DoExercise extends JFrame implements ActionListener
 
     private void initQuestionListPanel()
     {
-        pnQuestion.setBounds(220, 10, 800, 600);
+        pnQuestion.setBounds(220, 10, 950, 690);
         pnQuestion.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnQuestion.setLayout(new GridBagLayout());
 
@@ -164,7 +164,7 @@ public class DoExercise extends JFrame implements ActionListener
     private void initLeftFrame()
     {
         pnleftFrame = new JPanel();
-        pnleftFrame.setBounds(9,10,205,600);
+        pnleftFrame.setBounds(9,10,205,690);
         pnleftFrame.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnleftFrame.setLayout(null);
 
@@ -175,7 +175,7 @@ public class DoExercise extends JFrame implements ActionListener
         lbQuestionFinished.setBounds(10,50,180,40);
 
         btnSubmit = new JButton("Nộp bài sớm");
-        btnSubmit.setBounds(10,550,180,30);
+        btnSubmit.setBounds(10,650,180,30);
         btnSubmit.setFocusable(false);
         btnSubmit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnSubmit.addActionListener(this);
@@ -192,7 +192,7 @@ public class DoExercise extends JFrame implements ActionListener
     private void initQuestionFrame(int index, Question q)
     {
         JPanel pntemp = new JPanel();
-        pntemp.setPreferredSize(new Dimension(770,590));
+        pntemp.setPreferredSize(new Dimension(870,670));
         pntemp.setLayout(null);
 
         JLabel lbQuestionID = new JLabel(String.format("Câu %d:", index + 1)),
@@ -248,19 +248,20 @@ public class DoExercise extends JFrame implements ActionListener
         //Nút câu hỏi trước
         btnPreQuestion = new JButton("Câu trước");
         btnPreQuestion.setFocusable(false);
-        btnPreQuestion.setBounds(230,500,100,30);
+        btnPreQuestion.setBounds(230,600,100,30);
         btnPreQuestion.addActionListener(this);
 
         //Nút câu hỏi tiếp theo
         btnNextQuestion = new JButton("Câu sau");
         btnNextQuestion.setFocusable(false);
-        btnNextQuestion.setBounds(900,500,100,30);
+        btnNextQuestion.setBounds(1050,600,100,30);
         btnNextQuestion.addActionListener(this);
 
         hideOrShowPreAndNextButton();
 
-        this.setBounds(250, 100, 1050,650);
+        this.setBounds(250, 100, 1200,750);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
         this.setTitle("Test");
 

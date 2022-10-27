@@ -8,15 +8,15 @@ public class Classroom implements Serializable
 {
     private static final long serialVersionUID = 131202L;
     
-    private String id, name, teacherId;
+    private String id, name, teacherName;
     private TreeSet<String> studentIds;
     private ArrayList<Question> questions;
 
-    public Classroom(String id, String name, String teacherId)
+    public Classroom(String id, String name, String teacherName)
     {
         this.id = id;
         this.name = name;
-        this.teacherId = teacherId;
+        this.teacherName = teacherName;
         studentIds = new TreeSet<>();
         questions = new ArrayList<>();
     }    
@@ -29,6 +29,11 @@ public class Classroom implements Serializable
     public String getName()
     {
         return name;
+    }
+
+    public String getTeacherName()
+    {
+        return teacherName;
     }
 
     public void addStudentId(String studentId)

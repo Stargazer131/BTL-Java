@@ -6,10 +6,13 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.table.*;
 import generic.Pair;
+import manager.ClassroomManager;
 import entity.*;
 
 public class ClassroomFrame extends JFrame implements ActionListener
 {
+    private Classroom classroom;
+
     protected ArrayList<Pair<String, String>> currentActivities; // danh sach hoat dong gan day
     
     protected ArrayList<String> pendingStudents; // danh sach hoc sinh dang cho tham gia
@@ -22,7 +25,13 @@ public class ClassroomFrame extends JFrame implements ActionListener
 
     protected ArrayList<Pair<String, Integer>> rankingOfStudent; // bang xep hang
 
-    protected JPanel pnListOfExercises;  // panel chua cac exercise
+    protected ArrayList<JPanel> pnOfThisClassroom = new ArrayList<>();
+
+    protected JPanel pnListOfExercises,  // panel chua cac exercise
+                     pnMain, //Panel chứa các panel chính
+                     pnLeft,
+                     pnCurrentDisplay; 
+
     protected JScrollPane spForPanel; 
     protected JLabel lblListOfExercises; 
 
@@ -31,33 +40,151 @@ public class ClassroomFrame extends JFrame implements ActionListener
     protected JScrollPane spForTable; 
     protected JLabel lblRanking;
 
-    protected GridBagConstraints gbc;
+    protected GridBagConstraints gbc;//Bố cục các thành phần của GridBagLayout
 
     protected JButton btnListOfStudent, 
                       btnPendingStudents;
 
-    public ClassroomFrame()
+    private JButton btnEventOfClass = new JButton(),    
+                    btnExercise = new JButton(),
+                    btnScoreBoard = new JButton();
+
+    protected int indexOfPanelDisplay;
+
+    public ClassroomFrame(Classroom classroom)
     {
+        this.classroom = classroom;
+
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,5,10, 15);
         
-        initFrame();
-        initTopLeftButtons();
+        //Khởi tạo các thông số cơ bản của Frame
+        this.initFrame();
 
-        initListOfExercises();
-        initRakingOfStudentTable();
+        //Khởi tạo Jpanel chính
+        initMainFrame();
+
+        //Khởi tạo Jpanel góc trái
+        initLeftFrame();
+
+        //initTopLeftButtons();
+
+       // initListOfExercises();
+        //initRakingOfStudentTable();
         this.setVisible(true);
     }
 
     private void initFrame()
     {
+
         this.setBounds(200, 50, 1200,750);
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("E-Classroom");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
         this.setIconImage(icon.getImage());
+    }
+
+    protected void initButtonOfLeftPanel(JButton button,String title, int y)
+    {
+        button.setText(title);
+        button.setBounds(10,y,160,30);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        button.setFocusable(false);
+        button.addActionListener(this);
+        
+        pnLeft.add(button);
+    }
+
+    protected void initLeftFrame() 
+    {
+        pnLeft = new JPanel();
+        pnLeft.setLayout(null);
+        pnLeft.setBounds(10,10,180,690);
+        pnLeft.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        //Khởi tạo khu vực giới thiệu lớp học
+        JPanel pnClassinfor = new JPanel();
+        pnClassinfor.setLayout(null);
+        pnClassinfor.setBounds(1,1,178,100);
+
+        JLabel lbClassName = new JLabel(classroom.getName());
+        lbClassName.setBounds(0,0,178,40);
+        lbClassName.setFont(new Font("Arial",900,20));
+        pnClassinfor.add(lbClassName);
+
+        JLabel lbClassId = new JLabel("ID lớp: " + classroom.getId());
+        lbClassId.setBounds(0,41,178,20);
+        pnClassinfor.add(lbClassId);
+
+        JLabel lbTeacherName = new JLabel("Giáo viên: " + classroom.getTeacherName());
+        lbTeacherName.setBounds(0,61,178,20);
+        pnClassinfor.add(lbTeacherName);
+
+        JLabel lbLine = new JLabel();
+        lbLine.setBounds(0,86,178,1);
+        lbLine.setBorder(BorderFactory.createLineBorder(Color.black));
+        pnClassinfor.add(lbLine);
+
+        pnLeft.add(pnClassinfor);
+
+        //Khởi tạo các nút bấm 
+        initButtonOfLeftPanel(btnEventOfClass, "Hoạt động gần đây", 150);
+        initButtonOfLeftPanel(btnExercise, "Bài tập", 190);
+        initButtonOfLeftPanel(btnScoreBoard, "Bảng xếp hạng", 230);
+
+        //Khởi tạo nút quay lại
+        JButton btnTurnBack = new JButton("Quay lại");
+        btnTurnBack.setFocusable(false);
+        btnTurnBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnTurnBack.setBounds(30,630,120,30);
+        pnLeft.add(btnTurnBack);
+
+        this.add(pnLeft);
+    }
+
+    protected void initFrameOfClass(int i)
+    {
+        JPanel pnTemp = new JPanel();
+        pnTemp.setLayout(null);
+        pnTemp.setPreferredSize(new Dimension(940,670));
+        pnTemp.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        //Test
+        JLabel test = new JLabel(i + "");
+        test.setBounds(100,100,100,100);
+        test.setBorder(BorderFactory.createLineBorder(Color.green));
+        pnTemp.add(test);
+
+        pnTemp.setVisible(false);
+        pnMain.add(pnTemp, gbc);
+
+        pnOfThisClassroom.add(pnTemp);
+    }
+
+    protected void initMainFrame()
+    {
+        pnMain = new JPanel();
+        pnMain.setBounds(200,10,970,690);
+        pnMain.setLayout(new GridBagLayout());
+        pnMain.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        for(int i = 0 ; i < 3; i++)
+        {
+            initFrameOfClass(i);
+        }
+
+        this.add(pnMain);
+
+        //Mặc định hiện thị panel hoạt động
+        indexOfPanelDisplay = 0;
+        pnOfThisClassroom.get(indexOfPanelDisplay).setVisible(true);
+        pnCurrentDisplay = pnOfThisClassroom.get(0);
     }
 
     private void initRakingOfStudentTable()  // tao bang bang xep hang
@@ -219,20 +346,36 @@ public class ClassroomFrame extends JFrame implements ActionListener
         return new ImageIcon(newImage);
     }
 
+    protected void hideAndShowAnPanel()
+    {
+        pnCurrentDisplay.setVisible(false);
+        pnOfThisClassroom.get(indexOfPanelDisplay).setVisible(true);
+        pnCurrentDisplay = pnOfThisClassroom.get(indexOfPanelDisplay);
+    }
+
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnListOfStudent)
-        {  
-            new ListOfStudent(listOfStudent);
-        }
-
-        else if(e.getSource() == btnPendingStudents)
+    public void actionPerformed(ActionEvent e) 
+    {
+        if(e.getSource() == btnEventOfClass)
         {
-
+            indexOfPanelDisplay = 0;
+            hideAndShowAnPanel();
+        }
+        else if(e.getSource() == btnExercise)
+        {
+            indexOfPanelDisplay = 1;
+            hideAndShowAnPanel();
+        }
+        else if(e.getSource() == btnScoreBoard)
+        {
+            indexOfPanelDisplay = 2;
+            hideAndShowAnPanel();
         }
     }
     public static void main(String[] args) 
     {
-        new ClassroomFrame();
+        ClassroomManager.readData();
+
+        new ClassroomFrame(ClassroomManager.findClassroomById("triet01"));
     }
 }

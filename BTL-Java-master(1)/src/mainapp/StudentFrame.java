@@ -75,7 +75,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initFrame()             // create the main frame
     {
-        this.setBounds(200, 50, 1200,700);
+        this.setLocationRelativeTo(null);
+        this.setBounds(200, 50, 1200,750);
         this.setResizable(false);
         this.setTitle("E-Classroom");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -296,14 +297,14 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 }
             }
             else
-                System.out.println("Khong tim thay");
+            {
+                JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học!", "Thông báo",JOptionPane.ERROR_MESSAGE);
+            }
         }
     } 
 
     private void updatePanel(JPanel temp)
     {
-        System.out.println("Success");
-
         temp.revalidate(); 
         temp.repaint();
     }
