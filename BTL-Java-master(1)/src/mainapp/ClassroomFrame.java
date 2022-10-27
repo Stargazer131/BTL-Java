@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.table.*;
+
+import generic.EventMessage;
 import generic.Pair;
 import manager.ClassroomManager;
 import entity.*;
@@ -33,6 +35,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
                      pnCurrentDisplay; 
 
     protected JScrollPane spForPanel; 
+
     protected JLabel lblListOfExercises; 
 
 
@@ -40,7 +43,8 @@ public class ClassroomFrame extends JFrame implements ActionListener
     protected JScrollPane spForTable; 
     protected JLabel lblRanking;
 
-    protected GridBagConstraints gbc;//Bố cục các thành phần của GridBagLayout
+    protected GridBagConstraints gbc,
+                                 gbc2;//Bố cục các thành phần của GridBagLayout
 
     protected JButton btnListOfStudent, 
                       btnPendingStudents;
@@ -49,11 +53,24 @@ public class ClassroomFrame extends JFrame implements ActionListener
                     btnExercise = new JButton(),
                     btnScoreBoard = new JButton();
 
+    protected ArrayList<EventMessage> event_Messages;
+
     protected int indexOfPanelDisplay;
+
+    protected ArrayList<JScrollPane> scroll;
+
+    protected JScrollPane scrollCurrent;
+
+    protected void readDataOfClassroom()
+    {
+        this.event_Messages = classroom.getEventMessage();
+    }
 
     public ClassroomFrame(Classroom classroom)
     {
+        //Lấy dữ liệu từ classroom
         this.classroom = classroom;
+        readDataOfClassroom();
 
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,5,10, 15);
@@ -66,6 +83,9 @@ public class ClassroomFrame extends JFrame implements ActionListener
 
         //Khởi tạo Jpanel góc trái
         initLeftFrame();
+
+        //Khởi tạo các dòng tin nhắn
+        initMessageOfFrame();
 
         //initTopLeftButtons();
 
@@ -143,29 +163,37 @@ public class ClassroomFrame extends JFrame implements ActionListener
         pnLeft.add(btnTurnBack);
 
         this.add(pnLeft);
+
     }
 
     protected void initFrameOfClass(int i)
     {
         JPanel pnTemp = new JPanel();
-        pnTemp.setLayout(null);
-        pnTemp.setPreferredSize(new Dimension(940,670));
+        pnTemp.setLayout(new GridBagLayout());
         //pnTemp.setBorder(BorderFactory.createLineBorder(Color.black));
 
         //Test
-        JLabel test = new JLabel(i + "");
-        test.setBounds(100,100,100,100);
-        test.setBorder(BorderFactory.createLineBorder(Color.green));
-        pnTemp.add(test);
+        // JLabel test = new JLabel(i + "");
+        // test.setBounds(100,100,100,100);
+        // test.setBorder(BorderFactory.createLineBorder(Color.green));
+        // pnTemp.add(test);
 
-        pnTemp.setVisible(false);
-        pnMain.add(pnTemp, gbc);
+        JScrollPane scrollTemp = new JScrollPane(pnTemp);
+        scrollTemp.setPreferredSize(new Dimension(940,670));
+        scrollTemp.getVerticalScrollBar().setUnitIncrement(15);
+        scrollTemp.setBorder(null);
+
+        scrollTemp.setVisible(false);
+        pnMain.add(scrollTemp, gbc);
 
         pnOfThisClassroom.add(pnTemp);
+        scroll.add(scrollTemp);
     }
 
     protected void initMainFrame()
     {
+        scroll = new ArrayList<>();
+
         pnMain = new JPanel();
         pnMain.setBounds(200,10,970,690);
         pnMain.setLayout(new GridBagLayout());
@@ -183,8 +211,39 @@ public class ClassroomFrame extends JFrame implements ActionListener
 
         //Mặc định hiện thị panel hoạt động
         indexOfPanelDisplay = 0;
-        pnOfThisClassroom.get(indexOfPanelDisplay).setVisible(true);
-        pnCurrentDisplay = pnOfThisClassroom.get(0);
+        scroll.get(indexOfPanelDisplay).setVisible(true);
+        scrollCurrent = scroll.get(indexOfPanelDisplay);
+    }
+
+    protected void initMessageFrame(JPanel temp, int index,String content, String date)
+    {
+        gbc2.gridx = 0;
+        gbc2.gridy = index;
+        JLabel lbTemp = new JLabel("Test");
+        lbTemp.setPreferredSize( new Dimension(900,100));
+        lbTemp.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        JLabel lbTime = new JLabel(date);
+        lbTime.setFont(new Font("Arial",100,10));
+        lbTime.setBounds(770,75,200,20);
+        lbTemp.add(lbTime);
+
+        temp.add(lbTemp,gbc2);
+    }
+
+    protected void initEventFrame()
+    {
+        for(int i = 0; i < event_Messages.size(); i++)
+        {
+            initMessageFrame(pnOfThisClassroom.get(0), i, event_Messages.get(i).getContent(), event_Messages.get(i).getTime());
+        }
+    }
+
+    protected void initMessageOfFrame()
+    {
+        gbc2 = new GridBagConstraints();
+        gbc2.insets = new Insets(0,0,50,0);
+        initEventFrame();
     }
 
     private void initRakingOfStudentTable()  // tao bang bang xep hang
@@ -348,9 +407,19 @@ public class ClassroomFrame extends JFrame implements ActionListener
 
     protected void hideAndShowAnPanel()
     {
-        pnCurrentDisplay.setVisible(false);
-        pnOfThisClassroom.get(indexOfPanelDisplay).setVisible(true);
-        pnCurrentDisplay = pnOfThisClassroom.get(indexOfPanelDisplay);
+        // pnCurrentDisplay.setVisible(false);
+        // pnOfThisClassroom.get(indexOfPanelDisplay).setVisible(true);
+        // pnCurrentDisplay = pnOfThisClassroom.get(indexOfPanelDisplay);
+        
+        scrollCurrent.setVisible(false);
+        scroll.get(indexOfPanelDisplay).setVisible(true);
+        scrollCurrent = scroll.get(indexOfPanelDisplay);
+    }
+
+    private void updatePanel(JScrollPane temp)
+    {
+        temp.revalidate(); 
+        temp.repaint();
     }
 
     @Override

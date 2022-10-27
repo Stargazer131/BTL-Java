@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.ActionEvent;
 import entity.Classroom;
+import generic.EventMessage;
 import manager.ClassroomManager;
 
 public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
@@ -42,15 +43,30 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
         
         if(e.getSource() == btnListStudent)
         {
-            indexOfPanelDisplay = 3;
-            hideAndShowAnPanel();
+            super.indexOfPanelDisplay = 3;
+            super.hideAndShowAnPanel();
         }
     }
 
     public static void main(String[] args) 
     {
         ClassroomManager.readData();
-        new ClassroomOfTeacher(ClassroomManager.findClassroomById("triet01"));
+
+        Classroom temp = ClassroomManager.findClassroomById("triet01");
+        temp.addAnEventMessage(new EventMessage("1"));
+        temp.addAnEventMessage(new EventMessage("2"));
+        temp.addAnEventMessage(new EventMessage("3"));
+        temp.addAnEventMessage(new EventMessage("4"));
+        temp.addAnEventMessage(new EventMessage("1"));
+        temp.addAnEventMessage(new EventMessage("2"));
+        temp.addAnEventMessage(new EventMessage("3"));
+        temp.addAnEventMessage(new EventMessage("4"));
+        temp.addAnEventMessage(new EventMessage("1"));
+        temp.addAnEventMessage(new EventMessage("2"));
+        temp.addAnEventMessage(new EventMessage("3"));
+        temp.addAnEventMessage(new EventMessage("4"));
+
+        new ClassroomOfTeacher(temp);
     }
 
 }
