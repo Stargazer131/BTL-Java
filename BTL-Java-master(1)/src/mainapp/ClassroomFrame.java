@@ -45,7 +45,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
     protected JButton btnListOfStudent, 
                       btnPendingStudents;
 
-    private JButton btnEventOfClass = new JButton(),    
+    protected JButton btnEventOfClass = new JButton(),    
                     btnExercise = new JButton(),
                     btnScoreBoard = new JButton();
 
@@ -150,7 +150,7 @@ public class ClassroomFrame extends JFrame implements ActionListener
         JPanel pnTemp = new JPanel();
         pnTemp.setLayout(null);
         pnTemp.setPreferredSize(new Dimension(940,670));
-        pnTemp.setBorder(BorderFactory.createLineBorder(Color.black));
+        //pnTemp.setBorder(BorderFactory.createLineBorder(Color.black));
 
         //Test
         JLabel test = new JLabel(i + "");
