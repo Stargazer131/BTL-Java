@@ -77,29 +77,37 @@ public class DoExercise extends JFrame implements ActionListener
 
         this.setVisible(true);
 
-        //checkTimeRemain();
+        checkTimeRemain();
     }
 
     private void checkTimeRemain()
     {
-        while(exerciseTimeRemain > 0)
-        {
-            exerciseTimeRemain --;
+        class TimeCounter extends Thread {
+            @Override
+            public void run()
+            {
+                while(exerciseTimeRemain > 0)
+                {
+                    exerciseTimeRemain --;
+        
+                    try 
+                    {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) 
+                    {
+                        e.printStackTrace();
+                    }
+                    System.out.println(1);
+        
+                    lbtimeRemain.setText("Thời gian còn lại: " + exerciseTimeRemain);
+                }
 
-            try 
-            {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) 
-            {
-                e.printStackTrace();
+                JOptionPane.showConfirmDialog(null, "Đã hết thời gian làm bài!", " Thông báo", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+                collectData();
             }
-            System.out.println(1);
-
-            lbtimeRemain.setText("Thời gian còn lại: " + exerciseTimeRemain);
         }
 
-        JOptionPane.showConfirmDialog(null, "Đã hết thời gian làm bài!", " Thông báo", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
-        collectData();
+        new TimeCounter().start();
     }
 
     private void countQuestionFinished()
