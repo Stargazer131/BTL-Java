@@ -106,5 +106,4 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
 
         new ClassroomOfTeacher(temp);
     }
-
 }
