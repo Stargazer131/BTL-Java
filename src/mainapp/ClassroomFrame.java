@@ -179,7 +179,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         scrollTemp.getVerticalScrollBar().setUnitIncrement(15);
         scrollTemp.setBorder(null);
 
-        scrollTemp.setVisible(true);
+        scrollTemp.setVisible(false);
 
         pnMain.add(scrollTemp, gbc);
 
@@ -353,13 +353,14 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         scrollCurrent.setVisible(false);
         scroll.get(indexOfPanelDisplay).setVisible(true);
         scrollCurrent = scroll.get(indexOfPanelDisplay);
-        updatePanel(scrollCurrent);
+
+        updatePanel(pnMain);
     }
 
-    protected void updatePanel(JScrollPane temp)
+    protected void updatePanel(Object temp)
     {
-        temp.revalidate(); 
-        temp.repaint();
+        ((Component) temp).revalidate(); 
+        ((Component) temp).repaint();
     }
 
     @Override

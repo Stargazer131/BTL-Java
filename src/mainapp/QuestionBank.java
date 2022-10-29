@@ -298,6 +298,9 @@ public class QuestionBank extends JFrame implements ActionListener
             {
                 Exercise temp = new Exercise(tfExerciseTitle.getText(), Integer.parseInt(tfExerciseTime.getText()), questionsOfAnExercise,answerKeyOfExercise);
                 ExerciseManager.addExerCise(temp);
+                this.classroom.addAnExercise(temp);
+                ClassroomManager.writeData();
+                turnBackToClassroom();
             }
         }
         else
@@ -309,6 +312,12 @@ public class QuestionBank extends JFrame implements ActionListener
         updatePanel(panelMain);
 
         System.out.println(QuestionManager.questions.size());
+    }
+
+    private void turnBackToClassroom()
+    {
+        this.dispose();
+        new ClassroomOfTeacher(ClassroomManager.findClassroomById("triet01"));
     }
     
     @Override
@@ -345,8 +354,7 @@ public class QuestionBank extends JFrame implements ActionListener
         }
         else if(e.getSource() == btnTurnBack)
         {
-            this.dispose();
-            new ClassroomOfTeacher(ClassroomManager.findClassroomById("triet01"));
+            turnBackToClassroom();
         }
     }
 

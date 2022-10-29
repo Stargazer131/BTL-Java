@@ -19,6 +19,7 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
         
         initMessageFrame(pnOfThisClassroom.get(0), 0, "Tạo tin nhắn mới", "", "");
         initMessageFrame(pnOfThisClassroom.get(1), 0, "Tạo bài tập mới", "", "");
+
     }
 
     protected void initLeftFrame() 
@@ -102,8 +103,6 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
         ExerciseManager.readData();
 
         Classroom temp = ClassroomManager.findClassroomById("triet01");
-
-        //temp.addAnExercise(ExerciseManager.getExerciseByTitle("1"));
 
         new ClassroomOfTeacher(temp);
     }

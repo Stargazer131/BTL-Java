@@ -51,8 +51,6 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
 
         Classroom temp = ClassroomManager.findClassroomById("triet01");
 
-        temp.addAnExercise(ExerciseManager.getExerciseByTitle("123"));
-
         new ClassroomOfStudent(temp);
     }
 
