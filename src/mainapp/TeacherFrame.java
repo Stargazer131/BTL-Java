@@ -471,7 +471,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         }
         else
         {
-            
+            String classroomID = ( (JLabel) ((JButton) e.getSource()).getComponent(0)).getText();
+            this.dispose();
+            new ClassroomOfTeacher(ClassroomManager.findClassroomById(classroomID) );
         }
     }
 
@@ -543,7 +545,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
                 //Dùng để test, sau này gộp file lại có thể bỏ đi
                 TeacherManager.readData();
-                Teacher temp = TeacherManager.findTeacherById("HAO1234");//Do idsau khi tạo tài khoản sẽ tự động viết hoa tất cả
+                Teacher temp = TeacherManager.findTeacherById("PHUC2405");//Do idsau khi tạo tài khoản sẽ tự động viết hoa tất cả
                 new TeacherFrame(temp);
             }
         });

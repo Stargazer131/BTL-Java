@@ -253,12 +253,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnJoin.addActionListener(this);
 
-        btnRefresh = new JButton("Refresh");  // refresh button
-        btnRefresh.setFocusable(false);
-        btnRefresh.setBounds(20, 450, 100, 30);
-        btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnRefresh.addActionListener(this);
-        
         this.add(btnJoin);
         this.add(btnRefresh);
     }
@@ -290,16 +284,25 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 {
                     JOptionPane.showMessageDialog(null, "Gửi yêu cầu tham gia lớp học thành công", "Thông báo", JOptionPane.PLAIN_MESSAGE);
                     
-                    createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size(), -1);
-                    arrLClassroom.put(idClassroom, classroomTemp);
-                    StudentManager.addNewClassroom(this.student, classroomTemp);
-                    updatePanel(tableOfClassrooms);
+                    classroomTemp.addAnStudent(student);
+                    ClassroomManager.writeData();
+
+                    // createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size(), -1);
+                    // arrLClassroom.put(idClassroom, classroomTemp);
+                    // StudentManager.addNewClassroom(this.student, classroomTemp);
+                    // updatePanel(tableOfClassrooms);
                 }
             }
             else
             {
                 JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học!", "Thông báo",JOptionPane.ERROR_MESSAGE);
             }
+        }
+        else
+        {
+            String classroomID = ( (JLabel) ((JButton) e.getSource()).getComponent(0)).getText();
+            this.dispose();
+            new ClassroomOfStudent(ClassroomManager.findClassroomById(classroomID) );
         }
     } 
 

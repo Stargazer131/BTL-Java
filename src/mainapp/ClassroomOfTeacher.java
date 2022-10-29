@@ -3,15 +3,37 @@ package mainapp;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import manager.ClassroomManager;
 import manager.ExerciseManager;
 import manager.QuestionManager;
 import entity.*;
 
-public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener, MouseListener
+public class ClassroomOfTeacher extends ClassroomFrame
 {
     private JButton btnListStudent ;
+
+    private ArrayList<Student> studentInThisClassroom;
+
+    private ArrayList<Student> studentNotInThisClassroom;
+
+    protected void readDataOfClassroom()
+    {
+        super.readDataOfClassroom();
+
+        for(Student i : studentList.keySet())
+        {
+            if(studentList.get(i) == true)
+            {
+                studentInThisClassroom.add(i);
+            }
+            else
+            {
+                studentNotInThisClassroom.add(i);
+            }
+        }
+    }
 
     public ClassroomOfTeacher(Classroom classroom) 
     {
@@ -20,6 +42,7 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
         initMessageFrame(pnOfThisClassroom.get(0), 0, "Tạo tin nhắn mới", "", "");
         initMessageFrame(pnOfThisClassroom.get(1), 0, "Tạo bài tập mới", "", "");
 
+        readDataOfClassroom();
     }
 
     protected void initLeftFrame() 
@@ -28,7 +51,7 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
 
         super.initLeftFrame();
 
-        initButtonOfLeftPanel(btnListStudent, "Danh sách học sinh", 230);
+        initButtonOfLeftPanel(btnListStudent, "Danh sách sinh viên", 230);
         initButtonOfLeftPanel(btnScoreBoard, "Bảng xếp hạng", 270);
     }
 
@@ -51,7 +74,11 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
             temp.add(arrCom[i],gbc2);
         }
     }
+
+    //Tạo các phần tử của Jpanel danh sách học sinh
+
     
+    //Bắt sự kiện của chương trình
     public void actionPerformed(ActionEvent e) 
     {
         //Lấy những sự kiện đã được kế thừa ở lớp cha
@@ -64,6 +91,25 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
         }
     }
     
+    private void createAMessage(Object temp, String option)
+    {
+        if(!option.equals("Exercise"))
+        {
+            initMessageFrame(pnOfThisClassroom.get(0), 0, ((EventMessage) temp).getContent(), ((EventMessage) temp).getTime(), "Message");
+            initMessageFrame(pnOfThisClassroom.get(0), 0, "Tạo tin nhắn mới", "", "");
+            changePositionOfMessage(pnOfThisClassroom.get(0), 0);
+        }
+        else
+        {
+            initMessageFrame(pnOfThisClassroom.get(1), 0, ((Exercise) temp).getTitle(), ((Exercise) temp).getMessageTime(), "");
+            initMessageFrame(pnOfThisClassroom.get(1), 0, "Tạo bài tập mới", "", "");
+            changePositionOfMessage(pnOfThisClassroom.get(1), 0);
+        }
+        
+        updatePanel(scrollCurrent);
+    }
+
+    //Bắt sự kiện chuột khi nhấn
     public void mousePressed(MouseEvent e) 
     {
         System.out.println(pnCurrentDisplay.getComponentCount()) ;
@@ -83,16 +129,20 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
                 super.classroom.addAnEventMessage(temp);
                 ClassroomManager.writeData();
                 pnOfThisClassroom.get(0).remove(event_Messages.size() - 1);
-                initMessageFrame(pnOfThisClassroom.get(0), 0, temp.getContent(), temp.getTime(), "Message");
-                initMessageFrame(pnOfThisClassroom.get(0), 0, "Tạo tin nhắn mới", "", "");
-                changePositionOfMessage(pnOfThisClassroom.get(0), 0);
-                updatePanel(scrollCurrent);
+                //Tạo 1 tin nhắn mới
+                createAMessage(temp, "Message");
             }
         }
         else if(e.getSource() == pnOfThisClassroom.get(1).getComponent(pnOfThisClassroom.get(1).getComponentCount() - 1))
         {
             this.dispose();
             new QuestionBank(this.classroom);
+            pnOfThisClassroom.get(0).remove(event_Messages.size() - 1);
+
+            Exercise newExercise = classroom.getExercise().get(classroom.getExercise().size() - 1);
+            
+            //Tạo 1 bài tập mới
+            createAMessage(newExercise, "Exercise");
         }
     }
 
@@ -106,4 +156,5 @@ public class ClassroomOfTeacher extends ClassroomFrame implements ActionListener
 
         new ClassroomOfTeacher(temp);
     }
+
 }

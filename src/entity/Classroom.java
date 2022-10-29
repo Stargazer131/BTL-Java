@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ public class Classroom implements Serializable
     private static final long serialVersionUID = 131202L;
     
     private String id, name, teacherName;
-    private TreeSet<String> studentIds;
+    private TreeMap<Student, Boolean> studentIds;
     private ArrayList<EventMessage> eventMessages;
     private ArrayList<Exercise> eventExercise;
 
@@ -19,7 +20,7 @@ public class Classroom implements Serializable
         this.id = id;
         this.name = name;
         this.teacherName = teacherName;
-        studentIds = new TreeSet<>();
+        studentIds = new TreeMap<>();
         eventMessages = new ArrayList<>();
         eventExercise = new ArrayList<>();
     }    
@@ -39,9 +40,9 @@ public class Classroom implements Serializable
         return teacherName;
     }
 
-    public void addStudentId(String studentId)
+    public void addStudentId(Student student)
     {
-        studentIds.add(studentId);
+        studentIds.put(student, false);
     }
 
     public void addAnEventMessage(EventMessage e)
@@ -62,5 +63,10 @@ public class Classroom implements Serializable
     public ArrayList<Exercise> getExercise()
     {
         return eventExercise;
+    }
+
+    public void addAnStudent(Student s)
+    {
+        this.studentIds.put(s, false);
     }
 }

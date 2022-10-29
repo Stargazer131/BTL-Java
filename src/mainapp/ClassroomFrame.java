@@ -15,6 +15,8 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 {
     protected Classroom classroom;
 
+    protected TreeMap<Student, Boolean> studentList;
+
     protected ArrayList<Pair<String, String>> currentActivities; // danh sach hoat dong gan day
     
     protected ArrayList<String> pendingStudents; // danh sach hoc sinh dang cho tham gia
@@ -61,6 +63,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     {
         this.event_Messages = classroom.getEventMessage();
         this.listOfExercises = classroom.getExercise();
+        this.studentList = new TreeMap<>();
     }
 
     public ClassroomFrame(Classroom classroom)
@@ -86,7 +89,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
         //initTopLeftButtons();
 
-        //initRakingOfStudentTable();
+        initRakingOfStudentTable();
         this.setVisible(true);
     }
 
@@ -267,50 +270,54 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     private void initRakingOfStudentTable()  // tao bang bang xep hang
     {
+        pnOfThisClassroom.get(2).setLayout(null);
+
         int n = 100; // test data
         
         // ten cua cac cot
-        Object[] columnNames = {"Ma SV", "Ho ten", "Diem"};
+        Object[] columnNames = {"STT","Mã SV", "Họ tên", "Điểm"};
         
         // du lieu trong tung hang
-        Object[][] rowData = new Object[n][3];
+        Object[][] rowData = new Object[n][4];
         for(int i = 0; i < n; i++)
         {
-            rowData[i][0] = String.format("B20DCCN%03d", i);
-            rowData[i][1] = String.format("Nguyen Van %02d", i);
+            rowData[i][0] = i + 1;
+            rowData[i][1] = String.format("B20DCCN%03d", i);
+            rowData[i][2] = String.format("Nguyen Van %02d", i);
             Integer num = new Random().nextInt(0, 1000);
-            rowData[i][2] = num;
+            rowData[i][3] = num;
         }
 
-        lblRanking = new JLabel("BANG XEP HANG");
+        lblRanking = new JLabel("BẢNG XẾP HẠNG");
         lblRanking.setFont(new Font("Arial",100,30));
-        lblRanking.setBounds(0, 200, 350, 40);
-        this.add(lblRanking);
+        lblRanking.setBounds(300, 10, 350, 40);
+        pnOfThisClassroom.get(2).add(lblRanking);
         
         /////////
         rankingOfStudentTable = new JTable();
         
         // tao table voi ten cua cac cot va du lieu tung hang
-        rankingOfStudentTable.setModel(new DefaultTableModel(rowData, columnNames){
+        rankingOfStudentTable.setModel(new DefaultTableModel(rowData, columnNames)
+        {
             // Chi ro ra tung cot se chua kieu du lieu gi -> Quan trong cho viec sap xep dung
-            Class[] types = { String.class, String.class, Integer.class };
+            Class[] types = {Integer.class ,String.class, String.class, Integer.class };
         
             @Override
-            public Class getColumnClass(int columnIndex) {
+            public Class getColumnClass(int columnIndex) 
+            {
                 return this.types[columnIndex];
             }
         });
 
         rankingOfStudentTable.setEnabled(false);  
-        //////////
 
         spForTable = new JScrollPane(rankingOfStudentTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        spForTable.setBounds(0, 250, 390, 450);
+        spForTable.setBounds(0, 70, 940, 600);
         spForTable.getVerticalScrollBar().setUnitIncrement(15);
         spForTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        this.add(spForTable);
+        pnOfThisClassroom.get(2).add(spForTable);
 
-        sortRankingByColumn(2);
+        sortRankingByColumn(3);
     }
 
     private void insertNewRow(Object[] data, int index) // chen them 1 dong vao bang xep hang
