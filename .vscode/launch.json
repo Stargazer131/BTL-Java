@@ -6,6 +6,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch PendingStudent",
+            "request": "launch",
+            "mainClass": "mainapp.PendingStudent",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
+            "name": "Launch ListOfStudent",
+            "request": "launch",
+            "mainClass": "mainapp.ListOfStudent",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClassroomOfTeacher",
+            "request": "launch",
+            "mainClass": "mainapp.ClassroomOfTeacher",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClassroomFrame",
+            "request": "launch",
+            "mainClass": "mainapp.ClassroomFrame",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
+            "name": "Launch ClassroomOfStudent",
+            "request": "launch",
+            "mainClass": "mainapp.ClassroomOfStudent",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
             "name": "Launch ClassroomFrame",
             "request": "launch",
             "mainClass": "mainapp.ClassroomFrame",
