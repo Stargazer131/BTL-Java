@@ -9,6 +9,7 @@ import javax.swing.table.*;
 import generic.Pair;
 import manager.ClassroomManager;
 import manager.ExerciseManager;
+import manager.StudentManager;
 import entity.*;
 
 public class ClassroomFrame extends JFrame implements ActionListener, MouseListener
@@ -59,11 +60,14 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     protected JScrollPane scrollCurrent;
 
+    protected ArrayList<Pair<Student,Integer>> studentResult;
+
     protected void readDataOfClassroom()
     {
         this.event_Messages = classroom.getEventMessage();
         this.listOfExercises = classroom.getExercise();
         this.studentList = new TreeMap<>();
+        this.studentResult = classroom.getStudentResult();
     }
 
     public ClassroomFrame(Classroom classroom)
@@ -268,8 +272,25 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         initEventFrame("Exercise");
     }
 
+    private void sortStudentByPoint()
+    {
+        Collections.sort(studentResult, new Comparator<Pair<Student,Integer>>() {
+            @Override
+            public int compare(Pair a, Pair b)
+            {
+                if((Integer)a.getSecond() < (Integer)b.getSecond())
+                    return 1;
+                return -1;
+            }
+        });
+    }
+
     private void initRakingOfStudentTable()  // tao bang bang xep hang
     {
+        this.readDataOfClassroom();
+
+        sortStudentByPoint();
+
         pnOfThisClassroom.get(2).setLayout(null);
 
         int n = 100; // test data
@@ -278,14 +299,17 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         Object[] columnNames = {"STT","Mã SV", "Họ tên", "Điểm"};
         
         // du lieu trong tung hang
-        Object[][] rowData = new Object[n][4];
-        for(int i = 0; i < n; i++)
+        Object[][] rowData = new Object[studentResult.size()][4];
+
+        int index = 0;
+        for(Pair<Student, Integer> i: studentResult)
         {
-            rowData[i][0] = i + 1;
-            rowData[i][1] = String.format("B20DCCN%03d", i);
-            rowData[i][2] = String.format("Nguyen Van %02d", i);
+            rowData[index][0] = index + 1;
+            rowData[index][1] = i.getFirst().getId();
+            rowData[index][2] = i.getFirst().getName();
             Integer num = new Random().nextInt(0, 1000);
-            rowData[i][3] = num;
+            rowData[index][3] =  i.getSecond();
+            index++;
         }
 
         lblRanking = new JLabel("BẢNG XẾP HẠNG");
@@ -300,7 +324,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         rankingOfStudentTable.setModel(new DefaultTableModel(rowData, columnNames)
         {
             // Chi ro ra tung cot se chua kieu du lieu gi -> Quan trong cho viec sap xep dung
-            Class[] types = {Integer.class ,String.class, String.class, Integer.class };
+            Class[] types = {Integer.class,String.class, String.class, Double.class };
         
             @Override
             public Class getColumnClass(int columnIndex) 
@@ -308,11 +332,21 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
                 return this.types[columnIndex];
             }
         });
+        
+
+        TableColumn temp1 = rankingOfStudentTable.getColumnModel().getColumn(0),
+                    temp2 = rankingOfStudentTable.getColumnModel().getColumn(1),
+                    temp3 = rankingOfStudentTable.getColumnModel().getColumn(2),
+                    temp4 = rankingOfStudentTable.getColumnModel().getColumn(3);
+        temp1.setMaxWidth(50);
+        temp2.setMaxWidth(200);
+        temp3.setMaxWidth(200);
+        temp4.setMaxWidth(100);
 
         rankingOfStudentTable.setEnabled(false);  
 
         spForTable = new JScrollPane(rankingOfStudentTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        spForTable.setBounds(0, 70, 940, 600);
+        spForTable.setBounds(200, 70, 500, 600);
         spForTable.getVerticalScrollBar().setUnitIncrement(15);
         spForTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnOfThisClassroom.get(2).add(spForTable);
@@ -433,6 +467,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     public static void main(String[] args) 
     {
         ClassroomManager.readData();
+        StudentManager.readData();
 
         new ClassroomFrame(ClassroomManager.findClassroomById("triet01"));
     }

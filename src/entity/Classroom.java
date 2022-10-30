@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import generic.Pair;
+
 import java.io.Serializable;
+import java.lang.reflect.Array;
 
 public class Classroom implements Serializable 
 {
     private static final long serialVersionUID = 131202L;
     
     private String id, name, teacherName;
-    private TreeMap<Student, Boolean> studentIds;
+    private ArrayList<Pair<Student, Integer>> studentIds;
     private ArrayList<EventMessage> eventMessages;
     private ArrayList<Exercise> eventExercise;
 
@@ -20,7 +23,7 @@ public class Classroom implements Serializable
         this.id = id;
         this.name = name;
         this.teacherName = teacherName;
-        studentIds = new TreeMap<>();
+        studentIds = new ArrayList<>();
         eventMessages = new ArrayList<>();
         eventExercise = new ArrayList<>();
     }    
@@ -38,11 +41,6 @@ public class Classroom implements Serializable
     public String getTeacherName()
     {
         return teacherName;
-    }
-
-    public void addStudentId(Student student)
-    {
-        studentIds.put(student, false);
     }
 
     public void addAnEventMessage(EventMessage e)
@@ -67,6 +65,24 @@ public class Classroom implements Serializable
 
     public void addAnStudent(Student s)
     {
-        this.studentIds.put(s, false);
+        this.studentIds.add(new Pair<Student,Integer>(s, 0));
+    }
+
+    public void studentDoExerciseResult(Student student, int point)
+    {
+        for(Pair<Student,Integer> i: studentIds)
+        {
+            if(i.getFirst().getId().equals(student.getId()))
+            {
+                i.setSecond(i.getSecond() + point);
+                System.out.println(i.getSecond());
+                break;
+            }
+        }
+    }
+
+    public ArrayList<Pair<Student, Integer>>getStudentResult()
+    {
+        return studentIds;
     }
 }

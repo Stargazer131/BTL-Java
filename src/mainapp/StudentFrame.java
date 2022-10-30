@@ -254,7 +254,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         btnJoin.addActionListener(this);
 
         this.add(btnJoin);
-        this.add(btnRefresh);
     }
 
     @Override
@@ -282,15 +281,14 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "Gửi yêu cầu tham gia lớp học thành công", "Thông báo", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Tham gia lớp học thành công", "Thông báo", JOptionPane.PLAIN_MESSAGE);
                     
-                    classroomTemp.addAnStudent(student);
+                    ClassroomManager.findClassroomById(idClassroom).addAnStudent(student);
                     ClassroomManager.writeData();
-
-                    // createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size(), -1);
-                    // arrLClassroom.put(idClassroom, classroomTemp);
-                    // StudentManager.addNewClassroom(this.student, classroomTemp);
-                    // updatePanel(tableOfClassrooms);
+                    createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size(), -1);
+                    arrLClassroom.put(idClassroom, classroomTemp);
+                    StudentManager.addNewClassroom(this.student, classroomTemp);
+                    updatePanel(tableOfClassrooms);
                 }
             }
             else
@@ -350,16 +348,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
     }
 
     public static void main(String[] args) 
-    { // start the frame directly
-        java.awt.EventQueue.invokeLater(new Runnable() 
-        {
-            public void run() 
-            {   
-                // TreeMap<String, Classroom> temp = StudentManager.findStudentById("B20DCCN503").getListClassroom();
-                // temp = new TreeMap<>();
-                // TeacherManager.writeData();
-                new StudentFrame("B20DCCN503");
-            }
-        });
+    {
+        StudentManager.readData();
+        new StudentFrame("B20DCCN503");
     }
 }

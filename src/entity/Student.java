@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.io.Serializable;
 
-public class Student implements Serializable
+public class Student implements Serializable, Comparable<Student>
 {
     private static final long serialVersionUID = 13012002L;
     
@@ -79,5 +79,11 @@ public class Student implements Serializable
     public void deleteClassroomId(String classroomId) // delete a classroom 
     {
         classroomIds.remove(classroomId);
+    }
+
+    @Override
+    public int compareTo(Student o) 
+    {
+        return -this.id.compareTo(o.id);
     }
 }

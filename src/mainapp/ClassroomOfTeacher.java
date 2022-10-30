@@ -16,25 +16,6 @@ public class ClassroomOfTeacher extends ClassroomFrame
 
     private ArrayList<Student> studentInThisClassroom;
 
-    private ArrayList<Student> studentNotInThisClassroom;
-
-    protected void readDataOfClassroom()
-    {
-        super.readDataOfClassroom();
-
-        for(Student i : studentList.keySet())
-        {
-            if(studentList.get(i) == true)
-            {
-                studentInThisClassroom.add(i);
-            }
-            else
-            {
-                studentNotInThisClassroom.add(i);
-            }
-        }
-    }
-
     public ClassroomOfTeacher(Classroom classroom) 
     {
         super(classroom);
@@ -43,23 +24,6 @@ public class ClassroomOfTeacher extends ClassroomFrame
         initMessageFrame(pnOfThisClassroom.get(1), 0, "Tạo bài tập mới", "", "");
 
         readDataOfClassroom();
-    }
-
-    protected void initLeftFrame() 
-    {
-        btnListStudent = new JButton();
-
-        super.initLeftFrame();
-
-        initButtonOfLeftPanel(btnListStudent, "Danh sách sinh viên", 230);
-        initButtonOfLeftPanel(btnScoreBoard, "Bảng xếp hạng", 270);
-    }
-
-    protected void initMainFrame()
-    {
-        super.initMainFrame();
-
-        initFrameOfClass(3);
     }
 
     //Đẩy các ô message xuống 1 dòng
@@ -74,23 +38,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
             temp.add(arrCom[i],gbc2);
         }
     }
-
-    //Tạo các phần tử của Jpanel danh sách học sinh
-
-    
-    //Bắt sự kiện của chương trình
-    public void actionPerformed(ActionEvent e) 
-    {
-        //Lấy những sự kiện đã được kế thừa ở lớp cha
-        super.actionPerformed(e);
-        
-        if(e.getSource() == btnListStudent)
-        {
-            super.indexOfPanelDisplay = 3;
-            super.hideAndShowAnPanel();
-        }
-    }
-    
+   
     private void createAMessage(Object temp, String option)
     {
         if(!option.equals("Exercise"))
@@ -107,6 +55,19 @@ public class ClassroomOfTeacher extends ClassroomFrame
         }
         
         updatePanel(scrollCurrent);
+    }
+
+    //Bắt sự kiện của chương trình
+    public void actionPerformed(ActionEvent e) 
+    {
+        //Lấy những sự kiện đã được kế thừa ở lớp cha
+        super.actionPerformed(e);
+        
+        if(e.getSource() == btnListStudent)
+        {
+            super.indexOfPanelDisplay = 3;
+            super.hideAndShowAnPanel();
+        }
     }
 
     //Bắt sự kiện chuột khi nhấn

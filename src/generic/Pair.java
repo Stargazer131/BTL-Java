@@ -24,4 +24,9 @@ public class Pair<U, V> implements Serializable
     {
         return second;
     }
+
+    public void setSecond(V second)
+    {
+        this.second = second;
+    }
 }
