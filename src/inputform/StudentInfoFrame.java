@@ -320,11 +320,10 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         return new ImageIcon(newImage);
     }
 
-    public static void main(String[] args) {        // run the frame directly
-        java.awt.EventQueue.invokeLater(new Runnable() {
-              public void run() {
-                   new StudentInfoFrame("", "");
-              }
-        });
-    } 
-}
+    public static void main(String[] args)
+    {               
+        StudentManager.readData();
+        //StudentManager.writeData();
+        new StudentInfoFrame("", "");
+    }
+} 

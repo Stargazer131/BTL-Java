@@ -69,6 +69,8 @@ public class AccountManager
         try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename)))
         {
             output.writeObject(accounts);
+            output.flush();
+            output.close();
         }
 
         catch(Exception e)

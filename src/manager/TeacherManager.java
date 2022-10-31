@@ -54,6 +54,8 @@ public class TeacherManager
         try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename)))
         {
             output.writeObject(teachers);
+            output.flush();
+            output.close();
         }
         catch(Exception e)
         {

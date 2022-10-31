@@ -40,20 +40,21 @@ public class StudentManager
     @SuppressWarnings("unchecked")
     public static void readData()
     {
+        students = new HashMap<>();
         String filename = "resources\\data\\student.dat";
         try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename)))
         {
             students = (HashMap<String, Student>)input.readObject();
         }
-
         catch(Exception e)
         {
             students = new HashMap<>();
         }
 
+        //In ra danh sách học sinh
         for(String i: students.keySet())
         {
-            System.out.println(i + students.get(i));
+            System.out.println(i);
         }
     }
 
@@ -64,8 +65,9 @@ public class StudentManager
         try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename)))
         {
             output.writeObject(students);
+            output.flush();
+            output.close();
         }
-
         catch(Exception e)
         {
 

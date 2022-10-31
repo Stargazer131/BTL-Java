@@ -39,10 +39,11 @@ public class ExerciseManager
             {
                 exercises = (ArrayList<Exercise>) oos.readObject();
 
-                for(Exercise i: exercises)
-                {
-                    System.out.println(i.getTitle());
-                }
+                //In ra danh sách bài tập
+                // for(Exercise i: exercises)
+                // {
+                //     System.out.println(i.getTitle());
+                // }
             } catch (ClassNotFoundException e) 
             {
                 e.printStackTrace();

@@ -16,14 +16,6 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 {
     protected Classroom classroom;
 
-    protected TreeMap<Student, Boolean> studentList;
-
-    protected ArrayList<Pair<String, String>> currentActivities; // danh sach hoat dong gan day
-    
-    protected ArrayList<String> pendingStudents; // danh sach hoc sinh dang cho tham gia
-
-    protected int numberOfStudents; // si so lop
-
     protected ArrayList<Exercise> listOfExercises; // danh sach bai tap 
 
     protected ArrayList<Student> listOfStudent; // danh sach sinh vien cua lop hoc
@@ -66,7 +58,6 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     {
         this.event_Messages = classroom.getEventMessage();
         this.listOfExercises = classroom.getExercise();
-        this.studentList = new TreeMap<>();
         this.studentResult = classroom.getStudentResult();
     }
 
@@ -91,9 +82,9 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         //Khởi tạo các dòng tin nhắn
         initMessageOfFrame();
 
-        //initTopLeftButtons();
-
+        //Tạo bảng xếp hạng
         initRakingOfStudentTable();
+
         this.setVisible(true);
     }
 
@@ -285,7 +276,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         });
     }
 
-    private void initRakingOfStudentTable()  // tao bang bang xep hang
+    protected void initRakingOfStudentTable()  // tao bang bang xep hang
     {
         this.readDataOfClassroom();
 
@@ -332,15 +323,21 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
                 return this.types[columnIndex];
             }
         });
-        
 
+        rankingOfStudentTable.addMouseListener(this);
+        
+        //Set chiều rộng cho các cột 
         TableColumn temp1 = rankingOfStudentTable.getColumnModel().getColumn(0),
                     temp2 = rankingOfStudentTable.getColumnModel().getColumn(1),
                     temp3 = rankingOfStudentTable.getColumnModel().getColumn(2),
                     temp4 = rankingOfStudentTable.getColumnModel().getColumn(3);
+
         temp1.setMaxWidth(50);
+
         temp2.setMaxWidth(200);
+
         temp3.setMaxWidth(200);
+
         temp4.setMaxWidth(100);
 
         rankingOfStudentTable.setEnabled(false);  
@@ -361,12 +358,11 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     }
 
 
-    private void deleteRow(int index) // xoa 1 dong khoi bang xep hang
+    protected void deleteRow(int index) // xoa 1 dong khoi bang xep hang
     {
         DefaultTableModel model = (DefaultTableModel)rankingOfStudentTable.getModel();
         model.removeRow(index);
     }
-
 
     private void sortRankingByColumn(int columnIndexToSort) // sap xep bang xep bang xep hang theo cot can sap xep
     {

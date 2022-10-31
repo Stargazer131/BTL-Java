@@ -343,13 +343,11 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
         
     }
 
     public static void main(String[] args) 
     {
-        StudentManager.readData();
         new StudentFrame("B20DCCN503");
     }
 }

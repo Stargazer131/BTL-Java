@@ -51,10 +51,11 @@ public class ClassroomManager
             classrooms = new HashMap<>();
         }
 
-        for(String i: classrooms.keySet())
-        {
-            System.out.println(i);
-        }
+        //In ra danh sach lop
+        // for(String i: classrooms.keySet())
+        // {
+        //     System.out.println(i);
+        // }
     }
 
     // Update data back in the classroom.dat 
@@ -64,8 +65,8 @@ public class ClassroomManager
         try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename)))
         {
             output.writeObject(classrooms);
-            output.close();
             output.flush();
+            output.close();
         }
 
         catch(Exception e)

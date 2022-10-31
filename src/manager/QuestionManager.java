@@ -34,6 +34,7 @@ public class QuestionManager
             oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\question.dat"));
             oos.writeObject(questions);
             oos.flush();
+            oos.close();
         } catch (FileNotFoundException e) 
         {
             e.printStackTrace();
@@ -57,10 +58,11 @@ public class QuestionManager
 
             }
 
-            for(Question i: questions)
-            {
-                System.out.println(i);
-            }
+            //In ra danh sách câu hỏi
+            // for(Question i: questions)
+            // {
+            //     System.out.println(i);
+            // }
 
             ois.close();
         }catch (IOException e) 

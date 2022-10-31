@@ -3,18 +3,25 @@ package mainapp;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import manager.ClassroomManager;
 import manager.ExerciseManager;
 import manager.QuestionManager;
+import manager.StudentManager;
 import entity.*;
 
 public class ClassroomOfTeacher extends ClassroomFrame
 {
     private JButton btnListStudent ;
 
-    private ArrayList<Student> studentInThisClassroom;
+    private JButton btnStudentInfor,
+                    btnStudentDelete;
+
+    private JPopupMenu pmRightClickStudent;
+
+    private Student studentRightClick;
+
+    private int indexStudentRightClick=0;
 
     public ClassroomOfTeacher(Classroom classroom) 
     {
@@ -23,7 +30,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
         initMessageFrame(pnOfThisClassroom.get(0), 0, "Tạo tin nhắn mới", "", "");
         initMessageFrame(pnOfThisClassroom.get(1), 0, "Tạo bài tập mới", "", "");
 
-        readDataOfClassroom();
+        initPopupMenuRightClickStudent();
     }
 
     //Đẩy các ô message xuống 1 dòng
@@ -57,6 +64,54 @@ public class ClassroomOfTeacher extends ClassroomFrame
         updatePanel(scrollCurrent);
     }
 
+    //Tạo memupopup chuột phải
+    private void initPopupMenuRightClickStudent()
+    {
+        this.btnStudentDelete = new JButton("Xoá sinh viên này khỏi lớp");
+        btnStudentDelete.setMaximumSize(new Dimension(200,25));
+        btnStudentDelete.setFocusable(false);
+        btnStudentDelete.addActionListener(this);
+
+        this.btnStudentInfor = new JButton("Xem thông tin sinh viên");
+        btnStudentInfor.setMaximumSize(new Dimension(200,25));
+        btnStudentInfor.setFocusable(false);
+        btnStudentInfor.addActionListener(this);
+
+        this.pmRightClickStudent = new JPopupMenu();
+        pmRightClickStudent.add(btnStudentInfor);
+        pmRightClickStudent.add(btnStudentDelete);
+        pmRightClickStudent.setVisible(false);
+        pmRightClickStudent.setMaximumSize(new Dimension(220,40));
+
+        this.add(pmRightClickStudent);
+    }
+
+    //Ghi đè tạo bảng xếp hạng
+    protected void initRakingOfStudentTable()
+    {
+        super.initRakingOfStudentTable();
+
+        rankingOfStudentTable.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mousePressed(MouseEvent e) 
+            {
+                showPopUpMenuStudent(e);
+            }
+
+            public void showPopUpMenuStudent(MouseEvent e)
+            {
+                pmRightClickStudent.show(e.getComponent(), e.getX(), e.getY());
+
+                int indexRow = rankingOfStudentTable.rowAtPoint(e.getPoint());
+
+                indexStudentRightClick  = indexRow;
+                
+                studentRightClick = studentResult.get(indexRow).getFirst();
+            }
+        });
+    }
+    
     //Bắt sự kiện của chương trình
     public void actionPerformed(ActionEvent e) 
     {
@@ -68,12 +123,30 @@ public class ClassroomOfTeacher extends ClassroomFrame
             super.indexOfPanelDisplay = 3;
             super.hideAndShowAnPanel();
         }
+        else if(e.getSource() == btnStudentDelete)
+        {
+            int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn xoá sinh viên này khỏi lớp không?", "Thông báo",JOptionPane.OK_CANCEL_OPTION);
+
+            if(option == JOptionPane.OK_OPTION)
+            {
+                studentRightClick.deleteClassroomId(classroom.getId());
+                //StudentManager.writeData();
+
+                studentResult.remove(indexStudentRightClick);
+
+                //ClassroomManager.writeData();
+
+                pnOfThisClassroom.get(2).remove(rankingOfStudentTable);
+
+                //initRakingOfStudentTable();
+                updatePanel(pnCurrentDisplay);
+            }
+        }
     }
 
     //Bắt sự kiện chuột khi nhấn
     public void mousePressed(MouseEvent e) 
     {
-        System.out.println(pnCurrentDisplay.getComponentCount()) ;
         if(e.getSource() == pnOfThisClassroom.get(0).getComponent(pnOfThisClassroom.get(0).getComponentCount() - 1))
         {
             JTextField tfMessageContent = new JTextField();
@@ -112,6 +185,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
         QuestionManager.readData();
         ClassroomManager.readData();
         ExerciseManager.readData();
+        StudentManager.readData();
 
         Classroom temp = ClassroomManager.findClassroomById("triet01");
 
