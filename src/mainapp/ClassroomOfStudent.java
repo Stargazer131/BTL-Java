@@ -3,8 +3,7 @@ package mainapp;
 import javax.swing.*;
 import java.awt.event.*;
 import entity.Classroom;
-import manager.ClassroomManager;
-import manager.ExerciseManager;
+import launch.App;
 
 public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
 {
@@ -34,24 +33,21 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
             super.indexOfPanelDisplay = 3;
             super.hideAndShowAnPanel();
         }
+        else if(e.getSource() == btnTurnBack)
+        {
+            this.dispose();
+            new StudentFrame(App.studentUser);
+        }
     }
 
     public void mousePressed(MouseEvent e) 
     {
-        JLabel temp = (JLabel) e.getSource();
-        String exerciseTitle = ((JLabel) temp.getComponent(0)).getText();
+        if(e.getSource().getClass() == JLabel.class)
+        {
+            JLabel temp = (JLabel) e.getSource();
+            String exerciseTitle = ((JLabel) temp.getComponent(0)).getText();
 
-        doExercise(exerciseTitle);
+            doExercise(exerciseTitle);
+        }
     }
-
-    public static void main(String[] args) 
-    {
-        ClassroomManager.readData();
-        ExerciseManager.readData();
-
-        Classroom temp = ClassroomManager.findClassroomById("triet01");
-
-        new ClassroomOfStudent(temp);
-    }
-
 }

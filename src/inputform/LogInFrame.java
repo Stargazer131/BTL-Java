@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entity.Account;
+import launch.App;
 import mainapp.StudentFrame;
 import mainapp.TeacherFrame;
 import manager.AccountManager;
@@ -133,7 +134,7 @@ public class LogInFrame extends JFrame implements ActionListener
                 else  // student account
                 {
                     this.dispose();
-                    new StudentFrame(account.getId());
+                    new StudentFrame(App.studentUser);
                 }
             }
 

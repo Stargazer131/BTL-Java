@@ -20,7 +20,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     protected ArrayList<Student> listOfStudent; // danh sach sinh vien cua lop hoc
 
-    protected ArrayList<Pair<String, Integer>> rankingOfStudent; // bang xep hang
+    protected ArrayList<Pair<String, Double>> rankingOfStudent; // bang xep hang
 
     protected ArrayList<JPanel> pnOfThisClassroom = new ArrayList<>();
 
@@ -41,8 +41,9 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
                       btnPendingStudents;
 
     protected JButton btnEventOfClass = new JButton(),    
-                    btnExercise = new JButton(),
-                    btnScoreBoard = new JButton();
+                      btnExercise = new JButton(),
+                      btnScoreBoard = new JButton(),
+                      btnTurnBack = new JButton();
 
     protected ArrayList<EventMessage> event_Messages;
 
@@ -52,7 +53,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     protected JScrollPane scrollCurrent;
 
-    protected ArrayList<Pair<Student,Integer>> studentResult;
+    protected ArrayList<Pair<Student, Double>> studentResult;
 
     protected void readDataOfClassroom()
     {
@@ -150,10 +151,11 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         initButtonOfLeftPanel(btnScoreBoard, "Bảng xếp hạng", 230);
 
         //Khởi tạo nút quay lại
-        JButton btnTurnBack = new JButton("Quay lại");
+        btnTurnBack = new JButton("Quay lại");
         btnTurnBack.setFocusable(false);
         btnTurnBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnTurnBack.setBounds(30,630,120,30);
+        btnTurnBack.addActionListener(this);
         pnLeft.add(btnTurnBack);
 
         this.add(pnLeft);
@@ -265,11 +267,11 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     private void sortStudentByPoint()
     {
-        Collections.sort(studentResult, new Comparator<Pair<Student,Integer>>() {
+        Collections.sort(studentResult, new Comparator<Pair<Student,Double>>() {
             @Override
             public int compare(Pair a, Pair b)
             {
-                if((Integer)a.getSecond() < (Integer)b.getSecond())
+                if((Double)a.getSecond() < (Double)b.getSecond())
                     return 1;
                 return -1;
             }
@@ -293,7 +295,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         Object[][] rowData = new Object[studentResult.size()][4];
 
         int index = 0;
-        for(Pair<Student, Integer> i: studentResult)
+        for(Pair<Student, Double> i: studentResult)
         {
             rowData[index][0] = index + 1;
             rowData[index][1] = i.getFirst().getId();
@@ -423,10 +425,9 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     //Làm bài tập
     protected void doExercise(String exerciseID)
     {
-        
         ExerciseManager.readData();
         this.dispose();
-        new DoExercise(ExerciseManager.getExerciseByTitle(exerciseID));
+        new DoExercise(ExerciseManager.getExerciseByTitle(exerciseID), classroom);
     }
 
     //Lắng nghe sự kiện chuột

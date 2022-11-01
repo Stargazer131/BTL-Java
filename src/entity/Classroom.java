@@ -14,7 +14,7 @@ public class Classroom implements Serializable
     private static final long serialVersionUID = 131202L;
     
     private String id, name, teacherName;
-    private ArrayList<Pair<Student, Integer>> studentIds;
+    private ArrayList<Pair<Student, Double>> studentIds;
     private ArrayList<EventMessage> eventMessages;
     private ArrayList<Exercise> eventExercise;
 
@@ -65,12 +65,12 @@ public class Classroom implements Serializable
 
     public void addAnStudent(Student s)
     {
-        this.studentIds.add(new Pair<Student,Integer>(s, 0));
+        this.studentIds.add(new Pair<Student,Double>(s, 0.0));
     }
 
-    public void studentDoExerciseResult(Student student, int point)
+    public void studentDoExerciseResult(Student student, double point)
     {
-        for(Pair<Student,Integer> i: studentIds)
+        for(Pair<Student,Double> i: studentIds)
         {
             if(i.getFirst().getId().equals(student.getId()))
             {
@@ -81,7 +81,7 @@ public class Classroom implements Serializable
         }
     }
 
-    public ArrayList<Pair<Student, Integer>>getStudentResult()
+    public ArrayList<Pair<Student, Double>>getStudentResult()
     {
         return studentIds;
     }

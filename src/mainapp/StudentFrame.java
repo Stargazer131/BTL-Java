@@ -58,11 +58,11 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         this.arrLClassroom = student.getListClassroom();
     }
 
-    public StudentFrame(String studentId)
+    public StudentFrame(Student student)
     {
         StudentManager.readData();
         ClassroomManager.readData();
-        this.student = StudentManager.findStudentById(studentId);
+        this.student = student;
         readData();
         
         initFrame();
@@ -238,7 +238,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         initClassroomButtons();
 
         scrollPane = new JScrollPane(tableOfClassrooms,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(200, 210, 960, 440);
+        scrollPane.setBounds(200, 210, 960, 480);
         scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -285,9 +285,14 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                     
                     ClassroomManager.findClassroomById(idClassroom).addAnStudent(student);
                     ClassroomManager.writeData();
+
                     createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size(), -1);
                     arrLClassroom.put(idClassroom, classroomTemp);
-                    StudentManager.addNewClassroom(this.student, classroomTemp);
+
+                    Student temp = StudentManager.findStudentById(student.getId());
+                    temp.addClassroomId(idClassroom, classroomTemp);
+                    StudentManager.writeData();
+
                     updatePanel(tableOfClassrooms);
                 }
             }
@@ -344,10 +349,5 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
     @Override
     public void mouseExited(MouseEvent e) {
         
-    }
-
-    public static void main(String[] args) 
-    {
-        new StudentFrame("B20DCCN503");
     }
 }

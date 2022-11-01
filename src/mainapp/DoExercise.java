@@ -24,15 +24,18 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import entity.Classroom;
 import entity.Exercise;
 import entity.Question;
 import generic.Pair;
+import launch.App;
 import manager.ClassroomManager;
-import manager.ExerciseManager;
 
 public class DoExercise extends JFrame implements ActionListener
 {
     private Exercise exercise;
+
+    private Classroom classroom;
 
     private JLabel lbtimeRemain,
                    lbQuestionFinished;
@@ -72,9 +75,10 @@ public class DoExercise extends JFrame implements ActionListener
         this.answersOfExercise = exercise.getAnswerOfExercise();
     }
     
-    public DoExercise(Exercise temp)
+    public DoExercise(Exercise exercise, Classroom classroom)
     {   
-        this.exercise = temp;
+        this.exercise = exercise;
+        this.classroom = classroom;
         readData();
 
         initFrame();
@@ -315,7 +319,6 @@ public class DoExercise extends JFrame implements ActionListener
             {
                 if( ((JRadioButton) arrTemp[index]).isSelected() && j == answersOfExercise.get(i).getSecond())
                 {
-                    System.out.println("Cau " +  (i + 1));
                     soCauDung++;
                     break;
                 }
@@ -324,14 +327,17 @@ public class DoExercise extends JFrame implements ActionListener
         }
 
         diem = Math.round( 1.0 * soCauDung / questions.size() * 100.0) / 100.0 * 10 ;
+
+        //Cập nhật lại điểm cho sinh viên trong lơp
+        classroom.studentDoExerciseResult(App.studentUser, diem);
+        ClassroomManager.writeData();
         
         int option = JOptionPane.showConfirmDialog(null, "Chúc mừng bạn đã đạt được " + String.format("%.2f",diem), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
     
         if(option == JOptionPane.OK_OPTION)
         {
-            
             this.dispose();
-            new ClassroomOfStudent(ClassroomManager.findClassroomById("triet01"));
+            new ClassroomOfStudent(classroom);
         }
     }
 
@@ -404,12 +410,5 @@ public class DoExercise extends JFrame implements ActionListener
         this.repaint();
 
         hideOrShowPreAndNextButton();
-    }
-    
-    public static void main(String[] args) 
-    {
-        ExerciseManager.readData();
-
-        new DoExercise(ExerciseManager.getExerciseByTitle("123"));
     }
 }
