@@ -2,8 +2,7 @@ package launch;
 
 import entity.Student;
 import entity.Teacher;
-import mainapp.StudentFrame;
-import mainapp.TeacherFrame;
+import inputform.LogInFrame;
 import manager.AccountManager;
 import manager.ClassroomManager;
 import manager.ExerciseManager;
@@ -27,12 +26,6 @@ public class App
         StudentManager.readData();
         TeacherManager.readData();
 
-        teacherUser = TeacherManager.findTeacherById("PHUC2405");
-
-        studentUser = StudentManager.findStudentById("B20DCCN503");
-
-        //new TeacherFrame(teacherUser);
-
-        new StudentFrame(studentUser);
+        new LogInFrame();
     }
 }

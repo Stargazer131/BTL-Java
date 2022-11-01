@@ -306,6 +306,7 @@ public class DoExercise extends JFrame implements ActionListener
     private void collectData()
     {
         double diem = 0;
+        
         int soCauDung = 0;
 
         questionPanel = pnQuestion.getComponents();

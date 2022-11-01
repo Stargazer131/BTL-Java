@@ -201,12 +201,4 @@ public class RegisterFrame extends JFrame implements ActionListener
         Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
     }
-
-    public static void main(String[] args) { // start the frame directly
-        java.awt.EventQueue.invokeLater(new Runnable() {
-              public void run() {
-                   new RegisterFrame();
-              }
-        });
-    } 
 }

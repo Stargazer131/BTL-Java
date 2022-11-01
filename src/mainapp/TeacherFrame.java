@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import entity.Classroom;
 import entity.Teacher;
+import inputform.LogInFrame;
+import launch.App;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -468,6 +470,12 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
             {
                 deleteClass();
             }
+        }
+        else if(e.getSource() == btnLogOut)
+        {
+            App.teacherUser = null;
+            this.dispose();
+            new LogInFrame();
         }
         else
         {

@@ -87,7 +87,6 @@ public class QuestionBank extends JFrame implements ActionListener
 
     private void deleteQuestion(int index)
     {
-        System.out.println(panelMain.getComponents().length);
         Component lisComponent[] = panelMain.getComponents();
         for(int i = index ; i < lisComponent.length - 1 ; i ++)
         {
@@ -275,7 +274,6 @@ public class QuestionBank extends JFrame implements ActionListener
                     answerKeys.add(new Pair<String,Boolean>(questionAnswer[x], false));
             }
             Question temp = new Question(questionID, questionTitle, answerKeys, questionAnswerKey, trueAnswer);
-            System.out.println(temp);
             if( ((JRadioButton) elementList[elementList.length - 2]).isSelected() && option.equals("Tao bai tap"))
                 questionsOfAnExercise.add(temp);
 
@@ -310,8 +308,6 @@ public class QuestionBank extends JFrame implements ActionListener
         }
 
         updatePanel(panelMain);
-
-        System.out.println(QuestionManager.questions.size());
     }
 
     private void turnBackToClassroom()

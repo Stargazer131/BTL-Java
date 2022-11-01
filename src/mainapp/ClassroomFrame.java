@@ -300,7 +300,6 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
             rowData[index][0] = index + 1;
             rowData[index][1] = i.getFirst().getId();
             rowData[index][2] = i.getFirst().getName();
-            Integer num = new Random().nextInt(0, 1000);
             rowData[index][3] =  i.getSecond();
             index++;
         }
@@ -353,12 +352,11 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         sortRankingByColumn(3);
     }
 
-    private void insertNewRow(Object[] data, int index) // chen them 1 dong vao bang xep hang
-    {
-        DefaultTableModel model = (DefaultTableModel)rankingOfStudentTable.getModel();
-        model.insertRow(index, data);
-    }
-
+    // private void insertNewRow(Object[] data, int index) // chen them 1 dong vao bang xep hang
+    // {
+    //     DefaultTableModel model = (DefaultTableModel)rankingOfStudentTable.getModel();
+    //     model.insertRow(index, data);
+    // }
 
     protected void deleteRow(int index) // xoa 1 dong khoi bang xep hang
     {
@@ -378,13 +376,12 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         rankingOfStudentTable.getRowSorter();
     }
 
-
-    private static ImageIcon resizeImage(ImageIcon imageIcon)  // resize icon to fit in the frame
-    {
-        Image image = imageIcon.getImage(); // transform it 
-        Image newImage = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scale it the smooth way  
-        return new ImageIcon(newImage);
-    }
+    // private static ImageIcon resizeImage(ImageIcon imageIcon)  // resize icon to fit in the frame
+    // {
+    //     Image image = imageIcon.getImage(); // transform it 
+    //     Image newImage = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scale it the smooth way  
+    //     return new ImageIcon(newImage);
+    // }
 
     protected void hideAndShowAnPanel()
     {

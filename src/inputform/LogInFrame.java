@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,7 +26,7 @@ import manager.AccountManager;
 import manager.StudentManager;
 import manager.TeacherManager;
 
-public class LogInFrame extends JFrame implements ActionListener
+public class LogInFrame extends JFrame implements ActionListener, KeyListener
 {
     private JPanel panelUp;
     private JLabel lblUserName, lblPassWord;
@@ -98,7 +100,7 @@ public class LogInFrame extends JFrame implements ActionListener
         btnLogIn = new JButton("Dang nhap");   // create button Log in
         btnLogIn.setFocusable(false);
         btnLogIn.addActionListener(this);
-        btnLogIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));      
+        btnLogIn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));   
         btnLogIn.setBounds(20, 15, 120, 30);
        
         
@@ -113,38 +115,42 @@ public class LogInFrame extends JFrame implements ActionListener
         this.add(panelDown);
     }
 
+    private void logInSuccess()
+    {
+        AccountManager.readData();
+        String username = txtUserName.getText();     // get data from keyboard
+        String password = String.valueOf(txtPassWord.getPassword());
+        Account account;
+        if((account = AccountManager.findAccount(username, password)) != null)  // if the account is valid
+        {
+            if(account.isStudent())
+            {
+                this.dispose();
+                App.studentUser = StudentManager.findStudentById(account.getId());
+                new StudentFrame(App.studentUser);
+            }
+
+            else  // teacher account
+            {
+                this.dispose();
+                App.teacherUser = TeacherManager.findTeacherById(account.getId());
+                new TeacherFrame(App.teacherUser);
+            }
+        }
+
+        else   // display the error message                
+        {
+            JOptionPane.showMessageDialog(this, "Tai khoan hoac Mat khau khong dung",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e)        // when click the buttons
     {
         if(e.getSource() == btnLogIn)                 // if button is LOG IN
         {
-            AccountManager.readData();
-            String username = txtUserName.getText();     // get data from keyboard
-            String password = String.valueOf(txtPassWord.getPassword());
-            Account account;
-            if((account = AccountManager.findAccount(username, password)) != null)  // if the account is valid
-            {
-                if(account.isStudent())  // student account
-                {
-                    StudentManager.readData();
-                    this.dispose();
-                    new StudentFrame(StudentManager.findStudentById(account.getId()));
-                }
-
-                else  // teacher account
-                {
-                    TeacherManager.readData();
-                    this.dispose();
-                    new TeacherFrame(TeacherManager.findTeacherById(account.getId()));
-                }
-            }
-
-            else   // display the error message                
-            {
-                JOptionPane.showMessageDialog(this, "Tai khoan hoac Mat khau khong dung",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            logInSuccess();
         }
         
         else if(e.getSource() == btnCreateNewAccount)         // if button is create, open register window
@@ -158,5 +164,25 @@ public class LogInFrame extends JFrame implements ActionListener
         Image image = imageIcon.getImage(); // transform it 
         Image newImage = image.getScaledInstance(90, 90, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        System.out.println(e.getKeyCode());
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) 
+    {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            logInSuccess();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        System.out.println(e.getKeyCode());
     }
 }

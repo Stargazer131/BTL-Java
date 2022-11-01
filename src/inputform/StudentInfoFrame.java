@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -22,7 +24,7 @@ import manager.StudentManager;
 import utility.Checker;
 import utility.Formatter;
 
-public class StudentInfoFrame extends JFrame implements ActionListener
+public class StudentInfoFrame extends JFrame implements ActionListener, KeyListener
 {
     private JPanel panelLeft;
     private JLabel lblId, lblName, lblGender, lblBirthday;          // for the left side
@@ -230,6 +232,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         {
             createAccount();
         }    
+        
     }
 
     private void createAccount()
@@ -325,5 +328,26 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         StudentManager.readData();
         //StudentManager.writeData();
         new StudentInfoFrame("", "");
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) 
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) 
+    {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            createAccount();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) 
+    {
     }
 } 

@@ -9,6 +9,13 @@
             "name": "Launch RegisterFrame",
             "request": "launch",
             "mainClass": "inputform.RegisterFrame",
+            "projectName": "BTL-Java-master(1)_3263e158"
+        },
+        {
+            "type": "java",
+            "name": "Launch RegisterFrame",
+            "request": "launch",
+            "mainClass": "inputform.RegisterFrame",
             "projectName": "BTL-Java_c5da0f6e"
         },
         {
