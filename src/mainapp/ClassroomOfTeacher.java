@@ -129,17 +129,17 @@ public class ClassroomOfTeacher extends ClassroomFrame
 
             if(option == JOptionPane.OK_OPTION)
             {
-                studentRightClick.deleteClassroomId(classroom.getId());
-                //StudentManager.writeData();
+                StudentManager.findStudentById(studentRightClick.getId()).deleteClassroomId(classroom.getId());
+
+                StudentManager.writeData();
 
                 studentResult.remove(indexStudentRightClick);
 
-                //ClassroomManager.writeData();
+                ClassroomManager.writeData();
 
                 pnOfThisClassroom.get(2).remove(rankingOfStudentTable);
 
-                //initRakingOfStudentTable();
-                updatePanel(pnCurrentDisplay);
+                deleteRow(indexStudentRightClick);
             }
         }
     }

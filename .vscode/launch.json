@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch DoExercise",
+            "request": "launch",
+            "mainClass": "mainapp.DoExercise",
+            "projectName": "BTL-Java-master(1)_3263e158"
+        },
+        {
+            "type": "java",
             "name": "Launch StudentInfoFrame",
             "request": "launch",
             "mainClass": "inputform.StudentInfoFrame",

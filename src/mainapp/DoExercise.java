@@ -92,7 +92,7 @@ public class DoExercise extends JFrame implements ActionListener
             @Override
             public void run()
             {
-                while(exerciseTimeRemain > 0)
+                while(exerciseTimeRemain > 0 && !exerciseFinish)
                 {
                     exerciseTimeRemain --;
 
@@ -106,8 +106,12 @@ public class DoExercise extends JFrame implements ActionListener
 
                     lbtimeRemain.setText("Thời gian còn lại: " + exerciseTimeRemain);
                 }
-                JOptionPane.showConfirmDialog(null, "Đã hết thời gian làm bài!", " Thông báo", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
-                collectData();
+
+                if(exerciseTimeRemain == 0)
+                {
+                    JOptionPane.showConfirmDialog(null, "Đã hết thời gian làm bài!", " Thông báo", JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+                    collectData();
+                }
             }
         }
 
@@ -344,10 +348,10 @@ public class DoExercise extends JFrame implements ActionListener
         {
             if(exerciseTimeRemain > 0)
             {
-                exerciseFinish = true;
                 int option = JOptionPane.showConfirmDialog(null, "Chưa hết thời gian làm bài, bạn có muốn nộp bài sớm ?","Thông báo", JOptionPane.OK_CANCEL_OPTION);
                 if(option == JOptionPane.OK_OPTION)
                 {
+                    exerciseFinish = true;
                     collectData();
                 }
             }
