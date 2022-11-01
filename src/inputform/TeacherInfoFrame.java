@@ -118,7 +118,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
     
             else // create new admin account
             {   
-                AccountManager.addAccount(new Account(username, password, id)); // add account to database
+                AccountManager.addAccount(new Account(username, password, id, false)); // add account to database
                 TeacherManager.addTeacher(new Teacher(id, name)); // add teacher to database
     
                 JOptionPane.showMessageDialog(this, "Dang ky thanh cong!", // show message

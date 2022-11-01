@@ -303,7 +303,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     
             else // create account
             { 
-                AccountManager.addAccount(new Account(username, password, id));  // add the account to database
+                AccountManager.addAccount(new Account(username, password, id, true));  // add the account to database
                 StudentManager.addStudent(new Student(id, name, gender, birthday, address, group, email, phoneNumber)); // add the student to database
                 
                 JOptionPane.showMessageDialog(this, "Dang ky thanh cong!",

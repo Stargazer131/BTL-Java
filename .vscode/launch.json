@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch RegisterFrame",
+            "request": "launch",
+            "mainClass": "inputform.RegisterFrame",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "launch.App",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
             "name": "Launch DoExercise",
             "request": "launch",
             "mainClass": "mainapp.DoExercise",

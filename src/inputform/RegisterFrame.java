@@ -1,45 +1,41 @@
 package inputform;
 
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import manager.AccountManager;
 import utility.Checker;
 
 public class RegisterFrame extends JFrame implements ActionListener 
 {
-    private JPanel panelUp;              // for the top size
+    private JPanel topPanel;  // for the top side
+    private JRadioButton teacherCheckbox, studentCheckbox;
+    private ButtonGroup group;
+    private JLabel lblTeacher, lblStudent; 
+    
+    private JPanel middlePanel;              // for the middle side
     private JLabel lblUserName, lblPassWord;
     private JTextField txtUserName;
     private JPasswordField txtPassWord;
     
-    private JPanel panelDown;   // for the down size
+    private JPanel bottomPanel;   // for the bottom side
     private JButton btnNext;
     
     public RegisterFrame()
     {
         initFrame();
-        initPanelUp();
-        initPanelDown();
+        initTopPanel();
+        initMiddlePanel();
+        initBottomPanel();
         this.setVisible(true);
     }
 
     private void initFrame() // create the main window
     {
-        this.setBounds(600, 200, 350, 300);
+        this.setBounds(550, 150, 400, 400);
         this.setTitle("Dang ky");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(null);
@@ -48,59 +44,101 @@ public class RegisterFrame extends JFrame implements ActionListener
         this.setIconImage(icon.getImage());
     }
 
-    private void initPanelUp() 
+    private void initTopPanel()
     {
-        panelUp = new JPanel();
-        panelUp.setBounds(0, 0, 350, 200);    // create the top panel
-        panelUp.setLayout(null);
+        topPanel = new JPanel();
+        topPanel.setBounds(0, 0, 400, 100);    // create the top panel
+        topPanel.setLayout(null);
+
+
+        ImageIcon iconStudent = new ImageIcon("resources\\images\\Avatar\\Student.png");  // create label and add icon to it
+        lblStudent = new JLabel("Sinh vien", resizeImage(iconStudent, 50, 50), JLabel.CENTER);                              
+        lblStudent.setHorizontalTextPosition(JLabel.RIGHT);
+        lblStudent.setBounds(50, 40, 120, 50);
+
+
+        studentCheckbox = new JRadioButton();
+        studentCheckbox.setBounds(30, 55, 20, 20);
+        studentCheckbox.setSelected(true);
+
+
+        ImageIcon iconTeacher = new ImageIcon("resources\\images\\Avatar\\Admin.png");  // create label and add icon to it
+        lblTeacher = new JLabel("Giao vien", resizeImage(iconTeacher, 50, 50), JLabel.CENTER);                              
+        lblTeacher.setHorizontalTextPosition(JLabel.RIGHT);
+        lblTeacher.setBounds(240, 40, 120, 50);
+
+
+        teacherCheckbox = new JRadioButton();
+        teacherCheckbox.setBounds(220, 55, 20, 20);
+
+
+        group = new ButtonGroup();
+        group.add(studentCheckbox);
+        group.add(teacherCheckbox);
+
+
+        topPanel.add(lblStudent);
+        topPanel.add(studentCheckbox);
+        topPanel.add(lblTeacher);
+        topPanel.add(teacherCheckbox);
+        
+        this.add(topPanel);
+    }
+
+    private void initMiddlePanel() 
+    {
+        middlePanel = new JPanel();
+        middlePanel.setBounds(0, 100, 400, 200);    // create the top panel
+        middlePanel.setLayout(null);
 
         
         ImageIcon iconUserName = new ImageIcon("resources\\images\\ProfileIcon\\UserName.png");  // create label and add icon to it
-        lblUserName = new JLabel("Tai khoan", resizeImage(iconUserName), JLabel.CENTER);                              
+        lblUserName = new JLabel("Tai khoan", resizeImage(iconUserName, 30, 30), JLabel.CENTER);                              
         lblUserName.setHorizontalTextPosition(JLabel.RIGHT);
-        lblUserName.setBounds(40, 80, 100, 30);
+        lblUserName.setBounds(50, 80, 100, 30);
         
 
         ImageIcon iconPassword = new ImageIcon("resources\\images\\ProfileIcon\\Password.png");
-        lblPassWord = new JLabel("Mat khau", resizeImage(iconPassword), JLabel.CENTER);    
+        lblPassWord = new JLabel("Mat khau", resizeImage(iconPassword, 30, 30), JLabel.CENTER);    
         lblPassWord.setHorizontalTextPosition(JLabel.RIGHT);
-        lblPassWord.setBounds(40, 130, 100, 30);
+        lblPassWord.setBounds(50, 130, 100, 30);
                
 
         txtUserName = new JTextField();      // create text field and add tool tip text 
         txtUserName.setToolTipText("Chi co chu so va chu cai, do dai tu 4 den 20");
         txtUserName.setBorder(BorderFactory.createLoweredBevelBorder()); 
         txtUserName.setFont(new Font("Afical Neue", Font.PLAIN, 13));
-        txtUserName.setBounds(150, 80, 150, 30);
+        txtUserName.setBounds(160, 80, 150, 30);
         
+
         txtPassWord = new JPasswordField();
         txtPassWord.setToolTipText("Co it nhat 1 chu cai thuong, 1 chu cai hoa, 1 chu so, do dai lon hon 5 va khong co ky tu dac biet");
         txtPassWord.setBorder(BorderFactory.createLoweredBevelBorder());
         txtPassWord.setFont(new Font("Afical Neue", Font.PLAIN, 13));
-        txtPassWord.setBounds(150, 130, 150, 30);
+        txtPassWord.setBounds(160, 130, 150, 30);
 
         
-        panelUp.add(lblUserName);      // add components
-        panelUp.add(lblPassWord);
-        panelUp.add(txtUserName);
-        panelUp.add(txtPassWord);
-        this.add(panelUp);
+        middlePanel.add(lblUserName);      // add components
+        middlePanel.add(lblPassWord);
+        middlePanel.add(txtUserName);
+        middlePanel.add(txtPassWord);
+        this.add(middlePanel);
     }
 
-    private void initPanelDown() 
+    private void initBottomPanel() 
     {
-        panelDown = new JPanel();       // create the bottom panel                
-        panelDown.setBounds(0, 200, 350, 100);
-        panelDown.setLayout(null);
+        bottomPanel = new JPanel();       // create the bottom panel                
+        bottomPanel.setBounds(0, 300, 400, 100);
+        bottomPanel.setLayout(null);
         
         btnNext = new JButton("Tiep");                                     // create the button
         btnNext.setFocusable(false);
-        btnNext.setBounds(115, 15, 100, 30);
+        btnNext.setBounds(135, 15, 100, 30);
         btnNext.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));   // change the cursor
         btnNext.addActionListener(this);
 
-        panelDown.add(btnNext);
-        this.add(panelDown);
+        bottomPanel.add(btnNext);
+        this.add(bottomPanel);
     }
 
 
@@ -145,7 +183,7 @@ public class RegisterFrame extends JFrame implements ActionListener
         else
         {
             this.dispose();
-            if(username.startsWith("gvptit"))  // create teacher (admin) account 
+            if(teacherCheckbox.isSelected())  // create teacher (admin) account 
             {
                 new TeacherInfoFrame(username, password);
             }
@@ -157,18 +195,18 @@ public class RegisterFrame extends JFrame implements ActionListener
         }
     }
 
-    private static ImageIcon resizeImage(ImageIcon imageIcon)  // resize icon to fit in the frame
+    private static ImageIcon resizeImage(ImageIcon imageIcon, int width, int height)  // resize icon to fit in the frame
     {
         Image image = imageIcon.getImage(); // transform it 
-        Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // scale it the smooth way  
+        Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
     }
 
-    // public static void main(String[] args) { // start the frame directly
-    //     java.awt.EventQueue.invokeLater(new Runnable() {
-    //           public void run() {
-    //                new RegisterFrame();
-    //           }
-    //     });
-    // } 
+    public static void main(String[] args) { // start the frame directly
+        java.awt.EventQueue.invokeLater(new Runnable() {
+              public void run() {
+                   new RegisterFrame();
+              }
+        });
+    } 
 }

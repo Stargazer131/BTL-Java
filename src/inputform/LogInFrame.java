@@ -20,6 +20,7 @@ import entity.Account;
 import mainapp.StudentFrame;
 import mainapp.TeacherFrame;
 import manager.AccountManager;
+import manager.StudentManager;
 import manager.TeacherManager;
 
 public class LogInFrame extends JFrame implements ActionListener
@@ -123,17 +124,18 @@ public class LogInFrame extends JFrame implements ActionListener
             Account account;
             if((account = AccountManager.findAccount(username, password)) != null)  // if the account is valid
             {
-                if(username.startsWith("gvptit"))  // teacher account
+                if(account.isStudent())  // student account
+                {
+                    StudentManager.readData();
+                    this.dispose();
+                    new StudentFrame(StudentManager.findStudentById(account.getId()));
+                }
+
+                else  // teacher account
                 {
                     TeacherManager.readData();
                     this.dispose();
                     new TeacherFrame(TeacherManager.findTeacherById(account.getId()));
-                }
-
-                else  // student account
-                {
-                    this.dispose();
-                    new StudentFrame(account.getId());
                 }
             }
 

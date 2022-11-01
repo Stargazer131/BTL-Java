@@ -58,11 +58,11 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         this.arrLClassroom = student.getListClassroom();
     }
 
-    public StudentFrame(String studentId)
+    public StudentFrame(Student STUDENT)
     {
         StudentManager.readData();
         ClassroomManager.readData();
-        this.student = StudentManager.findStudentById(studentId);
+        this.student = STUDENT;
         readData();
         
         initFrame();
@@ -346,8 +346,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         
     }
 
-    public static void main(String[] args) 
-    {
-        new StudentFrame("B20DCCN503");
-    }
+    // public static void main(String[] args) 
+    // {
+    //     new StudentFrame("B20DCCN503");
+    // }
 }

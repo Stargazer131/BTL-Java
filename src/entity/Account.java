@@ -9,12 +9,14 @@ public class Account implements Serializable
     private String username;
     private String password;
     private String id;
+    private boolean isStudent;
 
-    public Account(String username, String password, String id)
+    public Account(String username, String password, String id, boolean isStudent)
     {
         this.username = username;
         this.password = password;
         this.id = id;
+        this.isStudent = isStudent;
     }
 
     public String getUsername()
@@ -30,5 +32,10 @@ public class Account implements Serializable
     public String getId()
     {
         return id;
+    }
+
+    public boolean isStudent()
+    {
+        return isStudent;
     }
 }
