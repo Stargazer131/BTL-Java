@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import entity.Account;
+import launch.App;
 import mainapp.StudentFrame;
 import mainapp.TeacherFrame;
 import manager.AccountManager;

@@ -9,6 +9,7 @@ import manager.ExerciseManager;
 import manager.QuestionManager;
 import manager.StudentManager;
 import entity.*;
+import launch.App;
 
 public class ClassroomOfTeacher extends ClassroomFrame
 {
@@ -142,6 +143,11 @@ public class ClassroomOfTeacher extends ClassroomFrame
                 deleteRow(indexStudentRightClick);
             }
         }
+        else if(e.getSource() == btnTurnBack)
+        {
+            this.dispose();
+            new TeacherFrame(App.teacherUser);
+        }
     }
 
     //Bắt sự kiện chuột khi nhấn
@@ -179,17 +185,4 @@ public class ClassroomOfTeacher extends ClassroomFrame
             createAMessage(newExercise, "Exercise");
         }
     }
-
-    public static void main(String[] args) 
-    {
-        QuestionManager.readData();
-        ClassroomManager.readData();
-        ExerciseManager.readData();
-        StudentManager.readData();
-
-        Classroom temp = ClassroomManager.findClassroomById("triet01");
-
-        new ClassroomOfTeacher(temp);
-    }
-
 }

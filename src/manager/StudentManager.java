@@ -52,10 +52,10 @@ public class StudentManager
         }
 
         //In ra danh sách học sinh
-        for(String i: students.keySet())
-        {
-            System.out.println(i);
-        }
+        // for(String i: students.keySet())
+        // {
+        //     System.out.println(i);
+        // }
     }
 
     // Update data back in the student.dat 
