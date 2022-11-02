@@ -1,41 +1,18 @@
 package mainapp;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.TreeMap;
-import java.awt.GridBagLayout;
-
-import java.awt.GridBagConstraints;
-import java.awt.BorderLayout;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.Font;
 
-import entity.Classroom;
-import entity.Student;
-import generic.Triplet;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.table.*;
+
+import generic.Pair;
 import manager.ClassroomManager;
+import manager.ExerciseManager;
 import manager.StudentManager;
-import manager.TeacherManager;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import entity.*;
 
 public class StudentFrame extends JFrame implements ActionListener, MouseListener
 {
@@ -49,7 +26,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private TreeMap<String,Classroom> arrLClassroom;
 
-    private JButton btnJoin, btnRefresh;
+    private JButton btnJoin;
 
     GridBagConstraints gbc = new GridBagConstraints();
 
@@ -63,7 +40,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         StudentManager.readData();
         ClassroomManager.readData();
         this.student = STUDENT;
-        readData();
         
         initFrame();
         initAvatar();
@@ -202,13 +178,15 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initClassroomButtons()
     {
+        System.out.println("Viet lai");
+
         int index = 0 ;
         
         ArrayList<String> indexOfClassroomDeleted = new ArrayList<>();
 
         for(String i: arrLClassroom.keySet())
         {
-            if(ClassroomManager.findClassroomById(i) == null)
+            if(!ClassroomManager.findClassroomById(i).getTimeCreate().equals(arrLClassroom.get(i).getTimeCreate()))
             {
                 indexOfClassroomDeleted.add(i);
                 continue;
@@ -230,6 +208,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initTable()  // create the table of classroom
     {
+        readData();
+
         gbc.insets = new Insets(0,5,10, 15);
 
         tableOfClassrooms = new JPanel();
@@ -304,15 +284,41 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         else
         {
             String classroomID = ( (JLabel) ((JButton) e.getSource()).getComponent(0)).getText();
-            this.dispose();
-            new ClassroomOfStudent(ClassroomManager.findClassroomById(classroomID) );
+
+            Boolean checkExitsClassroom = false;
+            
+            Classroom openClassroom = ClassroomManager.findClassroomById(classroomID);
+            ArrayList<Pair<Student, Double>> studentList = openClassroom.getStudentResult();
+
+            for(Pair<Student, Double> i: studentList)
+            {
+                if(i.getFirst() == student)
+                {
+                    this.dispose();
+                    new ClassroomOfStudent(openClassroom);
+                    checkExitsClassroom = true;
+                    break;
+                }
+            }
+            if(!checkExitsClassroom)
+            {
+                JOptionPane.showMessageDialog(null, "Bạn không phải là thành viên của lớp học này","Thông báo",JOptionPane.ERROR_MESSAGE);
+                
+                this.arrLClassroom.remove(classroomID);
+                
+                StudentManager.writeData();
+
+                tableOfClassrooms.remove((JButton) e.getSource());
+
+                updatePanel(tableOfClassrooms);
+            }
         }
     } 
 
-    private void updatePanel(JPanel temp)
+    protected void updatePanel(Object temp)
     {
-        temp.revalidate(); 
-        temp.repaint();
+        ((Component) temp).revalidate(); 
+        ((Component) temp).repaint();
     }
 
     private static ImageIcon resizeImage(ImageIcon imageIcon)  // resize icon to fit in the frame

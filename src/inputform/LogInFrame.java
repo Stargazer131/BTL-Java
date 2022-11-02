@@ -26,7 +26,7 @@ import manager.AccountManager;
 import manager.StudentManager;
 import manager.TeacherManager;
 
-public class LogInFrame extends JFrame implements ActionListener, KeyListener
+public class LogInFrame extends JFrame implements ActionListener
 {
     private JPanel panelUp;
     private JLabel lblUserName, lblPassWord;
@@ -43,6 +43,7 @@ public class LogInFrame extends JFrame implements ActionListener, KeyListener
         initPanelUp();
         initPanelDown();
         this.setVisible(true);
+
     }
 
     private void initFrame()  // create the main window
@@ -164,25 +165,5 @@ public class LogInFrame extends JFrame implements ActionListener, KeyListener
         Image image = imageIcon.getImage(); // transform it 
         Image newImage = image.getScaledInstance(90, 90, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        System.out.println(e.getKeyCode());
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) 
-    {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
-            logInSuccess();
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        System.out.println(e.getKeyCode());
     }
 }

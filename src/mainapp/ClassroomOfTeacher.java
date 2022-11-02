@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import manager.ClassroomManager;
-import manager.ExerciseManager;
-import manager.QuestionManager;
 import manager.StudentManager;
 import entity.*;
 import launch.App;
@@ -169,6 +167,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
                 super.classroom.addAnEventMessage(temp);
                 ClassroomManager.writeData();
                 pnOfThisClassroom.get(0).remove(event_Messages.size() - 1);
+                
                 //Tạo 1 tin nhắn mới
                 createAMessage(temp, "Message");
             }
@@ -177,12 +176,15 @@ public class ClassroomOfTeacher extends ClassroomFrame
         {
             this.dispose();
             new QuestionBank(this.classroom);
-            pnOfThisClassroom.get(0).remove(event_Messages.size() - 1);
+            pnOfThisClassroom.get(1).remove(pnOfThisClassroom.get(1).getComponentCount() - 1);
 
-            Exercise newExercise = classroom.getExercise().get(classroom.getExercise().size() - 1);
+            if(listOfExercises.size() > 0)
+            {
+                Exercise newExercise = classroom.getExercise().get(listOfExercises.size() - 1);
             
-            //Tạo 1 bài tập mới
-            createAMessage(newExercise, "Exercise");
+                //Tạo 1 bài tập mới
+                createAMessage(newExercise, "Exercise");
+            }    
         }
     }
 }

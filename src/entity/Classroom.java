@@ -1,19 +1,27 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import generic.Pair;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 
 public class Classroom implements Serializable 
 {
     private static final long serialVersionUID = 131202L;
     
-    private String id, name, teacherName;
+    private String id, 
+                   name, 
+                   teacherName,
+                   timeCreate;
     private ArrayList<Pair<Student, Double>> studentIds;
     private ArrayList<EventMessage> eventMessages;
     private ArrayList<Exercise> eventExercise;
+
+    private static SimpleDateFormat sfdHours = new SimpleDateFormat("HH:mm:ss"),
+                                    sdfDay = new SimpleDateFormat("DD/MM/YYYY");
 
     public Classroom(String id, String name, String teacherName)
     {
@@ -23,6 +31,9 @@ public class Classroom implements Serializable
         studentIds = new ArrayList<>();
         eventMessages = new ArrayList<>();
         eventExercise = new ArrayList<>();
+
+        Date d = new Date();
+        this.timeCreate = String.format("%s_%s", sfdHours.format(d), sdfDay.format(d));
     }    
 
     public String getId()
@@ -81,5 +92,10 @@ public class Classroom implements Serializable
     public ArrayList<Pair<Student, Double>>getStudentResult()
     {
         return studentIds;
+    }
+
+    public String getTimeCreate()
+    {
+        return this.timeCreate;
     }
 }

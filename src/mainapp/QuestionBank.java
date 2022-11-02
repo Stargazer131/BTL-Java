@@ -313,7 +313,7 @@ public class QuestionBank extends JFrame implements ActionListener
     private void turnBackToClassroom()
     {
         this.dispose();
-        new ClassroomOfTeacher(ClassroomManager.findClassroomById("triet01"));
+        new ClassroomOfTeacher(ClassroomManager.findClassroomById(classroom.getId()));
     }
     
     @Override

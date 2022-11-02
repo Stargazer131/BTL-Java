@@ -3,7 +3,9 @@ package mainapp;
 import javax.swing.*;
 
 import entity.Classroom;
+import entity.Student;
 import entity.Teacher;
+import generic.Pair;
 import inputform.LogInFrame;
 import launch.App;
 
@@ -469,6 +471,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
             if(deleteOption == JOptionPane.OK_OPTION)
             {
                 deleteClass();
+
             }
         }
         else if(e.getSource() == btnLogOut)
