@@ -186,7 +186,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
         for(String i: arrLClassroom.keySet())
         {
-            if(!ClassroomManager.findClassroomById(i).getTimeCreate().equals(arrLClassroom.get(i).getTimeCreate()))
+            if(ClassroomManager.findClassroomById(i) == null || !ClassroomManager.findClassroomById(i).getTimeCreate().equals(arrLClassroom.get(i).getTimeCreate()))
             {
                 indexOfClassroomDeleted.add(i);
                 continue;
