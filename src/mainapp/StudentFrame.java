@@ -9,6 +9,7 @@ import java.util.*;
 import javax.swing.table.*;
 
 import generic.Pair;
+import launch.App;
 import manager.ClassroomManager;
 import manager.ExerciseManager;
 import manager.StudentManager;
@@ -184,9 +185,12 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         
         ArrayList<String> indexOfClassroomDeleted = new ArrayList<>();
 
+        //Kiểm tra xem trong danh sách lớp học của học sinh xem có lớp học nào không hợp lệ
         for(String i: arrLClassroom.keySet())
         {
-            if(ClassroomManager.findClassroomById(i) == null || !ClassroomManager.findClassroomById(i).getTimeCreate().equals(arrLClassroom.get(i).getTimeCreate()))
+            Classroom checkClassroom = ClassroomManager.findClassroomById(i);
+
+            if(checkClassroom == null || !checkClassroom.getTimeCreate().equals(arrLClassroom.get(i).getTimeCreate()))
             {
                 indexOfClassroomDeleted.add(i);
                 continue;
@@ -198,6 +202,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             }
         }
 
+        //Xoá các lớp học không hợp lệ
         for(String i: indexOfClassroomDeleted)
         {
             arrLClassroom.remove(i);
@@ -234,6 +239,45 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         btnJoin.addActionListener(this);
 
         this.add(btnJoin);
+    }
+
+    private String getIDofClassroomButton(JButton temp)
+    {
+        return ((JLabel) temp.getComponent(0)).getText();
+    }
+
+    private void deleteClass(JButton temp)
+    {
+        String idDeleteClass = getIDofClassroomButton(temp);
+
+        int index = 0;
+
+        for(String i: arrLClassroom.keySet())
+        {
+            if(i.equals(idDeleteClass))
+            {
+                arrLClassroom.remove(i);
+                break;
+            }
+            index ++;
+        }
+        
+        this.tableOfClassrooms.remove(temp);
+
+        Component[] arrComponents = tableOfClassrooms.getComponents();
+        
+        for(int i = index; i < arrComponents.length - 1; i++)
+        {
+            gbc.gridx = i % 5;
+            gbc.gridy = i / 5;
+            JButton btnNewClass = (JButton) arrComponents[i];
+            tableOfClassrooms.add(btnNewClass, gbc, i);
+        }
+        //Khởi tạo lại vị trí của nút tạo lớp mớ
+
+        StudentManager.writeData();
+
+        updatePanel(tableOfClassrooms);
     }
 
     @Override
@@ -283,6 +327,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         }
         else
         {
+            ClassroomManager.readData();
+
             String classroomID = ( (JLabel) ((JButton) e.getSource()).getComponent(0)).getText();
 
             Boolean checkExitsClassroom = false;
@@ -292,8 +338,9 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
             for(Pair<Student, Double> i: studentList)
             {
-                if(i.getFirst() == student)
+                if(i.getFirst().getId().equals(App.studentUser.getId()))
                 {
+                    System.out.println("OK");
                     this.dispose();
                     new ClassroomOfStudent(openClassroom);
                     checkExitsClassroom = true;
@@ -305,12 +352,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 JOptionPane.showMessageDialog(null, "Bạn không phải là thành viên của lớp học này","Thông báo",JOptionPane.ERROR_MESSAGE);
                 
                 this.arrLClassroom.remove(classroomID);
-                
-                StudentManager.writeData();
 
-                tableOfClassrooms.remove((JButton) e.getSource());
-
-                updatePanel(tableOfClassrooms);
+                deleteClass((JButton) e.getSource());
             }
         }
     } 

@@ -132,6 +132,8 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         tableOfClassrooms.remove(btnCreateClass);
         createNewClassButton();
 
+        TeacherManager.writeData();
+
         this.teacher.setClassrooms(arrLClassroom);
         TeacherManager.addTeacher(teacher);
 
