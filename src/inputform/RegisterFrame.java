@@ -1,10 +1,24 @@
 package inputform;
 
-import java.awt.*;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import manager.AccountManager;
 import utility.Checker;
@@ -30,6 +44,7 @@ public class RegisterFrame extends JFrame implements ActionListener
         initTopPanel();
         initMiddlePanel();
         initBottomPanel();
+        initKeyBindings();
         this.setVisible(true);
     }
 
@@ -42,6 +57,23 @@ public class RegisterFrame extends JFrame implements ActionListener
         this.setResizable(false);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
         this.setIconImage(icon.getImage());
+    }
+
+    private void initKeyBindings() // neu bam enter 
+    {
+        EnterAction enterAction = new EnterAction();
+        
+        txtPassWord.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtPassWord.getActionMap().put("enterAction", enterAction);
+
+        txtUserName.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtUserName.getActionMap().put("enterAction", enterAction);
+
+        teacherCheckbox.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        teacherCheckbox.getActionMap().put("enterAction", enterAction);
+
+        studentCheckbox.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        studentCheckbox.getActionMap().put("enterAction", enterAction);
     }
 
     private void initTopPanel()
@@ -200,5 +232,13 @@ public class RegisterFrame extends JFrame implements ActionListener
         Image image = imageIcon.getImage(); // transform it 
         Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
+    }
+
+    public class EnterAction extends AbstractAction
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            createAccount();
+        }
     }
 }

@@ -5,9 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import entity.Account;
 import entity.Student;
@@ -24,7 +24,7 @@ import manager.StudentManager;
 import utility.Checker;
 import utility.Formatter;
 
-public class StudentInfoFrame extends JFrame implements ActionListener, KeyListener
+public class StudentInfoFrame extends JFrame implements ActionListener
 {
     private JPanel panelLeft;
     private JLabel lblId, lblName, lblGender, lblBirthday;          // for the left side
@@ -47,6 +47,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener, KeyListe
         initPanelLeft();
         initPanelRight();
         initPanelDown();
+        initKeyBindings();
         this.setVisible(true);
     }
 
@@ -59,6 +60,35 @@ public class StudentInfoFrame extends JFrame implements ActionListener, KeyListe
         this.setResizable(false);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
         this.setIconImage(icon.getImage());
+    }
+
+    private void initKeyBindings() // neu bam enter 
+    {
+        EnterAction enterAction = new EnterAction();
+        
+        txtId.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtId.getActionMap().put("enterAction", enterAction);
+
+        txtName.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtName.getActionMap().put("enterAction", enterAction);
+
+        txtGender.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtGender.getActionMap().put("enterAction", enterAction);
+
+        txtBirthday.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtBirthday.getActionMap().put("enterAction", enterAction);
+
+        txtAddress.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtAddress.getActionMap().put("enterAction", enterAction);
+
+        txtGroup.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtGroup.getActionMap().put("enterAction", enterAction);
+
+        txtEmail.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtEmail.getActionMap().put("enterAction", enterAction);
+
+        txtPhoneNumber.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtPhoneNumber.getActionMap().put("enterAction", enterAction);
     }
 
     private void initPanelLeft()  // create left size panel
@@ -330,24 +360,11 @@ public class StudentInfoFrame extends JFrame implements ActionListener, KeyListe
         new StudentInfoFrame("", "");
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) 
+    public class EnterAction extends AbstractAction
     {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) 
-    {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
+        @Override
+        public void actionPerformed(ActionEvent e) {
             createAccount();
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) 
-    {
     }
 } 

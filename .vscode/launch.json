@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch TeacherInfoFrame",
+            "request": "launch",
+            "mainClass": "inputform.TeacherInfoFrame",
+            "projectName": "BTL-Java_c5da0f6e"
+        },
+        {
+            "type": "java",
             "name": "Launch RegisterFrame",
             "request": "launch",
             "mainClass": "inputform.RegisterFrame",

@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import entity.Account;
 import entity.Teacher;
@@ -34,6 +36,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
         this.password = password;
         initFrame();
         initComponents();
+        initKeyBindings();
         this.setVisible(true);
     }
 
@@ -46,6 +49,17 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
         this.setResizable(false);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
         this.setIconImage(icon.getImage());
+    }
+
+    private void initKeyBindings() // neu bam enter 
+    {
+        EnterAction enterAction = new EnterAction();
+        
+        txtId.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtId.getActionMap().put("enterAction", enterAction);
+
+        txtName.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "enterAction");
+        txtName.getActionMap().put("enterAction", enterAction);
     }
 
     private void initComponents()
@@ -133,6 +147,14 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
         Image image = imageIcon.getImage(); // transform it 
         Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
+    }
+
+    public class EnterAction extends AbstractAction
+    {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            createAccount();
+        }
     }
 
     public static void main(String[] args) {        // run the frame directly
