@@ -52,10 +52,10 @@ public class ClassroomManager
         }
 
         //In ra danh sach lop
-        for(String i: classrooms.keySet())
-        {
-            System.out.println(i);
-        }
+        // for(String i: classrooms.keySet())
+        // {
+        //     System.out.println(i);
+        // }
     }
 
     // Update data back in the classroom.dat 

@@ -108,7 +108,7 @@ public class DoExercise extends JFrame implements ActionListener
                         e.printStackTrace();
                     }
 
-                    lbtimeRemain.setText("Thời gian còn lại: " + exerciseTimeRemain);
+                    lbtimeRemain.setText("Thời gian còn lại: " + String.format("%02d", exerciseTimeRemain / 60) + ":" + String.format("%02d",exerciseTimeRemain % 60) );
                 }
 
                 if(exerciseTimeRemain == 0)
@@ -190,7 +190,7 @@ public class DoExercise extends JFrame implements ActionListener
         pnleftFrame.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnleftFrame.setLayout(null);
 
-        lbtimeRemain = new JLabel("Thời gian còn lại: " + exerciseTimeRemain);
+        lbtimeRemain = new JLabel("Thời gian còn lại: " + String.format("%02d", exerciseTimeRemain / 60) + ":" + String.format("%02d",exerciseTimeRemain % 60) );
         lbtimeRemain.setBounds(10,0,180,20);
         
         lbQuestionFinished = new JLabel("Số câu hỏi đã hoàn thành: " + questionsFinish + "/" + questions.size());

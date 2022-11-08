@@ -92,10 +92,16 @@ public class ClassroomOfTeacher extends ClassroomFrame
 
         rankingOfStudentTable.addMouseListener(new MouseAdapter()
         {
-            @Override
             public void mousePressed(MouseEvent e) 
             {
-                showPopUpMenuStudent(e);
+                if(e.isPopupTrigger())
+                    showPopUpMenuStudent(e);
+            }
+
+            public void mouseReleased(MouseEvent e)
+            {
+                if(e.isPopupTrigger())
+                    showPopUpMenuStudent(e);
             }
 
             public void showPopUpMenuStudent(MouseEvent e)

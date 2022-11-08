@@ -233,6 +233,11 @@ public class QuestionBank extends JFrame implements ActionListener
         return new ImageIcon(newImage);
     }
 
+    private void invalidQuestion(int index)
+    {
+        JOptionPane.showMessageDialog(null, "Câu hỏi " + (index + 1) + " không hợp lệ!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+    }
+
     private void collectData(String option)
     {
         ArrayList<Question> questions = new ArrayList<>();
@@ -252,6 +257,12 @@ public class QuestionBank extends JFrame implements ActionListener
                    questionAnswer[] = new String[4],
                    questionAnswerKey = "";
 
+            if(questionTitle.equals(""))
+            {
+                invalidQuestion(i);
+                return;
+            }    
+
             ArrayList< Pair<String, Boolean>>answerKeys = new ArrayList<>();
 
             int index = 2,
@@ -262,6 +273,12 @@ public class QuestionBank extends JFrame implements ActionListener
                 boolean isChoose = ( (JRadioButton) elementList[index] ).isSelected();
                 index += 2;
                 questionAnswer[x] = ( (JTextField) elementList[index++] ) .getText();
+
+                if(questionAnswer[x].equals(""))
+                {
+                    invalidQuestion(i);
+                    return;
+                }
 
                 if(isChoose)
                 {

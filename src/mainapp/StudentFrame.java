@@ -179,8 +179,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initClassroomButtons()
     {
-        System.out.println("Viet lai");
-
         int index = 0 ;
         
         ArrayList<String> indexOfClassroomDeleted = new ArrayList<>();
@@ -340,7 +338,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             {
                 if(i.getFirst().getId().equals(App.studentUser.getId()))
                 {
-                    System.out.println("OK");
                     this.dispose();
                     new ClassroomOfStudent(openClassroom);
                     checkExitsClassroom = true;
