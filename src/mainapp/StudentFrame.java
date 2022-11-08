@@ -277,7 +277,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             JButton btnNewClass = (JButton) arrComponents[i];
             tableOfClassrooms.add(btnNewClass, gbc, i);
         }
-        //Khởi tạo lại vị trí của nút tạo lớp mớ
 
         StudentManager.writeData();
 
@@ -305,7 +304,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             {
                 if(arrLClassroom.containsKey(idClassroom))
                 {
-                    JOptionPane.showMessageDialog(null, "Bạn đã than gia lớp học này", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Bạn đã tham gia lớp học này", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
@@ -314,7 +313,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                     ClassroomManager.findClassroomById(idClassroom).addAnStudent(student);
                     ClassroomManager.writeData();
 
-                    createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size(), -1);
+                    createClassButton(idClassroom, classroomTemp.getName(), arrLClassroom.size() + 1, -1);
                     arrLClassroom.put(idClassroom, classroomTemp);
 
                     Student temp = StudentManager.findStudentById(student.getId());

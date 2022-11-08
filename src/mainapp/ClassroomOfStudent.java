@@ -3,7 +3,10 @@ package mainapp;
 import javax.swing.*;
 import java.awt.event.*;
 import entity.Classroom;
+import entity.Student;
+import generic.Pair;
 import launch.App;
+import manager.ClassroomManager;
 
 public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
 {
@@ -42,12 +45,35 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
 
     public void mousePressed(MouseEvent e) 
     {
+
         if(e.getSource().getClass() == JLabel.class)
         {
+            ClassroomManager.readData();
+            readDataOfClassroom();
+
             JLabel temp = (JLabel) e.getSource();
             String exerciseTitle = ((JLabel) temp.getComponent(0)).getText();
 
-            doExercise(exerciseTitle);
+            Boolean checkThisStudentInThisClassroom = true;
+
+            for(Pair<Student,Double> i: studentResult)
+            {
+                if(i.getFirst().getId().equals(App.studentUser.getId()))
+                {
+                    checkThisStudentInThisClassroom = false;
+                    doExercise(exerciseTitle);
+                    this.dispose();
+                    break;
+                }
+            }
+
+            if(checkThisStudentInThisClassroom)
+            {
+                JOptionPane.showMessageDialog(null, "Bạn không thể làm bài tập này!","Thông báo", JOptionPane.ERROR_MESSAGE);
+
+                this.dispose();
+                new StudentFrame(App.studentUser);
+            }
         }
     }
 }

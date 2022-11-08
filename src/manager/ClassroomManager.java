@@ -43,7 +43,6 @@ public class ClassroomManager
         try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename)))
         {
             classrooms = (HashMap<String, Classroom>)input.readObject();
-            input.close();
         }
 
         catch(Exception e)
@@ -65,8 +64,6 @@ public class ClassroomManager
         try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename)))
         {
             output.writeObject(classrooms);
-            output.flush();
-            output.close();
         }
 
         catch(Exception e)

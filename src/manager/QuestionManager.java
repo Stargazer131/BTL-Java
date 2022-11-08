@@ -33,8 +33,6 @@ public class QuestionManager
         {
             oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\question.dat"));
             oos.writeObject(questions);
-            oos.flush();
-            oos.close();
         } catch (FileNotFoundException e) 
         {
             e.printStackTrace();

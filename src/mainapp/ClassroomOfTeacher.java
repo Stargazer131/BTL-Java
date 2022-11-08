@@ -145,6 +145,8 @@ public class ClassroomOfTeacher extends ClassroomFrame
                 pnOfThisClassroom.get(2).remove(rankingOfStudentTable);
 
                 deleteRow(indexStudentRightClick);
+
+                System.out.println(studentResult.size());
             }
         }
         else if(e.getSource() == btnTurnBack)

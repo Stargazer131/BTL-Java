@@ -64,8 +64,6 @@ public class ExerciseManager
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\exercise.dat"));
 
             oos.writeObject(exercises);
-            oos.flush();
-            oos.close();
         } catch (FileNotFoundException e) 
         {
             e.printStackTrace();
