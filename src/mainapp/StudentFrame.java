@@ -6,12 +6,11 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import javax.swing.table.*;
 
 import generic.Pair;
+import inputform.LogInFrame;
 import launch.App;
 import manager.ClassroomManager;
-import manager.ExerciseManager;
 import manager.StudentManager;
 import entity.*;
 
@@ -27,7 +26,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private TreeMap<String,Classroom> arrLClassroom;
 
-    private JButton btnJoin;
+    private JButton btnJoin, btnLogOut;
 
     GridBagConstraints gbc = new GridBagConstraints();
 
@@ -232,11 +231,18 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
     {
         btnJoin = new JButton("Tham gia");  // join button
         btnJoin.setFocusable(false);
-        btnJoin.setBounds(20, 350, 100, 30);
+        btnJoin.setBounds(45, 350, 100, 30);
         btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnJoin.addActionListener(this);
 
+        btnLogOut = new JButton("Dang xuat");  // join button
+        btnLogOut.setFocusable(false);
+        btnLogOut.setBounds(45, 450, 100, 30);
+        btnLogOut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnLogOut.addActionListener(this);
+
         this.add(btnJoin);
+        this.add(btnLogOut);
     }
 
     private String getIDofClassroomButton(JButton temp)
@@ -323,6 +329,14 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học!", "Thông báo",JOptionPane.ERROR_MESSAGE);
             }
         }
+        
+        else if(e.getSource() == btnLogOut)
+        {
+            App.studentUser = null;
+            this.dispose();
+            new LogInFrame();
+        }
+
         else
         {
             ClassroomManager.readData();

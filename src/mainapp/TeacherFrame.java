@@ -3,9 +3,7 @@ package mainapp;
 import javax.swing.*;
 
 import entity.Classroom;
-import entity.Student;
 import entity.Teacher;
-import generic.Pair;
 import inputform.LogInFrame;
 import launch.App;
 
@@ -527,15 +525,13 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
     @Override
     public void mouseEntered(MouseEvent e) 
     {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void mouseExited(MouseEvent e)
     {
-        // TODO Auto-generated method stub
-        
+   
     }
 
     private void showPopUpMenu(MouseEvent e)

@@ -8,10 +8,6 @@ import java.util.ArrayList;
 
 import entity.Account;
 
-/** Manager for account Database
-@author hao
-*/
-
 public class AccountManager
 {
     private static ArrayList<Account> accounts;

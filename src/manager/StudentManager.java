@@ -9,10 +9,6 @@ import java.util.HashMap;
 import entity.Classroom;
 import entity.Student;
 
-/** Manager for student Database
-@author hao
-*/
-
 public class StudentManager
 {
     private static HashMap<String, Student> students;

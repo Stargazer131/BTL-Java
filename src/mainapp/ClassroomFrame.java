@@ -95,7 +95,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         this.setBounds(200, 50, 1200,750);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setTitle("E-Classroom");
+        this.setTitle(classroom.getName());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
