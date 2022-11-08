@@ -57,6 +57,9 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     protected void readDataOfClassroom()
     {
+        ClassroomManager.readData();
+        this.classroom = ClassroomManager.findClassroomById(classroom.getId());
+
         this.event_Messages = classroom.getEventMessage();
         this.listOfExercises = classroom.getExercise();
         this.studentResult = classroom.getStudentResult();

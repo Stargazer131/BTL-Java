@@ -49,6 +49,7 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
         if(e.getSource().getClass() == JLabel.class)
         {
             ClassroomManager.readData();
+            this.classroom = ClassroomManager.findClassroomById(classroom.getId());
             readDataOfClassroom();
 
             JLabel temp = (JLabel) e.getSource();
@@ -69,7 +70,7 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
 
             if(checkThisStudentInThisClassroom)
             {
-                JOptionPane.showMessageDialog(null, "Bạn không thể làm bài tập này!","Thông báo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Bạn phải thành viên của lớp học này","Thông báo", JOptionPane.ERROR_MESSAGE);
 
                 this.dispose();
                 new StudentFrame(App.studentUser);
