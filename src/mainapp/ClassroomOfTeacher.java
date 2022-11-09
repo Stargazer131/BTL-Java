@@ -207,6 +207,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
             }
 
             new ExerciseFrame(listOfExercises.get(indexOfExerciseToOpen), this.classroom.getId());
+            this.dispose();
         }
     }
 }
