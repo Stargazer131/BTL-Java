@@ -345,6 +345,14 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             Boolean checkExitsClassroom = false;
             
             Classroom openClassroom = ClassroomManager.findClassroomById(classroomID);
+
+            if(openClassroom == null)
+            {
+                JOptionPane.showMessageDialog(null, "Lớp học này không tồn tại!"," Thông báo",JOptionPane.ERROR_MESSAGE);
+                deleteClass((JButton) e.getSource());
+                return;
+            }
+
             ArrayList<Pair<Student, Double>> studentList = openClassroom.getStudentResult();
 
             for(Pair<Student, Double> i: studentList)
