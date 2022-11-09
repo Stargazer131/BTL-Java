@@ -1,6 +1,8 @@
 package mainapp;
 
 import javax.swing.*;
+
+import java.awt.*;
 import java.awt.event.*;
 import entity.Classroom;
 import entity.Student;
@@ -48,6 +50,16 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
 
         if(e.getSource().getClass() == JLabel.class)
         {
+            int indexOfExerciseToDo = 0;
+            for(Component i: pnOfThisClassroom.get(1).getComponents())
+            {
+                if(e.getSource() == i)
+                {
+                    break;
+                }
+                indexOfExerciseToDo++;
+            }
+
             ClassroomManager.readData();
             this.classroom = ClassroomManager.findClassroomById(classroom.getId());
             readDataOfClassroom();
@@ -62,7 +74,7 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
                 if(i.getFirst().getId().equals(App.studentUser.getId()))
                 {
                     checkThisStudentInThisClassroom = false;
-                    doExercise(exerciseTitle);
+                    doExercise(indexOfExerciseToDo);
                     this.dispose();
                     break;
                 }

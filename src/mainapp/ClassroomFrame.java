@@ -423,11 +423,11 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     }
 
     //Làm bài tập
-    protected void doExercise(String exerciseID)
+    protected void doExercise(int index)
     {
         ExerciseManager.readData();
         this.dispose();
-        new DoExercise(ExerciseManager.getExerciseByTitle(exerciseID), classroom);
+        new DoExercise(listOfExercises.get(index), classroom);
     }
 
     //Lắng nghe sự kiện chuột

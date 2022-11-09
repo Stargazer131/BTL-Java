@@ -194,6 +194,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             }
             else
             {
+                Classroom temp = arrLClassroom.get(i);
+                temp = checkClassroom;
                 createClassButton(i, arrLClassroom.get(i).getName(), index, -1);
                 index ++;
             }
@@ -204,8 +206,9 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         {
             arrLClassroom.remove(i);
         }
-        if(indexOfClassroomDeleted.size() > 0)
-            StudentManager.writeData();
+        
+        //Cập nhật lại dữ liệu
+        StudentManager.writeData();
     }
 
     private void initTable()  // create the table of classroom

@@ -27,7 +27,7 @@ import manager.QuestionManager;
 
 public class QuestionBank extends JFrame implements ActionListener
 {
-    private Classroom classroom;
+    private String classroomID;
 
     private JPanel panelMain;
 
@@ -42,9 +42,9 @@ public class QuestionBank extends JFrame implements ActionListener
 
     ArrayList<JButton> btnListDelete = new ArrayList<>();
 
-    public QuestionBank(Classroom classroom)
+    public QuestionBank(String classroomID)
     {
-        this.classroom = classroom;
+        this.classroomID = classroomID;
 
         initFrame();
 
@@ -299,6 +299,12 @@ public class QuestionBank extends JFrame implements ActionListener
 
         if(option.equals("Tao bai tap"))
         {
+            if(questionsOfAnExercise.size() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Bạn chưa chọn câu hỏi nào!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             JTextField tfExerciseTitle = new JTextField(),
                        tfExerciseTime = new JTextField();
 
@@ -312,9 +318,13 @@ public class QuestionBank extends JFrame implements ActionListener
             if(optionCreateExercise == JOptionPane.OK_OPTION)
             {
                 Exercise temp = new Exercise(tfExerciseTitle.getText(), Integer.parseInt(tfExerciseTime.getText()), questionsOfAnExercise,answerKeyOfExercise);
-                ExerciseManager.addExerCise(temp);
-                this.classroom.addAnExercise(temp);
+                
+                ClassroomManager.readData();
+                Classroom classroomTemp = ClassroomManager.findClassroomById(classroomID);
+                classroomTemp.addAnExercise(temp);
+
                 ClassroomManager.writeData();
+
                 turnBackToClassroom();
             }
         }
@@ -330,7 +340,7 @@ public class QuestionBank extends JFrame implements ActionListener
     private void turnBackToClassroom()
     {
         this.dispose();
-        new ClassroomOfTeacher(ClassroomManager.findClassroomById(classroom.getId()));
+        new ClassroomOfTeacher(ClassroomManager.findClassroomById(classroomID));
     }
     
     @Override

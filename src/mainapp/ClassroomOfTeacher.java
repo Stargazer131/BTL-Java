@@ -183,7 +183,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
         else if(e.getSource() == pnOfThisClassroom.get(1).getComponent(pnOfThisClassroom.get(1).getComponentCount() - 1))
         {
             this.dispose();
-            new QuestionBank(this.classroom);
+            new QuestionBank(this.classroom.getId());
             pnOfThisClassroom.get(1).remove(pnOfThisClassroom.get(1).getComponentCount() - 1);
 
             if(listOfExercises.size() > 0)
