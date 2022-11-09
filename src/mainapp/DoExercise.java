@@ -49,8 +49,6 @@ public class DoExercise extends JFrame implements ActionListener
 
     private ArrayList<JPanel> questionShow = new ArrayList<>();
 
-    private ArrayList<Pair<Integer, Integer>> answersOfExercise;
-
     private boolean exerciseFinish;
 
     private JPanel pnleftFrame,
@@ -72,7 +70,6 @@ public class DoExercise extends JFrame implements ActionListener
         this.exerciseTime = 60 * exercise.getTime();
         this.questionsFinish = 0;
         this.exerciseTimeRemain = exerciseTime;
-        this.answersOfExercise = exercise.getAnswerOfExercise();
     }
     
     public DoExercise(Exercise exercise, Classroom classroom)
@@ -316,9 +313,12 @@ public class DoExercise extends JFrame implements ActionListener
             Component arrTemp[] = ((JPanel) questionPanel[i]).getComponents();
 
             int index = 2;
+
+            Question temp = questions.get(i);
+
             for(int j = 0 ; j < 4; j++)
             {
-                if( ((JRadioButton) arrTemp[index]).isSelected() && j == answersOfExercise.get(i).getSecond())
+                if( ((JRadioButton) arrTemp[index]).isSelected() && temp.getAnswerList().get(j).getSecond())
                 {
                     soCauDung++;
                     break;
