@@ -8,7 +8,6 @@ import javax.swing.table.*;
 
 import generic.Pair;
 import manager.ClassroomManager;
-import manager.ExerciseManager;
 import manager.StudentManager;
 import entity.*;
 
@@ -425,7 +424,6 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     //Làm bài tập
     protected void doExercise(int index)
     {
-        ExerciseManager.readData();
         this.dispose();
         new DoExercise(listOfExercises.get(index), classroom);
     }

@@ -22,7 +22,6 @@ import entity.Exercise;
 import entity.Question;
 import generic.Pair;
 import manager.ClassroomManager;
-import manager.ExerciseManager;
 import manager.QuestionManager;
 
 public class QuestionBank extends JFrame implements ActionListener
@@ -330,6 +329,7 @@ public class QuestionBank extends JFrame implements ActionListener
         }
         else
         {
+            JOptionPane.showMessageDialog(null, "Cập nhật dữ liệu thành công!","Thông báo",JOptionPane.DEFAULT_OPTION);
             QuestionManager.questions = questions;
             QuestionManager.writeData();
         }
