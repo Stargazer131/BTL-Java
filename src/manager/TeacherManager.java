@@ -20,7 +20,7 @@ public class TeacherManager
     }
 
     //Replace a teacher
-    public static void replaceTeacger(String id, Teacher oldTeacher, Teacher newTeacher)
+    public static void replaceTeacher(String id, Teacher oldTeacher, Teacher newTeacher)
     {
         teachers.remove(oldTeacher.getId());
         teachers.put(newTeacher.getId(), newTeacher);

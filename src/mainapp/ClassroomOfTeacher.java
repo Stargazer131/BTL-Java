@@ -11,7 +11,7 @@ import launch.App;
 
 public class ClassroomOfTeacher extends ClassroomFrame
 {
-    private JButton btnListStudent ;
+    private JButton btnListStudent;
 
     private JButton btnStudentInfor,
                     btnStudentDelete;

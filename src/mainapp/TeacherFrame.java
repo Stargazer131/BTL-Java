@@ -429,7 +429,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         {
                             Teacher temp = new Teacher(textID, textName);
                             temp.setClassrooms(this.teacher.getClassRooms());
-                            TeacherManager.replaceTeacger(this.teacher.getId(), this.teacher, temp);
+                            TeacherManager.replaceTeacher(this.teacher.getId(), this.teacher, temp);
                             this.teacher = temp;
                             JOptionPane.showMessageDialog(null, "Thay doi thong tin thanh cong!", "Thong bao", JOptionPane.INFORMATION_MESSAGE);
                             this.lblId.setText(textID);
@@ -445,7 +445,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                     {
                         Teacher temp = new Teacher(textID, textName);
                         temp.setClassrooms(this.teacher.getClassRooms());
-                        TeacherManager.replaceTeacger(this.teacher.getId(), this.teacher, temp);
+                        TeacherManager.replaceTeacher(this.teacher.getId(), this.teacher, temp);
                         this.teacher = temp;
                         JOptionPane.showMessageDialog(null, "Thay doi thong tin thanh cong!", "Thong bao", JOptionPane.INFORMATION_MESSAGE);
                         this.lblId.setText(textID);

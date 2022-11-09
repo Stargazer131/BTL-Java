@@ -64,7 +64,6 @@ public class ClassroomManager
         try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename)))
         {
             output.writeObject(classrooms);
-            output.flush();
         }
 
         catch(Exception e)

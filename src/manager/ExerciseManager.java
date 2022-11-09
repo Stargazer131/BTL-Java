@@ -1,9 +1,7 @@
 package manager;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -30,48 +28,31 @@ public class ExerciseManager
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     public static void readData()
     {
-        try 
+        String filename = "resources\\data\\exercise.dat";
+        try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename)))
         {
-            ObjectInputStream oos = new ObjectInputStream(new FileInputStream("resources\\data\\exercise.dat"));
-            try 
-            {
-                exercises = (ArrayList<Exercise>) oos.readObject();
-
-                //In ra danh sách bài tập
-                // for(Exercise i: exercises)
-                // {
-                //     System.out.println(i.getTitle());
-                // }
-            } catch (ClassNotFoundException e) 
-            {
-                e.printStackTrace();
-            }
-            oos.close();
-        } catch (FileNotFoundException e) 
+            exercises = (ArrayList<Exercise>)input.readObject();
+        } 
+        catch(Exception e) 
         {
-            e.printStackTrace();
-        } catch (IOException e) 
-        {
-            e.printStackTrace();
+            exercises = new ArrayList<>();
         }
     }
 
     public static void writeData()
     {
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("resources\\data\\exercise.dat"));
+        String filename = "resources\\data\\exercise.dat";
+        try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename)))
+        {
+            output.writeObject(exercises);
+        } 
+        catch(Exception e) 
+        {
 
-            oos.writeObject(exercises);
-        } catch (FileNotFoundException e) 
-        {
-            e.printStackTrace();
-        } catch (IOException e) 
-        {
-            e.printStackTrace();
         }
-
     }
     
     public static void setData(ArrayList<Exercise> temp)
