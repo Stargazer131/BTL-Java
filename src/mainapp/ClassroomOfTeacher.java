@@ -194,5 +194,19 @@ public class ClassroomOfTeacher extends ClassroomFrame
                 createAMessage(newExercise, "Exercise");
             }    
         }
+        else if(e.getSource().getClass() == JLabel.class)
+        {
+            int indexOfExerciseToOpen = 0;
+            for(Component i: pnOfThisClassroom.get(1).getComponents())
+            {
+                if(e.getSource() == i)
+                {
+                    break;
+                }
+                indexOfExerciseToOpen++;
+            }
+
+            new ExerciseFrame(listOfExercises.get(indexOfExerciseToOpen), this.classroom.getId());
+        }
     }
 }

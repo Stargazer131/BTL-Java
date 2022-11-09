@@ -64,9 +64,6 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
             this.classroom = ClassroomManager.findClassroomById(classroom.getId());
             readDataOfClassroom();
 
-            JLabel temp = (JLabel) e.getSource();
-            String exerciseTitle = ((JLabel) temp.getComponent(0)).getText();
-
             Boolean checkThisStudentInThisClassroom = true;
 
             for(Pair<Student,Double> i: studentResult)
