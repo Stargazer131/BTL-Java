@@ -18,12 +18,6 @@ public class QuestionManager
         writeData();
     }
 
-    public static void removeQuestion(String id)
-    {
-        questions.remove(id);
-        writeData();
-    }
-
     public static void writeData()
     {
         String filename = "resources\\data\\question.dat";

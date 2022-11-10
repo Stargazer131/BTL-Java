@@ -271,7 +271,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     {
         Collections.sort(studentResult, new Comparator<Pair<Student,Double>>() {
             @Override
-            public int compare(Pair a, Pair b)
+            public int compare(Pair<Student,Double> a, Pair<Student,Double> b)
             {
                 if((Double)a.getSecond() < (Double)b.getSecond())
                     return 1;
@@ -287,8 +287,6 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         sortStudentByPoint();
 
         pnOfThisClassroom.get(2).setLayout(null);
-
-        int n = 100; // test data
         
         // ten cua cac cot
         Object[] columnNames = {"STT","Mã SV", "Họ tên", "Điểm"};
@@ -318,10 +316,10 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         rankingOfStudentTable.setModel(new DefaultTableModel(rowData, columnNames)
         {
             // Chi ro ra tung cot se chua kieu du lieu gi -> Quan trong cho viec sap xep dung
-            Class[] types = {Integer.class,String.class, String.class, Double.class };
+            Class<?>[] types = {Integer.class,String.class, String.class, Double.class };
         
             @Override
-            public Class getColumnClass(int columnIndex) 
+            public Class<?> getColumnClass(int columnIndex) 
             {
                 return this.types[columnIndex];
             }

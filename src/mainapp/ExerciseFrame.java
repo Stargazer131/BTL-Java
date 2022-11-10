@@ -45,6 +45,9 @@ public class ExerciseFrame extends JFrame implements ActionListener
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
+        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
+        this.setIconImage(icon.getImage());
+
         //Nút quay lại lớp học
         btnTurnBackToClassroom = new JButton("Quay lại");
         btnTurnBackToClassroom.setBounds(20,10,100,30);
@@ -113,7 +116,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
             initQuestionPanel(i);
         }
 
-        scrollPane = new JScrollPane(pnMainFrame,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane = new JScrollPane(pnMainFrame,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBounds(200, 0, 800, 720);
         scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
