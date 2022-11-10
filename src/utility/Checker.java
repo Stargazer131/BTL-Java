@@ -37,7 +37,7 @@ public class Checker
     public static boolean isValidGender(String gender)  // check valid gender
     {
         gender = gender.toLowerCase();
-        if(gender.equals("nam") || gender.equals("nu")) return true;
+        if(gender.equals("nam") || gender.equals("nữ")) return true;
         return false;
     }
 

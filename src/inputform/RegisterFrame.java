@@ -144,7 +144,7 @@ public class RegisterFrame extends JFrame implements ActionListener
         
 
         txtPassWord = new JPasswordField();
-        txtPassWord.setToolTipText("Có ít nhất 1 chữ cái thường, 1 chữ cái hoa, 1 chữ số, độ dài > 5 va và không có ký tự đặc biệt");
+        txtPassWord.setToolTipText("Có ít nhất 1 chữ cái thường, 1 chữ cái hoa, 1 chữ số, độ dài > 5 và không có ký tự đặc biệt");
         txtPassWord.setBorder(BorderFactory.createLoweredBevelBorder());
         txtPassWord.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtPassWord.setBounds(160, 130, 150, 30);

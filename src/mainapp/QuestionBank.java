@@ -69,7 +69,7 @@ public class QuestionBank extends JFrame implements ActionListener
         btnUpdateQuestion.addActionListener(this);
         this.add(btnUpdateQuestion);
 
-        btnCreateAnExercise = new JButton("Tao bai tap");
+        btnCreateAnExercise = new JButton("Tạo bài tập");
         btnCreateAnExercise.setBounds(900,50,130,30);
         btnCreateAnExercise.addActionListener(this);
         this.add(btnCreateAnExercise);
@@ -77,7 +77,7 @@ public class QuestionBank extends JFrame implements ActionListener
         this.setBackground(Color.CYAN);
         this.setBounds(250, 100, 1050,650);
         this.setResizable(false);
-        this.setTitle("Question bank");
+        this.setTitle("Ngân hàng câu hỏi");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\questionBank.png");
@@ -164,7 +164,7 @@ public class QuestionBank extends JFrame implements ActionListener
         rSelectThisQuestion.setBounds(560,12,20,40);
         panelTemp.add(rSelectThisQuestion);
 
-        JButton btnDeleteQuestion = new JButton("Xoa cau hoi");
+        JButton btnDeleteQuestion = new JButton("Xóa câu hỏi");
         btnDeleteQuestion.setBounds(500,250,100,30);
         btnDeleteQuestion.addActionListener(this);
         btnListDelete.add(btnDeleteQuestion);
@@ -290,13 +290,13 @@ public class QuestionBank extends JFrame implements ActionListener
                     answerKeys.add(new Pair<String,Boolean>(questionAnswer[x], false));
             }
             Question temp = new Question(questionID, questionTitle, answerKeys, questionAnswerKey, trueAnswer);
-            if( ((JRadioButton) elementList[elementList.length - 2]).isSelected() && option.equals("Tao bai tap"))
+            if( ((JRadioButton) elementList[elementList.length - 2]).isSelected() && option.equals("Tạo bài tập"))
                 questionsOfAnExercise.add(temp);
 
             questions.add(temp);
         }
 
-        if(option.equals("Tao bai tap"))
+        if(option.equals("Tạo bài tập"))
         {
             if(questionsOfAnExercise.size() == 0)
             {
@@ -357,7 +357,7 @@ public class QuestionBank extends JFrame implements ActionListener
             initCreateQuestion();
             updatePanel(panelMain);
         }
-        else if(e.getActionCommand().equals("Xoa cau hoi"))
+        else if(e.getActionCommand().equals("Xóa câu hỏi"))
         {
             for(int i = 0 ; i < btnListDelete.size(); i++)
             {
@@ -373,7 +373,7 @@ public class QuestionBank extends JFrame implements ActionListener
         }
         else if(e.getSource() == btnCreateAnExercise)
         {
-            collectData("Tao bai tap");
+            collectData("Tạo bài tập");
         }
         else if(e.getSource() == btnTurnBack)
         {

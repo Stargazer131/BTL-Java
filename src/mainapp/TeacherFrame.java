@@ -155,7 +155,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         //Tạo nút bấm thêm 1 lớp mới
         gbc.gridx = arrLClassroom.size() % 5;
         gbc.gridy = arrLClassroom.size() / 5;
-        btnCreateClass = createBackGroundButton("resources\\images\\Logo\\add.png", "Tao lop moi");
+        btnCreateClass = createBackGroundButton("resources\\images\\Logo\\add.png", "Tạo lớp mới");
         tableOfClassrooms.add(btnCreateClass, gbc);
     }
 
@@ -317,7 +317,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 {
                     if(kiemTraIDTonTai(idClass, nameClass) == 1)
                     {
-                        if(optionTitle.equals("Thay doi thong tin lop hoc"))
+                        if(optionTitle.equals("Thay đổi thông tin lớp học"))
                         {
                             if(getIDofClassroomButton(btnClassRightClick).equals(idClass))
                             {
@@ -338,7 +338,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                     }
                     else if(kiemTraIDTonTai(idClass, nameClass) == 2)
                     {
-                        if(optionTitle.equals("Thay doi thong tin lop hoc"))
+                        if(optionTitle.equals("Thay đổi thông tin lớp học"))
                         {
                             if(ClassroomManager.findClassroomById(getIDofClassroomButton(btnClassRightClick)).getName().equals(nameClass))
                             {
@@ -360,7 +360,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                     }
                     else if(kiemTraIDTonTai(idClass, nameClass) == 0)
                     {
-                        if(optionTitle.equals("Tao lop hoc"))
+                        if(optionTitle.equals("Tạo lớp học"))
                         {   
                             //Cập nhật lại thông tin cho các file dữ liệu
                             Classroom temp = new Classroom(idClass, nameClass, teachClass);
@@ -399,7 +399,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
     {
         if(e.getSource() == btnCreateClass)
         {
-            buttonClassMassage("Tao lop hoc");
+            buttonClassMassage("Tạo lớp học");
         }
         else if(e.getSource() == btnChangeInfor)
         {
@@ -473,7 +473,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         }
         else if(e.getSource() == mnChinhSuaLopHoc)
         {
-            buttonClassMassage("Thay doi thong tin lop hoc");
+            buttonClassMassage("Thay đổi thông tin lớp học");
         }
         else if(e.getSource() == mnXoaLopHoc)
         {

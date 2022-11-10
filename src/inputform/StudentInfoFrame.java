@@ -148,7 +148,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         
         txtGender = new JTextField(); // text field for Gender
         txtGender.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtGender.setToolTipText("Nam hoặc Nu");
+        txtGender.setToolTipText("Nam hoặc Nữ");
         txtGender.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtGender.setBounds(150, 210, 150, 30);
         
