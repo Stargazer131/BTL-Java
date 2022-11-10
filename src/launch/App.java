@@ -1,5 +1,6 @@
 package launch;
 
+import entity.Account;
 import entity.Student;
 import entity.Teacher;
 import inputform.LogInFrame;
@@ -15,6 +16,8 @@ public class App
     public static Teacher teacherUser;
 
     public static Student studentUser;
+
+    public static Account accountUser;
 
     public static void main(String[] args)  
     {

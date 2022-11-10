@@ -139,13 +139,16 @@ public class LogInFrame extends JFrame implements ActionListener
             {
                 this.dispose();
                 App.studentUser = StudentManager.findStudentById(account.getId());
+                App.teacherUser = null;
                 new StudentFrame(App.studentUser);
             }
 
             else  // teacher account
             {
+                App.accountUser = account;
                 this.dispose();
                 App.teacherUser = TeacherManager.findTeacherById(account.getId());
+                App.studentUser = null;
                 new TeacherFrame(App.teacherUser);
             }
         }

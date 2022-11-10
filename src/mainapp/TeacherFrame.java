@@ -2,6 +2,7 @@ package mainapp;
 
 import javax.swing.*;
 
+import entity.Account;
 import entity.Classroom;
 import entity.Teacher;
 import inputform.LogInFrame;
@@ -15,6 +16,8 @@ import java.awt.event.MouseListener;
 
 import java.awt.*;
 import java.util.*;
+
+import manager.AccountManager;
 import manager.ClassroomManager;
 import manager.TeacherManager;
 
@@ -331,7 +334,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                                 break;
                             }
                         }
-                        
 
                         JOptionPane.showMessageDialog(null,"ID lớp học này đã tồn tại",
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -394,6 +396,12 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         }
     }
 
+    private void changeInforTeacher(String id)
+    {
+        App.accountUser.setID(id);
+        AccountManager.writeData();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) 
     {
@@ -443,6 +451,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                             this.lblName.setText(textName);
                             this.updatePanel(panelLeft);
 
+                            //Thay đổi thông tin giáo viên
+                            changeInforTeacher(textID);
+
                             break;
                         }
 
@@ -461,6 +472,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         this.lblId.setText(textID);
                         this.lblName.setText(textName);
                         this.updatePanel(panelLeft);
+
+                        //Thay đổi thông tin giáo viên
+                        changeInforTeacher(textID);
 
                         break;
                     }

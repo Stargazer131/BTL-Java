@@ -19,6 +19,11 @@ public class Account implements Serializable
         this.isStudent = isStudent;
     }
 
+    public void setID(String id)
+    {
+        this.id = id;
+    }
+
     public String getUsername()
     {
         return username;

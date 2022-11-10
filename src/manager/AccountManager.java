@@ -56,6 +56,11 @@ public class AccountManager
         {
             accounts = new ArrayList<>();
         }
+
+        // for(Account i: accounts)
+        // {
+        //     System.out.println(i.getId());
+        // }
     }
 
     // update data back in the account.dat 
