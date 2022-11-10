@@ -10,7 +10,7 @@ import generic.Pair;
 import launch.App;
 import manager.ClassroomManager;
 
-public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
+public class ClassroomOfStudent extends ClassroomFrame
 {
     private JButton btnListStudent ;
 
@@ -27,7 +27,7 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
         initFrameOfClass(3);
     }
 
-    
+    @Override
     public void actionPerformed(ActionEvent e) 
     {
         //Lấy những sự kiện đã được kế thừa ở lớp cha
@@ -45,6 +45,7 @@ public class ClassroomOfStudent extends ClassroomFrame implements MouseListener
         }
     }
 
+    @Override
     public void mousePressed(MouseEvent e) 
     {
 

@@ -118,6 +118,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
     }
     
     //Bắt sự kiện của chương trình
+    @Override
     public void actionPerformed(ActionEvent e) 
     {
         //Lấy những sự kiện đã được kế thừa ở lớp cha
@@ -157,6 +158,7 @@ public class ClassroomOfTeacher extends ClassroomFrame
     }
 
     //Bắt sự kiện chuột khi nhấn
+    @Override
     public void mousePressed(MouseEvent e) 
     {
         if(e.getSource() == pnOfThisClassroom.get(0).getComponent(pnOfThisClassroom.get(0).getComponentCount() - 1))

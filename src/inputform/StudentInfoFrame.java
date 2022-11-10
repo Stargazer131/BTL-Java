@@ -54,7 +54,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     private void initFrame()    // create the main window
     {
         this.setBounds(400, 100, 700, 500);
-        this.setTitle("Thong tin ca nhan");
+        this.setTitle("Thông tin cá nhân");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -105,23 +105,23 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     private void initJLabelLeft()   // create the left size label and add Icon to that label
     {
         ImageIcon iconId = new ImageIcon("resources\\images\\ProfileIcon\\Id.png");   // Id label    
-        lblId = new JLabel("Ma SV", resizeImage(iconId), JLabel.LEFT);
+        lblId = new JLabel("Mã SV", resizeImage(iconId), JLabel.LEFT);
         lblId.setHorizontalTextPosition(JLabel.RIGHT);
         lblId.setBounds(60, 50, 90, 30);
         
         
         ImageIcon iconName = new ImageIcon("resources\\images\\ProfileIcon\\Name.png");   // Name label      
-        lblName = new JLabel("Ho ten", resizeImage(iconName), JLabel.LEFT);
+        lblName = new JLabel("Họ tên", resizeImage(iconName), JLabel.LEFT);
         lblName.setHorizontalTextPosition(JLabel.RIGHT);
         lblName.setBounds(60, 130, 90, 30);
 
         ImageIcon iconGender = new ImageIcon("resources\\images\\ProfileIcon\\Gender.png");  // Gender label       
-        lblGender = new JLabel("Gioi tinh", resizeImage(iconGender), JLabel.LEFT);
+        lblGender = new JLabel("Giới tính", resizeImage(iconGender), JLabel.LEFT);
         lblGender.setHorizontalTextPosition(JLabel.RIGHT);
         lblGender.setBounds(60, 210, 90, 30);
 
         ImageIcon iconBirthday = new ImageIcon("resources\\images\\ProfileIcon\\Birthday.png");  // Birthday label
-        lblBirthday = new JLabel("Ngay sinh", resizeImage(iconBirthday), JLabel.LEFT);
+        lblBirthday = new JLabel("Ngày sinh", resizeImage(iconBirthday), JLabel.LEFT);
         lblBirthday.setHorizontalTextPosition(JLabel.RIGHT);
         lblBirthday.setBounds(60, 290, 90, 30);
         
@@ -136,25 +136,25 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     {
         txtId = new JTextField();  // text field for Id 
         txtId.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtId.setToolTipText("Ma SV hop le, VD: B20DCCN001");
+        txtId.setToolTipText("Mã SV hợp lệ, VD: B20DCCN001");
         txtId.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtId.setBounds(150, 50, 150, 30);
         
         txtName = new JTextField(); // text field for Name
         txtName.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtName.setToolTipText("Ho ten hop le, VD: Nguyen Van A");
+        txtName.setToolTipText("Họ tên hợp lệ, VD: Nguyễn Văn A");
         txtName.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtName.setBounds(150, 130, 150, 30);
         
         txtGender = new JTextField(); // text field for Gender
         txtGender.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtGender.setToolTipText("Nam hoac Nu");
+        txtGender.setToolTipText("Nam hoặc Nữ");
         txtGender.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtGender.setBounds(150, 210, 150, 30);
         
         txtBirthday = new JTextField(); // text field for Birthday
         txtBirthday.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtBirthday.setToolTipText("Ngay sinh hop le, VD: 10/12/2002");
+        txtBirthday.setToolTipText("Ngày sinh hợp lệ, VD: 10/12/2002");
         txtBirthday.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtBirthday.setBounds(150, 290, 150, 30);
         
@@ -179,12 +179,12 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     private void initJLabelRight()                   // create the right size label and add Icon to that label
     {
         ImageIcon iconAddress = new ImageIcon("resources\\images\\ProfileIcon\\Address.png");         
-        lblAddress = new JLabel("Dia chi", resizeImage(iconAddress), JLabel.LEFT);
+        lblAddress = new JLabel("Địa chỉ", resizeImage(iconAddress), JLabel.LEFT);
         lblAddress.setBounds(60, 50, 90, 30);
         lblAddress.setHorizontalTextPosition(JLabel.RIGHT);
         
         ImageIcon iconGroup = new ImageIcon("resources\\images\\ProfileIcon\\Group.png");         
-        lblGroup = new JLabel("Lop", resizeImage(iconGroup), JLabel.LEFT);
+        lblGroup = new JLabel("Lớp", resizeImage(iconGroup), JLabel.LEFT);
         lblGroup.setBounds(60, 130, 90, 30);
         lblGroup.setHorizontalTextPosition(JLabel.RIGHT);
         
@@ -196,7 +196,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
 
 
         ImageIcon iconPhoneNumber = new ImageIcon("resources\\images\\ProfileIcon\\PhoneNumber.png");         
-        lblPhoneNumber = new JLabel("SDT", resizeImage(iconPhoneNumber), JLabel.LEFT);
+        lblPhoneNumber = new JLabel("SĐT", resizeImage(iconPhoneNumber), JLabel.LEFT);
         lblPhoneNumber.setBounds(60, 290, 90, 30);
         lblPhoneNumber.setHorizontalTextPosition(JLabel.RIGHT);
         
@@ -211,25 +211,25 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     {
         txtAddress = new JTextField(); // text field for Address
         txtAddress.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtAddress.setToolTipText("Dia chi hop le, VD: Mo lao-Ha dong-Ha noi"); 
+        txtAddress.setToolTipText("Địa chỉ hợp lệ, VD: Hà Nội"); 
         txtAddress.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtAddress.setBounds(150, 50, 150, 30);
         
         txtGroup = new JTextField();   // text field for Group
         txtGroup.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtGroup.setToolTipText("Lop hop hop le, VD: D20CQCN01-B");
+        txtGroup.setToolTipText("Lớp học hợp lệ, VD: D20CQCN01-B");
         txtGroup.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtGroup.setBounds(150, 130, 150, 30);
 
         txtEmail = new JTextField();  // text field for Email
         txtEmail.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtEmail.setToolTipText("Email hop le, VD: AnNV@stu.ptit.edu.vn, nguyenvanan@gmail.com, ...");
+        txtEmail.setToolTipText("Email hợp lệ, VD: AnNV@stu.ptit.edu.vn, nguyenvanan@gmail.com, ...");
         txtEmail.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtEmail.setBounds(150, 210, 150, 30);
         
         txtPhoneNumber = new JTextField();  // text field for Phone Number
         txtPhoneNumber.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtPhoneNumber.setToolTipText("So dien thoai 10 so");
+        txtPhoneNumber.setToolTipText("Số điện thoại 10 số");
         txtPhoneNumber.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtPhoneNumber.setBounds(150, 290, 150, 30);
         
@@ -245,7 +245,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         panelDown.setBounds(0, 400, 700, 100);
         panelDown.setLayout(null);
 
-        btnFinish = new JButton("Ket thuc"); // create the button
+        btnFinish = new JButton("Kết thúc"); // create the button
         btnFinish.setBounds(290, 15, 120, 30);
         btnFinish.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));   // change the cursor
         btnFinish.setFocusable(false);
@@ -279,8 +279,8 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         if(id.equals("") || name.equals("") || gender.equals("") || birthday.equals("")
           || address.equals("") || group.equals("") || email.equals("") || phoneNumber.equals(""))
         {
-            JOptionPane.showMessageDialog(this, "Khong duoc bo trong bat ky o nao!",
-            "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Không được bỏ trống bất kỳ ô nào",
+            "Lỗi", JOptionPane.WARNING_MESSAGE);
         }
         
         else
@@ -294,44 +294,44 @@ public class StudentInfoFrame extends JFrame implements ActionListener
             
             if(!Checker.isValidId(id))                                    // check for invalid data
             {
-                JOptionPane.showMessageDialog(this, "Ma SV khong hop le!",  // if id is invalid
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Mã SV không hợp lệ",  // if id is invalid
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
             else if(!Checker.isValidGender(gender))                                // if gender is invalid
             {
-                JOptionPane.showMessageDialog(this, "Gioi tinh khong hop le!", 
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Giới tính không hợp lệ", 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
             else if(!Checker.isValidBirthday(birthday))                             // if birthday is invalid
             {
-                JOptionPane.showMessageDialog(this, "Ngay sinh khong hop le!",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Ngày sinh không hợp lệ",
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
             else if(!Checker.isValidGroup(group))                                // if group is invalid
             {
-                JOptionPane.showMessageDialog(this, "Lop khong hop le!",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Lớp không hợp lệ",
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
             else if(!Checker.isValidEmail(email))                               // if email is invalid
             {
-                JOptionPane.showMessageDialog(this, "Email khong hop le!",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Email không hợp lệ",
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
             else if(!Checker.isValidPhoneNumber(phoneNumber))                          // if phone number is invalid
             {
-                JOptionPane.showMessageDialog(this, "So dien thoai khong hop le!",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ",
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }                                                                               // end of checking data
     
             else if(StudentManager.findStudentById(id) != null) // if id has already been registered
             {
-                JOptionPane.showMessageDialog(this, "Ma SV nay da duoc dang ky!",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Mã SV này đã được đăng ký",
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
             else // create account
@@ -339,8 +339,8 @@ public class StudentInfoFrame extends JFrame implements ActionListener
                 AccountManager.addAccount(new Account(username, password, id, true));  // add the account to database
                 StudentManager.addStudent(new Student(id, name, gender, birthday, address, group, email, phoneNumber)); // add the student to database
                 
-                JOptionPane.showMessageDialog(this, "Dang ky thanh cong!",
-                "Successful", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Đăng ký thành công",
+                "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }
         }
@@ -352,14 +352,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         Image newImage = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // scale it the smooth way  
         return new ImageIcon(newImage);
     }
-
-    public static void main(String[] args)
-    {               
-        StudentManager.readData();
-        //StudentManager.writeData();
-        new StudentInfoFrame("", "");
-    }
-
+    
     public class EnterAction extends AbstractAction
     {
         @Override

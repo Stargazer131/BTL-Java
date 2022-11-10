@@ -34,7 +34,7 @@ public class QuestionBank extends JFrame implements ActionListener
 
     private JButton btnTurnBack,
                     btnUpdateQuestion,
-                    btnCreateAnExcercise,
+                    btnCreateAnExercise,
                     btnCreateQuestion;
 
     ArrayList<Question> questions;
@@ -54,30 +54,30 @@ public class QuestionBank extends JFrame implements ActionListener
 
     private void initFrame()
     {
-        JLabel lbTitle = new JLabel("Danh sach cau hoi");
+        JLabel lbTitle = new JLabel("Danh sách câu hỏi");
         lbTitle.setFont(new Font("Arial",100,40));
         lbTitle.setBounds(350, 0, 1050, 40);
         this.add(lbTitle);
 
-        btnTurnBack = new JButton("Quay lai");
+        btnTurnBack = new JButton("Quay lại");
         btnTurnBack.setBounds(10,10,120,30);
         btnTurnBack.addActionListener(this);
         this.add(btnTurnBack);
 
-        btnUpdateQuestion = new JButton("Cap nhat du lieu");
+        btnUpdateQuestion = new JButton("Cập nhật dữ liệu");
         btnUpdateQuestion.setBounds(900,10,130,30);
         btnUpdateQuestion.addActionListener(this);
         this.add(btnUpdateQuestion);
 
-        btnCreateAnExcercise = new JButton("Tao bai tap");
-        btnCreateAnExcercise.setBounds(900,50,130,30);
-        btnCreateAnExcercise.addActionListener(this);
-        this.add(btnCreateAnExcercise);
+        btnCreateAnExercise = new JButton("Tạo bài tập");
+        btnCreateAnExercise.setBounds(900,50,130,30);
+        btnCreateAnExercise.addActionListener(this);
+        this.add(btnCreateAnExercise);
 
         this.setBackground(Color.CYAN);
         this.setBounds(250, 100, 1050,650);
         this.setResizable(false);
-        this.setTitle("Question bank");
+        this.setTitle("Ngân hàng câu hỏi");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\questionBank.png");
@@ -110,7 +110,7 @@ public class QuestionBank extends JFrame implements ActionListener
         panelTemp.setLayout(null);
         panelTemp.setBounds(40, (index) * 300 + 10 * (index + 1), 620, 300);
 
-        JLabel lbQuestionID = new JLabel(String.format("Cau hoi %d:", index + 1)),
+        JLabel lbQuestionID = new JLabel(String.format("Câu hỏi %d:", index + 1)),
                lbAnswer[] = new JLabel [4];
 
         JRadioButton rbtn[] = new JRadioButton [4];
@@ -156,7 +156,7 @@ public class QuestionBank extends JFrame implements ActionListener
             bg.add(rbtn[i]);
         }
 
-        JLabel lbSelectThisQuestion = new JLabel("Chon cau hoi nay:");
+        JLabel lbSelectThisQuestion = new JLabel("Chọn câu hỏi này:");
         lbSelectThisQuestion.setBounds(450,10,100,40);
         panelTemp.add(lbSelectThisQuestion);
 
@@ -164,7 +164,7 @@ public class QuestionBank extends JFrame implements ActionListener
         rSelectThisQuestion.setBounds(560,12,20,40);
         panelTemp.add(rSelectThisQuestion);
 
-        JButton btnDeleteQuestion = new JButton("Xoa cau hoi");
+        JButton btnDeleteQuestion = new JButton("Xóa câu hỏi");
         btnDeleteQuestion.setBounds(500,250,100,30);
         btnDeleteQuestion.addActionListener(this);
         btnListDelete.add(btnDeleteQuestion);
@@ -184,7 +184,7 @@ public class QuestionBank extends JFrame implements ActionListener
 
         ImageIcon icon = new ImageIcon("resources\\images\\Logo\\add.png");
 
-        JLabel lbCreateQuestion = new JLabel("Them cau hoi", resizeImage(icon), JLabel.CENTER);
+        JLabel lbCreateQuestion = new JLabel("Thêm câu hỏi", resizeImage(icon), JLabel.CENTER);
 
         btnCreateQuestion = new JButton();
         btnCreateQuestion.add(lbCreateQuestion);
@@ -290,13 +290,13 @@ public class QuestionBank extends JFrame implements ActionListener
                     answerKeys.add(new Pair<String,Boolean>(questionAnswer[x], false));
             }
             Question temp = new Question(questionID, questionTitle, answerKeys, questionAnswerKey, trueAnswer);
-            if( ((JRadioButton) elementList[elementList.length - 2]).isSelected() && option.equals("Tao bai tap"))
+            if( ((JRadioButton) elementList[elementList.length - 2]).isSelected() && option.equals("Tạo bài tập"))
                 questionsOfAnExercise.add(temp);
 
             questions.add(temp);
         }
 
-        if(option.equals("Tao bai tap"))
+        if(option.equals("Tạo bài tập"))
         {
             if(questionsOfAnExercise.size() == 0)
             {
@@ -357,7 +357,7 @@ public class QuestionBank extends JFrame implements ActionListener
             initCreateQuestion();
             updatePanel(panelMain);
         }
-        else if(e.getActionCommand().equals("Xoa cau hoi"))
+        else if(e.getActionCommand().equals("Xóa câu hỏi"))
         {
             for(int i = 0 ; i < btnListDelete.size(); i++)
             {
@@ -371,9 +371,9 @@ public class QuestionBank extends JFrame implements ActionListener
                 }
             }
         }
-        else if(e.getSource() == btnCreateAnExcercise)
+        else if(e.getSource() == btnCreateAnExercise)
         {
-            collectData("Tao bai tap");
+            collectData("Tạo bài tập");
         }
         else if(e.getSource() == btnTurnBack)
         {

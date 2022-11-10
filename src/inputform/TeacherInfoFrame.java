@@ -43,7 +43,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
     private void initFrame()    // create the main window
     {
         this.setBounds(600, 200, 350, 300);
-        this.setTitle("Thong tin ca nhan");
+        this.setTitle("Thông tin cá nhân");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -65,12 +65,12 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
     private void initComponents()
     {
         ImageIcon iconId = new ImageIcon("resources\\images\\ProfileIcon\\Id.png");   // Id label    
-        lblId = new JLabel("Ma GV", resizeImage(iconId), JLabel.LEFT);
+        lblId = new JLabel("Mã GV", resizeImage(iconId), JLabel.LEFT);
         lblId.setHorizontalTextPosition(JLabel.RIGHT);                 
         lblId.setBounds(50, 60, 80, 30);
         
         ImageIcon iconName = new ImageIcon("resources\\images\\ProfileIcon\\Name.png");   // Name label      
-        lblName = new JLabel("Ho ten", resizeImage(iconName), JLabel.LEFT);
+        lblName = new JLabel("Họ tên", resizeImage(iconName), JLabel.LEFT);
         lblName.setHorizontalTextPosition(JLabel.RIGHT);
         lblName.setBounds(50, 110, 80, 30);
 
@@ -84,7 +84,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
         txtName.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtName.setBorder(BorderFactory.createLoweredBevelBorder());
 
-        btnFinish = new JButton("Hoan thanh");     // create finish button
+        btnFinish = new JButton("Hoàn thành");     // create finish button
         btnFinish.setBounds(110, 190, 120, 30);
         btnFinish.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));  // change the cursor
         btnFinish.setFocusable(false);
@@ -115,8 +115,8 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
 
         if(id.equals("") || name.equals("")) // if don't type anything
         {
-            JOptionPane.showMessageDialog(this, "Khong duoc de trong bat ky o nao!",
-            "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Không được bỏ trống bất kỳ ô nào",
+            "Lỗi", JOptionPane.WARNING_MESSAGE);
         }
 
         else
@@ -126,8 +126,8 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
             
             if(TeacherManager.findTeacherById(id) != null) // if the id has already been registered
             {
-                JOptionPane.showMessageDialog(this, "Ma GV nay da duoc dang ky",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Mã GV này đã được đăng ký",
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
             else // create new admin account
@@ -135,8 +135,8 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
                 AccountManager.addAccount(new Account(username, password, id, false)); // add account to database
                 TeacherManager.addTeacher(new Teacher(id, name)); // add teacher to database
     
-                JOptionPane.showMessageDialog(this, "Dang ky thanh cong!", // show message
-                "Successful", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Đăng ký thành công", // show message
+                "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }
         }
@@ -155,13 +155,5 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
         public void actionPerformed(ActionEvent e) {
             createAccount();
         }
-    }
-
-    public static void main(String[] args) {        // run the frame directly
-        java.awt.EventQueue.invokeLater(new Runnable() {
-              public void run() {
-                   new TeacherInfoFrame("", "");
-              }
-        });
     }
 }
