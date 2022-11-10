@@ -194,8 +194,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             }
             else
             {
-                Classroom temp = arrLClassroom.get(i);
-                temp = checkClassroom;
+                // Classroom temp = arrLClassroom.get(i);
+                // temp = checkClassroom;
                 createClassButton(i, arrLClassroom.get(i).getName(), index, -1);
                 index ++;
             }
@@ -299,7 +299,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 "Id của lớp học:", tfIDclassroom
             };
 
-            int option = JOptionPane.showConfirmDialog(null, input, "Tìm kiếm lớp học", JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showConfirmDialog(null, input, "Tìm kiếm lớp học", JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
 
             String idClassroom = tfIDclassroom.getText();
             Classroom classroomTemp = ClassroomManager.findClassroomById(idClassroom);
