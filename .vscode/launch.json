@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Test",
+            "request": "launch",
+            "mainClass": "test.Test",
+            "projectName": "BTL-Java_fcea3847"
+        },
+        {
+            "type": "java",
+            "name": "Launch TeacherFrame",
+            "request": "launch",
+            "mainClass": "mainapp.teacher.TeacherFrame",
+            "projectName": "BTL-Java_fcea3847"
+        },
+        {
+            "type": "java",
             "name": "Launch QuestionBank",
             "request": "launch",
             "mainClass": "mainapp.QuestionBank",

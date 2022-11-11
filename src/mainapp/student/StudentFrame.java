@@ -39,7 +39,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
     {
         StudentManager.readData();
         ClassroomManager.readData();
-        this.student = STUDENT;
+        this.student = StudentManager.findStudentById(STUDENT.getId());
         
         initFrame();
         initAvatar();

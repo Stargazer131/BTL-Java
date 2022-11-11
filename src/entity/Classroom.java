@@ -51,6 +51,12 @@ public class Classroom implements Serializable
         return teacherName;
     }
 
+    public void changeInforOfClassroom(String newID, String newName)
+    {
+        this.id = newID;
+        this.name = newName;
+    }
+
     public void addAnEventMessage(EventMessage e)
     {
         this.eventMessages.add(e);

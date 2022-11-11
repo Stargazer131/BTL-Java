@@ -18,12 +18,6 @@ public class ClassroomManager
         writeData();
     }
 
-    public static void changeInforClass(String id, Classroom classroom1, Classroom classroom2)
-    {
-        classrooms.replace(id, classroom1, classroom2);
-        writeData();
-    }
-
     public static Classroom findClassroomById(String id) // find and return the classroom with the given id
     {
         return classrooms.get(id);

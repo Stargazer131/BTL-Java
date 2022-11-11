@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -29,11 +30,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import entity.Classroom;
+import entity.Student;
 import entity.Teacher;
+import generic.Pair;
 import inputform.LogInFrame;
 import launch.App;
 import manager.AccountManager;
 import manager.ClassroomManager;
+import manager.StudentManager;
 import manager.TeacherManager;
 import utility.Formatter;
 
@@ -278,43 +282,57 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         return new ImageIcon(newImage);
     }
 
-    private void changeInforClass(Classroom temp, String oldID)
+    private void changeInforClass(String newID, String newName, String oldID)
     {
         int index = 0;
         for(Component i: tableOfClassrooms.getComponents())
         {
             if(i == btnClassRightClick)
             {
-                createClassButton(temp.getId(), temp.getName(), index, index);
-                tableOfClassrooms.remove(i);
+                ((JLabel) ((JButton) i).getComponent(0)).setText(newID);
 
+                //Cập nhật lại dữ liệu cho danh sách lớp
+                ClassroomManager.readData();
+                Classroom oldClassroom = ClassroomManager.findClassroomById(oldID);
+                oldClassroom.changeInforOfClassroom(newID, newName);
                 ClassroomManager.deleteClassroom(oldID);
-                ClassroomManager.addClassroom(temp);
+                ClassroomManager.addClassroom(oldClassroom);
 
+                //Cập nhật lại dữ liệu cho giáo viên
                 arrLClassroom.remove(index);
-                arrLClassroom.add(index,temp);
-
+                arrLClassroom.add(index,oldClassroom);
                 this.teacher.setClassrooms(arrLClassroom);
-
                 TeacherManager.addTeacher(teacher);
                 
+                //Cập nhật lại dữ liệu cho từng sinh viên của lớp đó
+                StudentManager.readData();
+                ArrayList<Pair<Student,Double>> listStudentOfThisClassroom = oldClassroom.getStudentResult();
+                for(Pair<Student, Double> j: listStudentOfThisClassroom)
+                {
+                    Student studentChangInforClass = StudentManager.findStudentById(j.getFirst().getId());
+                    TreeMap<String, Classroom> classroomsOfStudentInThisClassroom = studentChangInforClass.getListClassroom();
+                    classroomsOfStudentInThisClassroom.remove(oldID);
+                    classroomsOfStudentInThisClassroom.put(newID, oldClassroom);
+                }
+                ClassroomManager.writeData();
+                StudentManager.writeData();
+
                 break;
             }
             index ++;
         }
     }
 
+    //Tạo 1 lớp học mới hoặc thay đổi thông tin lớp học tuỳ vào option
     private void buttonClassMassage(String optionTitle)
     {
         JTextField tfIDClass = new JTextField(),
-                       tfNameClass = new JTextField(),
-                       tfTeacherClass = new JTextField();
+                       tfNameClass = new JTextField();
 
         Object[] input = 
         {
             "ID lớp học:", tfIDClass,
-            "Tên lớp học:", tfNameClass,
-            "Tên giáo viên: ", tfTeacherClass
+            "Tên lớp học:", tfNameClass
         };
 
         while(true)
@@ -324,10 +342,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
             if(option == JOptionPane.OK_OPTION)
             {
                 String idClass = tfIDClass.getText(),
-                        nameClass = tfNameClass.getText(),
-                        teachClass = tfTeacherClass.getText();
+                        nameClass = tfNameClass.getText();
 
-                if(idClass.equals("") || nameClass.equals("") || teachClass.equals(""))
+                if(idClass.equals("") || nameClass.equals(""))
                 {
                     JOptionPane.showMessageDialog(null,"Thông tin không được để trống",
                     "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -340,8 +357,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         {
                             if(getIDofClassroomButton(btnClassRightClick).equals(idClass))
                             {
-                                Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                                changeInforClass(temp, getIDofClassroomButton(btnClassRightClick));
+                                changeInforClass(idClass, nameClass, getIDofClassroomButton(btnClassRightClick));
 
                                 this.updatePanel(tableOfClassrooms);
 
@@ -360,8 +376,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         {
                             if(ClassroomManager.findClassroomById(getIDofClassroomButton(btnClassRightClick)).getName().equals(nameClass))
                             {
-                                Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                                changeInforClass(temp, getIDofClassroomButton(btnClassRightClick));
+                                changeInforClass(idClass, nameClass, getIDofClassroomButton(btnClassRightClick));
 
                                 this.updatePanel(tableOfClassrooms);
 
@@ -372,7 +387,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                             }
                         }
                         
-                        
                         JOptionPane.showMessageDialog(null,"Tên lớp học này đã tồn tại",
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
                     }
@@ -381,7 +395,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         if(optionTitle.equals("Tạo lớp học"))
                         {   
                             //Cập nhật lại thông tin cho các file dữ liệu
-                            Classroom temp = new Classroom(idClass, nameClass, teachClass);
+                            Classroom temp = new Classroom(idClass, nameClass, App.teacherUser.getName());
                             this.teacher.addClassRoom(temp);
                             this.arrLClassroom = teacher.getClassRooms();
                             ClassroomManager.addClassroom(temp);
@@ -394,8 +408,8 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         }
                         else
                         {
-                            Classroom temp = new Classroom(idClass, nameClass, teachClass);
-                            changeInforClass(temp, getIDofClassroomButton(btnClassRightClick));
+                            Classroom temp = new Classroom(idClass, nameClass, App.teacherUser.getName());
+                            changeInforClass(idClass, nameClass, getIDofClassroomButton(btnClassRightClick));
                         }
 
                         this.updatePanel(tableOfClassrooms);
