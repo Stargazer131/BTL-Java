@@ -1,4 +1,4 @@
-package mainapp;
+package mainapp.student;
 
 import javax.swing.*;
 
@@ -8,6 +8,7 @@ import entity.Classroom;
 import entity.Student;
 import generic.Pair;
 import launch.App;
+import mainapp.ClassroomFrame;
 import manager.ClassroomManager;
 
 public class ClassroomOfStudent extends ClassroomFrame

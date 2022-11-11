@@ -1,4 +1,4 @@
-package mainapp;
+package mainapp.student;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;

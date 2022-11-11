@@ -1,4 +1,4 @@
-package mainapp;
+package mainapp.teacher;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +8,7 @@ import manager.ClassroomManager;
 import manager.StudentManager;
 import entity.*;
 import launch.App;
+import mainapp.ClassroomFrame;
 
 public class ClassroomOfTeacher extends ClassroomFrame
 {
@@ -154,6 +155,11 @@ public class ClassroomOfTeacher extends ClassroomFrame
         {
             this.dispose();
             new TeacherFrame(App.teacherUser);
+        }
+
+        else if(e.getSource() == btnStudentInfor)
+        {
+            new StudentInfo(studentRightClick);
         }
     }
 

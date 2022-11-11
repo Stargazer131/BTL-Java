@@ -1,4 +1,4 @@
-package mainapp;
+package mainapp.teacher;
 
 import javax.swing.*;
 import java.awt.*;

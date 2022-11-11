@@ -1,4 +1,4 @@
-package mainapp;
+package mainapp.teacher;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -20,8 +20,8 @@ import javax.swing.KeyStroke;
 
 import entity.Account;
 import launch.App;
-import mainapp.StudentFrame;
-import mainapp.TeacherFrame;
+import mainapp.student.StudentFrame;
+import mainapp.teacher.TeacherFrame;
 import manager.AccountManager;
 import manager.StudentManager;
 import manager.TeacherManager;

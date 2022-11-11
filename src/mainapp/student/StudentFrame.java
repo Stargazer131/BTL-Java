@@ -1,4 +1,4 @@
-package mainapp;
+package mainapp.student;
 
 import javax.swing.*;
 import javax.swing.border.Border;

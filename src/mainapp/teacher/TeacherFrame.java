@@ -1,8 +1,7 @@
-package mainapp;
+package mainapp.teacher;
 
 import javax.swing.*;
 
-import entity.Account;
 import entity.Classroom;
 import entity.Teacher;
 import inputform.LogInFrame;
