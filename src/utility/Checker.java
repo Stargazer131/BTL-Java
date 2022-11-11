@@ -6,9 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/** Checking valid data
- * @author Hao
-*/
 
 public class Checker
 {

@@ -1,24 +1,41 @@
 package mainapp.teacher;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import entity.Classroom;
 import entity.Teacher;
 import inputform.LogInFrame;
 import launch.App;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import java.awt.*;
-import java.util.*;
-
 import manager.AccountManager;
 import manager.ClassroomManager;
 import manager.TeacherManager;
+import utility.Formatter;
 
 public class TeacherFrame extends JFrame implements ActionListener, MouseListener
 {
@@ -426,7 +443,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 if(option == JOptionPane.OK_OPTION)
                 {
                     String textID = tfIDTeacher.getText().toUpperCase(),
-                           textName = tfNameTeacher.getText();
+                           textName = Formatter.formatName(tfNameTeacher.getText());
 
                     if(textID.equals("") || textName.equals(""))
                     {

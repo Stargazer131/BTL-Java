@@ -1,10 +1,7 @@
 package utility;
 
-/** Format data
-* @author hao
-*/
-
-import java.text.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Formatter 
 {
@@ -36,6 +33,7 @@ public class Formatter
 
     private static String toTitle(String s)              // nGyEN -> Nguyen
     {
+        if(s.equals("")) return "";
         String result = ""+Character.toUpperCase(s.charAt(0));
         if(s.length() > 1) result += s.substring(1).toLowerCase();
         return result;
