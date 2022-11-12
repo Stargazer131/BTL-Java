@@ -310,6 +310,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 for(Pair<Student, Double> j: listStudentOfThisClassroom)
                 {
                     Student studentChangInforClass = StudentManager.findStudentById(j.getFirst().getId());
+
+                    System.out.println(studentChangInforClass.getId());
+
                     TreeMap<String, Classroom> classroomsOfStudentInThisClassroom = studentChangInforClass.getListClassroom();
                     classroomsOfStudentInThisClassroom.remove(oldID);
                     classroomsOfStudentInThisClassroom.put(newID, oldClassroom);
