@@ -38,6 +38,7 @@ public class ClassroomOfStudent extends ClassroomFrame
 
         rankingOfStudentTable.addMouseListener(new MouseAdapter()
         {
+            @Override
             public void mousePressed(MouseEvent e)
             {
                 int indexRow = rankingOfStudentTable.rowAtPoint(e.getPoint());

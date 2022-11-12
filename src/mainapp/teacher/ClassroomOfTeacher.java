@@ -95,12 +95,14 @@ public class ClassroomOfTeacher extends ClassroomFrame
 
         rankingOfStudentTable.addMouseListener(new MouseAdapter()
         {
+            @Override
             public void mousePressed(MouseEvent e) 
             {
                 if(e.isPopupTrigger())
                     showPopUpMenuStudent(e);
             }
 
+            @Override
             public void mouseReleased(MouseEvent e)
             {
                 if(e.isPopupTrigger())
@@ -118,6 +120,8 @@ public class ClassroomOfTeacher extends ClassroomFrame
                 studentRightClick = studentResult.get(indexRow).getFirst();
             }
         });
+
+
     }
     
     //Bắt sự kiện của chương trình

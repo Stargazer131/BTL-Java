@@ -464,16 +464,24 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         
     }
 
+    // khi di chuot vao JTable
     @Override
     public void mouseEntered(MouseEvent e) 
     {
-        
+        if(e.getSource() instanceof JTable)
+        {
+            spForTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        }
     }
 
+    // khi di chuot ra khoi JTable
     @Override
     public void mouseExited(MouseEvent e) 
     {
-        
+        if(e.getSource() instanceof JTable)
+        {
+            spForTable.setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     public static void main(String[] args) 
