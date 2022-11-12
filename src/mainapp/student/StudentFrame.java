@@ -199,6 +199,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 // temp = checkClassroom;
                 createClassButton(i, arrLClassroom.get(i).getName(), index, -1);
                 index ++;
+                //Cập nhật thông tin của lớp học
+                //arrLClassroom.put(i, checkClassroom);
             }
         }
 

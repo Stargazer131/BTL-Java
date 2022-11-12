@@ -432,7 +432,20 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
     private void changeInforTeacher(String id)
     {
         App.accountUser.setID(id);
+        App.teacherUser = TeacherManager.findTeacherById(id);
         AccountManager.writeData();
+    }
+
+    private void changeTeacherNameOfClassroom()
+    {
+        ClassroomManager.readData();
+        for(Classroom i: arrLClassroom)
+        {
+            Classroom temp = ClassroomManager.findClassroomById(i.getId());
+            temp.changeTeacherName(App.teacherUser.getName());
+            i = temp;
+        }
+        ClassroomManager.writeData();
     }
 
     @Override
@@ -442,7 +455,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         {
             buttonClassMassage("Tạo lớp học");
         }
-        else if(e.getSource() == btnChangeInfor)
+        else if(e.getSource() == btnChangeInfor) //Thay đổi thông tin giáo viên
         {
             JTextField tfIDTeacher = new JTextField(),
                        tfNameTeacher = new JTextField();
@@ -487,6 +500,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                             //Thay đổi thông tin giáo viên
                             changeInforTeacher(textID);
 
+                            //Đổi tên giáo viên của các lớp
+                            changeTeacherNameOfClassroom();
+
                             break;
                         }
 
@@ -508,6 +524,9 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
                         //Thay đổi thông tin giáo viên
                         changeInforTeacher(textID);
+
+                        //Đổi tên giáo viên của các lớp
+                        changeTeacherNameOfClassroom();
 
                         break;
                     }

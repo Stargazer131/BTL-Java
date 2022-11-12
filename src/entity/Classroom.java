@@ -57,6 +57,11 @@ public class Classroom implements Serializable
         this.name = newName;
     }
 
+    public void changeTeacherName(String newName)
+    {
+        this.teacherName = newName;
+    }
+
     public void addAnEventMessage(EventMessage e)
     {
         this.eventMessages.add(e);
