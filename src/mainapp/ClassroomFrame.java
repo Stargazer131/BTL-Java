@@ -7,6 +7,7 @@ import java.util.*;
 import javax.swing.table.*;
 
 import generic.Pair;
+import launch.App;
 import mainapp.student.DoExercise;
 import manager.ClassroomManager;
 import manager.StudentManager;
@@ -238,6 +239,19 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         {
             lbTemp.addMouseListener(this);
             lbTemp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            //Nếu người dùng là sinh viên thì sẽ thêm dòng trạng thái: đã hoàn thành/ chưa hoàn thành
+            if(App.teacherUser == null)
+            {
+                JLabel isFinish = new JLabel("Chưa hoàn thành");
+                if(listOfExercises.get(listOfExercises.size() - index).getListStudentFinish().contains(App.studentUser.getId()))
+                {
+                    isFinish.setText("Đã hoàn thành");
+                    isFinish.setForeground(Color.red);
+                }    
+                isFinish.setBounds(800,10,100,20);
+                lbTemp.add(isFinish);
+            }
         }    
         temp.add(lbTemp,gbc2);
     }
@@ -424,7 +438,11 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     protected void doExercise(int index)
     {
         this.dispose();
-        new DoExercise(listOfExercises.get(index), classroom);
+        //Kiểm tra xem sinh viên này đã hoàn thành bài tập này chưa, nếu chưa thì sẽ tính điểm, nếu đã làm rồi thì sẽ coi như là luyện tập
+        if(listOfExercises.get(index).getListStudentFinish().contains(App.studentUser.getId()))
+            new DoExercise(listOfExercises.get(index), classroom, false);
+        else
+        new DoExercise(listOfExercises.get(index), classroom, true);
     }
 
     //Lắng nghe sự kiện chuột

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TreeSet;
 
 import generic.Pair;
 
@@ -22,6 +23,8 @@ public class Exercise implements Serializable
 
     private ArrayList<Pair<Integer, Integer>> answerKey;
 
+    private TreeSet<String>studentFinishThisExercise;
+
     private static SimpleDateFormat sdfDay = new SimpleDateFormat("dd/MM/YYYY"),
                                     sdfHour = new SimpleDateFormat("HH:mm");
 
@@ -32,9 +35,15 @@ public class Exercise implements Serializable
         this.questions = QUESTIONS;
         this.exerciseFinish = false;
         this.answerKey = ANSWER_KEY;
+        this.studentFinishThisExercise = new TreeSet<>();
 
         Date d = new Date();
         this.messageTime = String.format("%s ngày %s", sdfHour.format(d), sdfDay.format(d));
+    }
+
+    public void addAnStudentFinish(String id)
+    {
+        studentFinishThisExercise.add(id);
     }
 
     public String getTitle()
@@ -65,5 +74,10 @@ public class Exercise implements Serializable
     public String getMessageTime()
     {
         return this.messageTime;
+    }
+
+    public TreeSet<String> getListStudentFinish()
+    {
+        return studentFinishThisExercise;
     }
 }

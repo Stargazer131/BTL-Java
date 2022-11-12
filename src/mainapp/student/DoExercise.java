@@ -49,7 +49,8 @@ public class DoExercise extends JFrame implements ActionListener
 
     private ArrayList<JPanel> questionShow = new ArrayList<>();
 
-    private boolean exerciseFinish;
+    private boolean exerciseFinish,
+                    firstTimeDoThisExercise;
 
     private JPanel pnleftFrame,
                    pnQuestion = new JPanel(),
@@ -72,10 +73,11 @@ public class DoExercise extends JFrame implements ActionListener
         this.exerciseTimeRemain = exerciseTime;
     }
     
-    public DoExercise(Exercise exercise, Classroom classroom)
+    public DoExercise(Exercise exercise, Classroom classroom, boolean check)
     {   
         this.exercise = exercise;
         this.classroom = classroom;
+        this.firstTimeDoThisExercise = check;
         readData();
 
         initFrame();
@@ -330,8 +332,12 @@ public class DoExercise extends JFrame implements ActionListener
         diem = Math.round( 1.0 * soCauDung / questions.size() * 100.0) / 100.0 * 10 ;
 
         //Cập nhật lại điểm cho sinh viên trong lơp
-        classroom.studentDoExerciseResult(App.studentUser, diem);
-        ClassroomManager.writeData();
+        if(firstTimeDoThisExercise)
+        {
+            classroom.studentDoExerciseResult(App.studentUser, diem);
+            exercise.addAnStudentFinish(App.studentUser.getId());
+            ClassroomManager.writeData();
+        }
         
         int option = JOptionPane.showConfirmDialog(null, "Chúc mừng bạn đã đạt được " + String.format("%.2f",diem), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
     
