@@ -122,7 +122,7 @@ public class TeacherInfoFrame extends JFrame implements ActionListener
         else
         {
             id = id.toUpperCase();  // format the data
-            name = Formatter.formatName(name);
+            name = Formatter.toTitle(name);
             
             if(TeacherManager.findTeacherById(id) != null) // if the id has already been registered
             {

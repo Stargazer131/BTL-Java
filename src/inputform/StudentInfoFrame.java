@@ -286,9 +286,10 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         else
         {
             id = id.toUpperCase();              // format data
-            name = Formatter.formatName(name);
+            name = Formatter.toTitle(name);
             gender = Formatter.formatGender(gender);
             birthday = Formatter.formatBirthday(birthday);
+            address = Formatter.toTitle(address);
             email = email.toLowerCase();
             group = group.toUpperCase();
             

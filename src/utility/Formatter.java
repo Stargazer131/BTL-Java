@@ -7,11 +7,11 @@ public class Formatter
 {
     private Formatter() {}
 
-    public static String formatName(String name)    // format the name: nGyEN  VAn  a -> Nguyen Van A
+    public static String toTitle(String str)    // format the name: nGyEN  VAn  a -> Nguyen Van A
     {
         String result = "";
-        String[] arr = name.trim().split("\\s+");
-        for(String x : arr) result += toTitle(x) + " ";
+        String[] arr = str.trim().split("\\s+");
+        for(String x : arr) result += format(x) + " ";
         return result.trim();
     }
 
@@ -31,7 +31,7 @@ public class Formatter
         catch(ParseException e) { return ""; }
     }
 
-    private static String toTitle(String s)              // nGyEN -> Nguyen
+    private static String format(String s)              // nGyEN -> Nguyen
     {
         if(s.equals("")) return "";
         String result = ""+Character.toUpperCase(s.charAt(0));

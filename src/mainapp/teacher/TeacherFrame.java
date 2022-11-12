@@ -457,7 +457,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 if(option == JOptionPane.OK_OPTION)
                 {
                     String textID = tfIDTeacher.getText().toUpperCase(),
-                           textName = Formatter.formatName(tfNameTeacher.getText());
+                           textName = Formatter.toTitle(tfNameTeacher.getText());
 
                     if(textID.equals("") || textName.equals(""))
                     {
