@@ -10,6 +10,7 @@ import generic.Pair;
 import launch.App;
 import mainapp.ClassroomFrame;
 import manager.ClassroomManager;
+import manager.StudentManager;
 
 public class ClassroomOfStudent extends ClassroomFrame
 {
@@ -41,7 +42,9 @@ public class ClassroomOfStudent extends ClassroomFrame
         }
         else if(e.getSource() == btnTurnBack)
         {
+            StudentManager.readData();
             this.dispose();
+            App.studentUser = StudentManager.findStudentById(App.studentUser.getId());
             new StudentFrame(App.studentUser);
         }
     }

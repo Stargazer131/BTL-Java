@@ -30,16 +30,17 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     GridBagConstraints gbc = new GridBagConstraints();
 
-    private void readData()
+    private void readData(String id)
     {
+        StudentManager.readData();
+        ClassroomManager.readData();
+        this.student = StudentManager.findStudentById(id);
         this.arrLClassroom = student.getListClassroom();
     }
 
     public StudentFrame(Student STUDENT)
     {
-        StudentManager.readData();
-        ClassroomManager.readData();
-        this.student = StudentManager.findStudentById(STUDENT.getId());
+        readData(STUDENT.getId());
         
         initFrame();
         initAvatar();
@@ -213,8 +214,6 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initTable()  // create the table of classroom
     {
-        readData();
-
         gbc.insets = new Insets(0,5,10, 15);
 
         tableOfClassrooms = new JPanel();
@@ -253,7 +252,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         return ((JLabel) temp.getComponent(0)).getText();
     }
 
-    private void deleteClass(JButton temp)
+    private void deleteClass(JButton temp, boolean check)
     {
         String idDeleteClass = getIDofClassroomButton(temp);
 
@@ -280,8 +279,8 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             JButton btnNewClass = (JButton) arrComponents[i];
             tableOfClassrooms.add(btnNewClass, gbc, i);
         }
-
-        StudentManager.writeData();
+        
+        StudentManager.writeData();  
 
         updatePanel(tableOfClassrooms);
     }
@@ -352,7 +351,14 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             if(openClassroom == null)
             {
                 JOptionPane.showMessageDialog(null, "Lớp học này không tồn tại!"," Thông báo",JOptionPane.ERROR_MESSAGE);
-                deleteClass((JButton) e.getSource());
+
+                readData(student.getId());
+
+                this.remove(scrollPane);
+                initTable();
+
+                updatePanel(tableOfClassrooms);
+
                 return;
             }
 
@@ -374,7 +380,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                 
                 this.arrLClassroom.remove(classroomID);
 
-                deleteClass((JButton) e.getSource());
+                deleteClass((JButton) e.getSource() , true);
             }
         }
     } 

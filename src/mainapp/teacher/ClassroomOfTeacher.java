@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 import manager.ClassroomManager;
 import manager.StudentManager;
+import manager.TeacherManager;
 import entity.*;
 import launch.App;
 import mainapp.ClassroomFrame;
@@ -153,7 +154,9 @@ public class ClassroomOfTeacher extends ClassroomFrame
         }
         else if(e.getSource() == btnTurnBack)
         {
+            TeacherManager.readData();
             this.dispose();
+            App.teacherUser = TeacherManager.findTeacherById(App.teacherUser.getId());
             new TeacherFrame(App.teacherUser);
         }
 
