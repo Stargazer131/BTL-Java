@@ -10,6 +10,7 @@ import manager.TeacherManager;
 import entity.*;
 import launch.App;
 import mainapp.ClassroomFrame;
+import mainapp.StudentInfo;
 
 public class ClassroomOfTeacher extends ClassroomFrame
 {
@@ -159,7 +160,6 @@ public class ClassroomOfTeacher extends ClassroomFrame
             App.teacherUser = TeacherManager.findTeacherById(App.teacherUser.getId());
             new TeacherFrame(App.teacherUser);
         }
-
         else if(e.getSource() == btnStudentInfor)
         {
             new StudentInfo(studentRightClick);

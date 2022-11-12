@@ -1,4 +1,5 @@
-package mainapp.teacher;
+package mainapp;
+
 
 import java.awt.GridLayout;
 import java.awt.Image;

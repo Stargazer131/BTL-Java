@@ -9,6 +9,7 @@ import entity.Student;
 import generic.Pair;
 import launch.App;
 import mainapp.ClassroomFrame;
+import mainapp.StudentInfo;
 import manager.ClassroomManager;
 import manager.StudentManager;
 
@@ -19,7 +20,6 @@ public class ClassroomOfStudent extends ClassroomFrame
     public ClassroomOfStudent(Classroom classroom) 
     {
         super(classroom);
-        
     }
 
     protected void initMainFrame()
@@ -27,6 +27,23 @@ public class ClassroomOfStudent extends ClassroomFrame
         super.initMainFrame();
 
         initFrameOfClass(3);
+    }
+
+    //Xem thông tin của sinh viên khác trong bảng xếp hạng
+    protected void initRakingOfStudentTable()
+    {
+        super.initRakingOfStudentTable();
+
+        rankingOfStudentTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        rankingOfStudentTable.addMouseListener(new MouseAdapter()
+        {
+            public void mousePressed(MouseEvent e)
+            {
+                int indexRow = rankingOfStudentTable.rowAtPoint(e.getPoint());
+                new StudentInfo(studentResult.get(indexRow).getFirst());
+            }
+        });
     }
 
     @Override
@@ -52,7 +69,6 @@ public class ClassroomOfStudent extends ClassroomFrame
     @Override
     public void mousePressed(MouseEvent e) 
     {
-
         if(e.getSource().getClass() == JLabel.class)
         {
             int indexOfExerciseToDo = 0;
