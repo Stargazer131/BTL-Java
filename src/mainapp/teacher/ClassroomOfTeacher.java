@@ -122,7 +122,6 @@ public class ClassroomOfTeacher extends ClassroomFrame
             }
         });
 
-
     }
     
     //Bắt sự kiện của chương trình
@@ -151,10 +150,6 @@ public class ClassroomOfTeacher extends ClassroomFrame
 
                 studentResult.remove(indexStudentRightClick);
 
-                pnOfThisClassroom.get(2).remove(rankingOfStudentTable);
-
-                deleteRow(indexStudentRightClick);
-
                 //Xoá sinh viên ra khỏi danh sách đã làm bài tập
                 for(Exercise i: listOfExercises)
                 {
@@ -163,6 +158,10 @@ public class ClassroomOfTeacher extends ClassroomFrame
                 }
                 
                 ClassroomManager.writeData();
+
+                //Xoá 1 dòng của bảng
+                pnCurrentDisplay.remove(1);
+                initRakingOfStudentTable();
             }
         }
         else if(e.getSource() == btnTurnBack)
