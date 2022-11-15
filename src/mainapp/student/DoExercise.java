@@ -349,7 +349,8 @@ public class DoExercise extends JFrame implements ActionListener
             ClassroomManager.writeData();
         }
         
-        int option = JOptionPane.showConfirmDialog(null, "Chúc mừng bạn đã đạt được " + String.format("%.2f",diem), "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane.showConfirmDialog(null, "Chúc mừng bạn đã đạt được " + String.format("%.2f",diem), 
+        "Thông báo", JOptionPane.OK_CANCEL_OPTION);
 
         this.dispose();
         new ClassroomOfStudent(classroom);
