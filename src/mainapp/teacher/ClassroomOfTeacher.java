@@ -3,6 +3,7 @@ package mainapp.teacher;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.TreeSet;
 
 import manager.ClassroomManager;
 import manager.StudentManager;
@@ -142,19 +143,26 @@ public class ClassroomOfTeacher extends ClassroomFrame
 
             if(option == JOptionPane.OK_OPTION)
             {
-                StudentManager.findStudentById(studentRightClick.getId()).deleteClassroomId(classroom.getId());
+                StudentManager.readData();
+                Student temp = StudentManager.findStudentById(studentRightClick.getId());
+                temp.deleteClassroomId(classroom.getId());
 
                 StudentManager.writeData();
 
                 studentResult.remove(indexStudentRightClick);
 
-                ClassroomManager.writeData();
-
                 pnOfThisClassroom.get(2).remove(rankingOfStudentTable);
 
                 deleteRow(indexStudentRightClick);
 
-                System.out.println(studentResult.size());
+                //Xoá sinh viên ra khỏi danh sách đã làm bài tập
+                for(Exercise i: listOfExercises)
+                {
+                    TreeSet<String> studentsFinishThisExercise = i.getListStudentFinish();
+                    studentsFinishThisExercise.remove(temp.getId());
+                }
+                
+                ClassroomManager.writeData();
             }
         }
         else if(e.getSource() == btnTurnBack)
