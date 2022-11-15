@@ -411,7 +411,6 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         }
                         else
                         {
-                            Classroom temp = new Classroom(idClass, nameClass, App.teacherUser.getName());
                             changeInforClass(idClass, nameClass, getIDofClassroomButton(btnClassRightClick));
                         }
 
