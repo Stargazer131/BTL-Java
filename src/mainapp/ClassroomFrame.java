@@ -2,6 +2,8 @@ package mainapp;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.table.*;
@@ -10,7 +12,6 @@ import generic.Pair;
 import launch.App;
 import mainapp.student.DoExercise;
 import manager.ClassroomManager;
-import manager.StudentManager;
 import entity.*;
 
 public class ClassroomFrame extends JFrame implements ActionListener, MouseListener
@@ -117,6 +118,31 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         pnLeft.add(button);
     }
 
+    // tao string co xuong dong
+    protected void initMultiLineString(String str, int maximum, JTextArea text)
+    {
+        String[] arr = str.trim().split("\\s+");
+        String temp = "", res = "";
+        for(int i = 0; i < arr.length; i++)
+        {
+            String nextTemp = temp + arr[i];            
+            AffineTransform affineTransform = new AffineTransform();     
+            FontRenderContext frc = new FontRenderContext(affineTransform,true,true);     
+            Font font = text.getFont();
+            int textWidth = (int)(font.getStringBounds(nextTemp, frc).getWidth());
+            if(textWidth > maximum-15)
+            {
+                res += temp + "\n";
+                temp = arr[i] + " ";
+            }
+
+            else temp += arr[i] + " ";
+        }
+        res += temp;
+        
+        text.setText(res);
+    }
+
     protected void initLeftFrame() 
     {
         pnLeft = new JPanel();
@@ -125,34 +151,47 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         pnLeft.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         //Khởi tạo khu vực giới thiệu lớp học
-        JPanel pnClassinfor = new JPanel();
-        pnClassinfor.setLayout(null);
-        pnClassinfor.setBounds(1,1,178,100);
+        JPanel pnClassInfo = new JPanel();
+        pnClassInfo.setLayout(null);
+        pnClassInfo.setBounds(1,1,178,160);
 
-        JLabel lbClassName = new JLabel(classroom.getName());
-        lbClassName.setBounds(0,0,178,40);
+
+        JTextArea lbClassName = new JTextArea();
+        lbClassName.setEditable(false);
+        lbClassName.setFocusable(false);
+        lbClassName.setBackground(this.getContentPane().getBackground());
+        lbClassName.setBounds(0,0,178,80);
         lbClassName.setFont(new Font("Arial",900,20));
-        pnClassinfor.add(lbClassName);
+        initMultiLineString(classroom.getName(), 178, lbClassName);
+        pnClassInfo.add(lbClassName);
+
 
         JLabel lbClassId = new JLabel("ID lớp: " + classroom.getId());
-        lbClassId.setBounds(0,41,178,20);
-        pnClassinfor.add(lbClassId);
+        lbClassId.setBounds(0,81,178,20);
+        pnClassInfo.add(lbClassId);
 
-        JLabel lbTeacherName = new JLabel("Giáo viên: " + classroom.getTeacherName());
-        lbTeacherName.setBounds(0,61,178,20);
-        pnClassinfor.add(lbTeacherName);
+
+        JTextArea lbTeacherName = new JTextArea();
+        lbTeacherName.setEditable(false);
+        lbTeacherName.setFocusable(false);
+        lbTeacherName.setBackground(this.getContentPane().getBackground());
+        lbTeacherName.setBounds(0,101,178,40);
+        lbTeacherName.setFont(lbClassId.getFont());
+        initMultiLineString("Giáo viên: " + classroom.getTeacherName(), 178, lbTeacherName);
+        pnClassInfo.add(lbTeacherName);
+
 
         JLabel lbLine = new JLabel();
-        lbLine.setBounds(0,86,178,1);
+        lbLine.setBounds(0,159,178,1);
         lbLine.setBorder(BorderFactory.createLineBorder(Color.black));
-        pnClassinfor.add(lbLine);
+        pnClassInfo.add(lbLine);
 
-        pnLeft.add(pnClassinfor);
+        pnLeft.add(pnClassInfo);
 
         //Khởi tạo các nút bấm 
-        initButtonOfLeftPanel(btnEventOfClass, "Hoạt động gần đây", 150);
-        initButtonOfLeftPanel(btnExercise, "Bài tập", 190);
-        initButtonOfLeftPanel(btnScoreBoard, "Bảng xếp hạng", 230);
+        initButtonOfLeftPanel(btnEventOfClass, "Hoạt động gần đây", 230);
+        initButtonOfLeftPanel(btnExercise, "Bài tập", 270);
+        initButtonOfLeftPanel(btnScoreBoard, "Bảng xếp hạng", 310);
 
         //Khởi tạo nút quay lại
         btnTurnBack = new JButton("Quay lại");
@@ -482,13 +521,5 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         {
             spForTable.setCursor(Cursor.getDefaultCursor());
         }
-    }
-
-    public static void main(String[] args) 
-    {
-        ClassroomManager.readData();
-        StudentManager.readData();
-
-        new ClassroomFrame(ClassroomManager.findClassroomById("triet01"));
     }
 }
