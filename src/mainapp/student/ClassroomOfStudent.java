@@ -1,9 +1,15 @@
 package mainapp.student;
 
-import javax.swing.*;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import entity.Classroom;
 import entity.Student;
 import generic.Pair;

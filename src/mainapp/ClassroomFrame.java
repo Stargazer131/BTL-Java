@@ -1,18 +1,46 @@
 package mainapp;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.table.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
+
+import entity.Classroom;
+import entity.EventMessage;
+import entity.Exercise;
+import entity.Student;
 import generic.Pair;
 import launch.App;
 import mainapp.student.DoExercise;
 import manager.ClassroomManager;
-import entity.*;
 
 public class ClassroomFrame extends JFrame implements ActionListener, MouseListener
 {
