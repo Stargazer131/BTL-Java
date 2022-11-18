@@ -230,7 +230,7 @@ public class DoExercise extends JFrame implements ActionListener
 
         //Set bounds
         lbQuestionID.setBounds(10,10,50,20);
-        llbQuestionTitle.setBounds(50,10,400,20);
+        llbQuestionTitle.setBounds(50,10,800,20);
 
         pntemp.add(lbQuestionID);
         pntemp.add(llbQuestionTitle);
@@ -245,7 +245,7 @@ public class DoExercise extends JFrame implements ActionListener
             temp.setBounds(30,50 * ( i + 1), 40,15);
 
             lbAnswer[i] = new JLabel(answerList.get(i).getFirst());
-            lbAnswer[i].setBounds(50, 50 * (i + 1), 300, 15);
+            lbAnswer[i].setBounds(50, 50 * (i + 1), 800, 15);
 
             pntemp.add(rbtnAnswer[i]);
             pntemp.add(temp);

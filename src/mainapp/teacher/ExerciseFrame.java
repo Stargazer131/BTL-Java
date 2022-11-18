@@ -85,7 +85,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
         pnTemp.add(lbQuestionIndex);
 
         JLabel lbQuestionTitle = new JLabel(questions.get(index).getQuestionTitle());
-        lbQuestionTitle.setBounds(80,10,200,20);
+        lbQuestionTitle.setBounds(80,10,700,20);
         pnTemp.add(lbQuestionTitle);
 
         JLabel lbChoices[] = new JLabel[4],
@@ -105,7 +105,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
                 lbAnswers[i].setForeground(Color.red);
                 lbChoices[i].setForeground(Color.red);
             }    
-            lbAnswers[i].setBounds(40,5 + 20 * (i + 1),300,20);
+            lbAnswers[i].setBounds(40,5 + 20 * (i + 1),700,20);
             pnTemp.add(lbAnswers[i]);
         }
 
