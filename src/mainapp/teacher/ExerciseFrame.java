@@ -57,7 +57,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
+        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\exercise.png");
         this.setIconImage(icon.getImage());
 
         //Nút quay lại lớp học

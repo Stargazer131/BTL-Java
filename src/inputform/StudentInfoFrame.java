@@ -141,7 +141,6 @@ public class StudentInfoFrame extends JFrame implements ActionListener
         
         txtName = new JTextField(); // text field for Name
         txtName.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtName.setToolTipText("Họ tên hợp lệ, VD: Nguyễn Văn A");
         txtName.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtName.setBounds(150, 130, 150, 30);
         
@@ -209,8 +208,7 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     private void initJTextRight()                 // create the right size textfield and add tool tip text
     {
         txtAddress = new JTextField(); // text field for Address
-        txtAddress.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtAddress.setToolTipText("Địa chỉ hợp lệ, VD: Hà Nội"); 
+        txtAddress.setBorder(BorderFactory.createLoweredBevelBorder()); 
         txtAddress.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtAddress.setBounds(150, 50, 150, 30);
         
