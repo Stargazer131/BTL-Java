@@ -1,12 +1,11 @@
 package entity;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import generic.Pair;
-
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
 
 public class Classroom implements Serializable 
 {

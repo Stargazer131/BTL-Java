@@ -1,9 +1,21 @@
 package mainapp.teacher;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import entity.Classroom;
 import entity.Exercise;
@@ -45,7 +57,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\logo.png");
+        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\exercise.png");
         this.setIconImage(icon.getImage());
 
         //Nút quay lại lớp học
@@ -73,7 +85,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
         pnTemp.add(lbQuestionIndex);
 
         JLabel lbQuestionTitle = new JLabel(questions.get(index).getQuestionTitle());
-        lbQuestionTitle.setBounds(80,10,200,20);
+        lbQuestionTitle.setBounds(80,10,700,20);
         pnTemp.add(lbQuestionTitle);
 
         JLabel lbChoices[] = new JLabel[4],
@@ -93,7 +105,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
                 lbAnswers[i].setForeground(Color.red);
                 lbChoices[i].setForeground(Color.red);
             }    
-            lbAnswers[i].setBounds(40,5 + 20 * (i + 1),300,20);
+            lbAnswers[i].setBounds(40,5 + 20 * (i + 1),700,20);
             pnTemp.add(lbAnswers[i]);
         }
 

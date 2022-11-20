@@ -1,18 +1,40 @@
 package mainapp.student;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.TreeMap;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-
+import entity.Classroom;
+import entity.Student;
 import generic.Pair;
 import inputform.LogInFrame;
 import launch.App;
 import manager.ClassroomManager;
 import manager.StudentManager;
-import entity.*;
 
 public class StudentFrame extends JFrame implements ActionListener, MouseListener
 {

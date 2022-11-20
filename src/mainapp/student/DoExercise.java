@@ -1,14 +1,19 @@
 package mainapp.student;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,13 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
-import java.awt.GridBagConstraints;
-import java.awt.Color;
-import java.awt.Component;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import entity.Classroom;
 import entity.Exercise;
@@ -230,7 +228,7 @@ public class DoExercise extends JFrame implements ActionListener
 
         //Set bounds
         lbQuestionID.setBounds(10,10,50,20);
-        llbQuestionTitle.setBounds(50,10,400,20);
+        llbQuestionTitle.setBounds(50,10,800,20);
 
         pntemp.add(lbQuestionID);
         pntemp.add(llbQuestionTitle);
@@ -246,7 +244,7 @@ public class DoExercise extends JFrame implements ActionListener
             temp.setBounds(30,50 * ( i + 1), 40,15);
 
             lbAnswer[i] = new JLabel(answerList.get(i).getFirst());
-            lbAnswer[i].setBounds(50, 50 * (i + 1), 300, 15);
+            lbAnswer[i].setBounds(50, 50 * (i + 1), 800, 15);
 
             pntemp.add(rbtnAnswer[i]);
             pntemp.add(temp);
@@ -293,7 +291,7 @@ public class DoExercise extends JFrame implements ActionListener
         this.setTitle(exercise.getTitle());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
-        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\questionBank.png");
+        ImageIcon icon = new ImageIcon("resources\\images\\Logo\\exercise.png");
         this.setIconImage(icon.getImage());
 
     }

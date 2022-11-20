@@ -136,13 +136,11 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     {
         txtId = new JTextField();  // text field for Id 
         txtId.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtId.setToolTipText("Mã SV hợp lệ, VD: B20DCCN001");
         txtId.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtId.setBounds(150, 50, 150, 30);
         
         txtName = new JTextField(); // text field for Name
         txtName.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtName.setToolTipText("Họ tên hợp lệ, VD: Nguyễn Văn A");
         txtName.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtName.setBounds(150, 130, 150, 30);
         
@@ -210,14 +208,12 @@ public class StudentInfoFrame extends JFrame implements ActionListener
     private void initJTextRight()                 // create the right size textfield and add tool tip text
     {
         txtAddress = new JTextField(); // text field for Address
-        txtAddress.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtAddress.setToolTipText("Địa chỉ hợp lệ, VD: Hà Nội"); 
+        txtAddress.setBorder(BorderFactory.createLoweredBevelBorder()); 
         txtAddress.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtAddress.setBounds(150, 50, 150, 30);
         
         txtGroup = new JTextField();   // text field for Group
         txtGroup.setBorder(BorderFactory.createLoweredBevelBorder());
-        txtGroup.setToolTipText("Lớp học hợp lệ, VD: D20CQCN01-B");
         txtGroup.setFont(new Font("Afical Neue", Font.PLAIN, 13));
         txtGroup.setBounds(150, 130, 150, 30);
 
@@ -292,14 +288,8 @@ public class StudentInfoFrame extends JFrame implements ActionListener
             address = Formatter.toTitle(address);
             email = email.toLowerCase();
             group = group.toUpperCase();
-            
-            if(!Checker.isValidId(id))                                    // check for invalid data
-            {
-                JOptionPane.showMessageDialog(this, "Mã SV không hợp lệ",  // if id is invalid
-                "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
     
-            else if(!Checker.isValidGender(gender))                                // if gender is invalid
+            if(!Checker.isValidGender(gender))                                // if gender is invalid
             {
                 JOptionPane.showMessageDialog(this, "Giới tính không hợp lệ", 
                 "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -308,12 +298,6 @@ public class StudentInfoFrame extends JFrame implements ActionListener
             else if(!Checker.isValidBirthday(birthday))                             // if birthday is invalid
             {
                 JOptionPane.showMessageDialog(this, "Ngày sinh không hợp lệ",
-                "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-    
-            else if(!Checker.isValidGroup(group))                                // if group is invalid
-            {
-                JOptionPane.showMessageDialog(this, "Lớp không hợp lệ",
                 "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
     
