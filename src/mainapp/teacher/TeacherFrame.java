@@ -100,7 +100,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         this.setIconImage(icon.getImage());
     }
 
-    private JButton createBackGroundButton(String url, String name)
+    private JButton createBackGroundButton(String url, String name) //Tạo các thuộc tính của 1 lớp học
     {
         JButton button = new JButton();
         button.setLayout(new BorderLayout());
@@ -115,12 +115,12 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         return button;
     }
 
-    private String getIDofClassroomButton(JButton temp)
+    private String getIDofClassroomButton(JButton temp) //Lấy id của nút bấm
     {
         return ((JLabel) temp.getComponent(0)).getText();
     }
 
-    private void deleteClass()
+    private void deleteClass() //Xoá 1 lớp học
     {
         String idDeleteClass = getIDofClassroomButton(btnClassRightClick);
         ClassroomManager.deleteClassroom(idDeleteClass);
@@ -161,7 +161,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         updatePanel(tableOfClassrooms);
     }
 
-    private void createClassButton(String id, String name, int i, int index)
+    private void createClassButton(String id, String name, int i, int index) //Tạo ra 1 nút bấm lớp học mới
     {
         gbc.gridx = i % 5;
         gbc.gridy = i / 5;
@@ -173,7 +173,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
             tableOfClassrooms.add(btnClass,gbc);
     }
 
-    private void createNewClassButton()
+    private void createNewClassButton() //nút bấm tạo ra 1 lớp học mới
     {
         //Tạo nút bấm thêm 1 lớp mới
         gbc.gridx = arrLClassroom.size() % 5;
@@ -182,7 +182,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         tableOfClassrooms.add(btnCreateClass, gbc);
     }
 
-    private void initClassroomButtons()
+    private void initClassroomButtons() //Tạo ra 1 nút bấm lớp học
     {
         for(int i = 0 ; i < arrLClassroom.size() ; i++)
         {
@@ -191,7 +191,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         createNewClassButton();
     }
 
-    private void initTable()  // create the table of classroom
+    private void initTable()  //Tại phần chưa lớp học
     {
         JLabel lbLopHoc = new JLabel("Danh sách lớp học:");
         lbLopHoc.setFont(new Font("Arial",100,40));
@@ -220,7 +220,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         this.add(lblAvatar);
     }
 
-    private void initPopUpMenu()
+    private void initPopUpMenu() //Menu chuột phải
     {
         this.pmClassRightClick = new JPopupMenu();
 
@@ -282,7 +282,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         return new ImageIcon(newImage);
     }
 
-    private void changeInforClass(String newID, String newName, String oldID)
+    private void changeInforClass(String newID, String newName, String oldID) //Thay đổi thông tin của lớp học
     {
         int index = 0;
         for(Component i: tableOfClassrooms.getComponents())
@@ -347,14 +347,14 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 String idClass = tfIDClass.getText(),
                         nameClass = tfNameClass.getText();
 
-                if(idClass.equals("") || nameClass.equals(""))
+                if(idClass.equals("") || nameClass.equals("")) //1 textfield chưa được nhập
                 {
                     JOptionPane.showMessageDialog(null,"Thông tin không được để trống",
                     "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
-                    if(kiemTraIDTonTai(idClass, nameClass) == 1)
+                    if(kiemTraIDTonTai(idClass, nameClass) == 1) //Nếu ID đã tồn tại
                     {
                         if(optionTitle.equals("Thay đổi thông tin lớp học"))
                         {
@@ -373,7 +373,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         JOptionPane.showMessageDialog(null,"ID lớp học này đã tồn tại",
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
                     }
-                    else if(kiemTraIDTonTai(idClass, nameClass) == 2)
+                    else if(kiemTraIDTonTai(idClass, nameClass) == 2) //Nếu tên lớp học đã tồn tại
                     {
                         if(optionTitle.equals("Thay đổi thông tin lớp học"))
                         {
@@ -393,7 +393,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         JOptionPane.showMessageDialog(null,"Tên lớp học này đã tồn tại",
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
                     }
-                    else if(kiemTraIDTonTai(idClass, nameClass) == 0)
+                    else if(kiemTraIDTonTai(idClass, nameClass) == 0) //Các điều kiện đều thoả mãn 
                     {
                         if(optionTitle.equals("Tạo lớp học"))
                         {   
@@ -409,7 +409,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                             createClassButton(idClass,nameClass, arrLClassroom.size() - 1, -1);
                             createNewClassButton();
                         }
-                        else
+                        else //Thay đổi thông tin cho lớp học thành công
                         {
                             changeInforClass(idClass, nameClass, getIDofClassroomButton(btnClassRightClick));
                         }
@@ -428,14 +428,14 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         }
     }
 
-    private void changeInforTeacher(String id)
+    private void changeInforTeacher(String id) //Thay đổi account sử dụng
     {
         App.accountUser.setID(id);
         App.teacherUser = TeacherManager.findTeacherById(id);
         AccountManager.writeData();
     }
 
-    private void changeTeacherNameOfClassroom()
+    private void changeTeacherNameOfClassroom() //Thay đổi tên giáo viên của các lớp học thuộc giáo viên này
     {
         ClassroomManager.readData();
         for(Classroom i: arrLClassroom)
@@ -474,16 +474,16 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                     String textID = tfIDTeacher.getText().toUpperCase(),
                            textName = Formatter.toTitle(tfNameTeacher.getText());
 
-                    if(textID.equals("") || textName.equals(""))
+                    if(textID.equals("") || textName.equals("")) //Lỗi còn phần chưa được ghi
                     {
                         JOptionPane.showMessageDialog(null, "Thông tin không được để trống",
                         "Thông báo", JOptionPane.ERROR_MESSAGE);
                         continue;
                     }
 
-                    if(!TeacherManager.checkIDExist(textID))
+                    if(!TeacherManager.checkIDExist(textID)) //Nếu ID này đã tồn tại
                     {
-                        if(textID.equals(this.teacher.getId()))
+                        if(textID.equals(this.teacher.getId())) //Nếu ID mới trùng với id của giáo viên
                         {
                             Teacher temp = new Teacher(textID, textName);
                             temp.setClassrooms(this.teacher.getClassRooms());
@@ -508,7 +508,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                         JOptionPane.showMessageDialog(null,"Mã GV này đã tồn tại",
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
                     }
-                    else
+                    else //Thoả mãn điều kiện
                     {
                         Teacher temp = new Teacher(textID, textName);
                         temp.setClassrooms(this.teacher.getClassRooms());
@@ -536,11 +536,11 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
                 }
             }
         }
-        else if(e.getSource() == mnChinhSuaLopHoc)
+        else if(e.getSource() == mnChinhSuaLopHoc) //Chỉnh sửa thông tin lớp học
         {
             buttonClassMassage("Thay đổi thông tin lớp học");
         }
-        else if(e.getSource() == mnXoaLopHoc)
+        else if(e.getSource() == mnXoaLopHoc) //Xoá lớp học
         {
             int deleteOption = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa lớp học này?","Thông báo",JOptionPane.OK_CANCEL_OPTION);
             if(deleteOption == JOptionPane.OK_OPTION)
@@ -549,13 +549,13 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
             }
         }
-        else if(e.getSource() == btnLogOut)
+        else if(e.getSource() == btnLogOut) //Đăng xuất
         {
             App.teacherUser = null;
             this.dispose();
             new LogInFrame();
         }
-        else
+        else //Mở 1 lớp học
         {
             String classroomID = ( (JLabel) ((JButton) e.getSource()).getComponent(0)).getText();
             this.dispose();
@@ -563,7 +563,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         }
     }
 
-    private void updatePanel(JPanel temp)
+    private void updatePanel(JPanel temp)//Cập nhật lại panel
     {
         temp.revalidate(); 
         temp.repaint();

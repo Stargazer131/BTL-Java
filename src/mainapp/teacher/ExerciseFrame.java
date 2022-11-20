@@ -70,7 +70,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
         this.setVisible(true);
     }
 
-    private void initQuestionPanel(int index)
+    private void initQuestionPanel(int index)  //Tạo ra 1 panel chứa nội dung câu hỏi
     {
         gbc.gridx = 0;
         gbc.gridy = index;
@@ -112,7 +112,7 @@ public class ExerciseFrame extends JFrame implements ActionListener
         pnMainFrame.add(pnTemp,gbc);
     }
 
-    private void initMainFrame()
+    private void initMainFrame() //Tạo phần panel chính
     {
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,0,10,0);

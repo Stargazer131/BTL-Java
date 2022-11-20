@@ -92,7 +92,7 @@ public class QuestionBank extends JFrame implements ActionListener
         this.setIconImage(icon.getImage());
     }
 
-    private void deleteQuestion(int index)
+    private void deleteQuestion(int index) //Xoá 1 lớp học
     {
         Component lisComponent[] = panelMain.getComponents();
         for(int i = index ; i < lisComponent.length - 1 ; i ++)
@@ -105,7 +105,7 @@ public class QuestionBank extends JFrame implements ActionListener
         }
     }   
 
-    private void createQuestionPanel(int index, Question temp, int indexAdd)
+    private void createQuestionPanel(int index, Question temp, int indexAdd) //Tạo ra 1 panel câu hỏi
     {
         gbc.gridx = 0;
         gbc.gridy = index;
@@ -185,7 +185,7 @@ public class QuestionBank extends JFrame implements ActionListener
             panelMain.add(lbContainer,gbc,indexAdd);
     }
 
-    private void initCreateQuestion()
+    private void initCreateQuestion() //nút bấm thêm 1 câu hỏi
     {
         gbc.gridx = 0;
         gbc.gridy = panelMain.getComponents().length;
@@ -202,7 +202,7 @@ public class QuestionBank extends JFrame implements ActionListener
         this.panelMain.add(btnCreateQuestion,gbc);
     }
 
-    private void initmainPanel()
+    private void initmainPanel() //Tạo ra panel chính
     {
         this.gbc = new GridBagConstraints();
         gbc.insets = new Insets(5,0,5,0);
@@ -240,12 +240,12 @@ public class QuestionBank extends JFrame implements ActionListener
         return new ImageIcon(newImage);
     }
 
-    private void invalidQuestion(int index)
+    private void invalidQuestion(int index) //In ra câu hỏi không hợp lệ
     {
         JOptionPane.showMessageDialog(null, "Câu hỏi " + (index + 1) + " không hợp lệ!", "Thông báo", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void collectData(String option)
+    private void collectData(String option) //Đọc dữ liệu
     {
         ArrayList<Question> questions = new ArrayList<>();
         ArrayList<Question> questionsOfAnExercise = new ArrayList<>();
@@ -335,7 +335,7 @@ public class QuestionBank extends JFrame implements ActionListener
                 turnBackToClassroom();
             }
         }
-        else
+        else //Cập nhật dữ liệu câu hỏi
         {
             JOptionPane.showMessageDialog(null, "Cập nhật dữ liệu thành công!","Thông báo",JOptionPane.DEFAULT_OPTION);
             QuestionManager.questions = questions;
@@ -345,7 +345,7 @@ public class QuestionBank extends JFrame implements ActionListener
         updatePanel(panelMain);
     }
 
-    private void turnBackToClassroom()
+    private void turnBackToClassroom() //Quay lại lớp học
     {
         this.dispose();
         new ClassroomOfTeacher(ClassroomManager.findClassroomById(classroomID));
@@ -354,18 +354,18 @@ public class QuestionBank extends JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        if(e.getSource() == btnUpdateQuestion)
+        if(e.getSource() == btnUpdateQuestion) //Cập nhật dữ liệu câu hỏi
         {
             collectData("");
         }
-        else if(e.getSource() == btnCreateQuestion)
+        else if(e.getSource() == btnCreateQuestion) //Tạo ra 1 câu hỏi mới
         {
             createQuestionPanel(panelMain.getComponents().length - 1, new Question(), panelMain.getComponents().length - 1);
             panelMain.remove(btnCreateQuestion);
             initCreateQuestion();
             updatePanel(panelMain);
         }
-        else if(e.getActionCommand().equals("Xóa câu hỏi"))
+        else if(e.getActionCommand().equals("Xóa câu hỏi")) //Xoá 1 câu hỏi
         {
             for(int i = 0 ; i < btnListDelete.size(); i++)
             {
@@ -379,20 +379,13 @@ public class QuestionBank extends JFrame implements ActionListener
                 }
             }
         }
-        else if(e.getSource() == btnCreateAnExercise)
+        else if(e.getSource() == btnCreateAnExercise)  //Tạo 1 bài tập
         {
             collectData("Tạo bài tập");
         }
-        else if(e.getSource() == btnTurnBack)
+        else if(e.getSource() == btnTurnBack) //Quay lại
         {
             turnBackToClassroom();
         }
-    }
-
-    public static void main(String[] args) 
-    {
-        QuestionManager.readData();
-
-        new QuestionBank(null);
     }
 }
