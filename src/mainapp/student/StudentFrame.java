@@ -50,7 +50,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         this.setVisible(true);
     }
 
-    private void initFrame()             // create the main frame
+    private void initFrame()             // Khởi tạo Frame này
     {
         this.setLocationRelativeTo(null);
         this.setBounds(200, 50, 1200,750);
@@ -64,7 +64,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
     private void initAvatar()
     {
-        String gender = student.getGender(); // create avatar for student
+        String gender = student.getGender(); //Khởi tạo avatar
         gender = (gender.equals("Nam")) ? "Male" : "Female";
         ImageIcon icon = new ImageIcon(String.format("resources\\images\\Avatar\\%s.png", gender));    
         lblAvatar = new JLabel(icon, JLabel.CENTER);
@@ -73,7 +73,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         this.add(lblAvatar);
     }
 
-    private void initInfoPanel()      // create the up panel which contains student information
+    private void initInfoPanel()      // Khởi tạo phần thông tin 
     {
         infoPanel = new JPanel();
         infoPanel.setBounds(200, 0, 1000, 200);
@@ -150,7 +150,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         this.add(infoPanel);
     }
 
-    private JButton createBackGroundButton(String url, String name)
+    private JButton createBackGroundButton(String url, String name) //Tạo ra các thuộc tính của nút bấm lớp học
     {
         JButton button = new JButton();
         button.setLayout(new BorderLayout());
@@ -165,7 +165,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         return button;
     }
 
-    private void createClassButton(String id, String name, int i, int index)
+    private void createClassButton(String id, String name, int i, int index) //Tạo ra 1 nút bấm lớp học
     {
         gbc.gridx = i % 5;
         gbc.gridy = i / 5;
@@ -214,7 +214,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         StudentManager.writeData();
     }
 
-    private void initTable()  // create the table of classroom
+    private void initTable()  // Tạo ra danh sách các lớp học
     {
         gbc.insets = new Insets(0,5,10, 15);
 
@@ -231,7 +231,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         this.add(scrollPane);
     }
 
-    private void initButtons() // create the refresh and join buttons
+    private void initButtons() // cTạo ra nút tham gia hoặc đăng xuất
     {
         btnJoin = new JButton("Tham gia");  // join button
         btnJoin.setFocusable(false);
@@ -239,7 +239,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         btnJoin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnJoin.addActionListener(this);
 
-        btnLogOut = new JButton("Đăng xuất");  // join button
+        btnLogOut = new JButton("Đăng xuất");  // Đăng xuất
         btnLogOut.setFocusable(false);
         btnLogOut.setBounds(45, 450, 100, 30);
         btnLogOut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -249,12 +249,12 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         this.add(btnLogOut);
     }
 
-    private String getIDofClassroomButton(JButton temp)
+    private String getIDofClassroomButton(JButton temp) //Lấy id lớp học của nút bấm 
     {
         return ((JLabel) temp.getComponent(0)).getText();
     }
 
-    private void deleteClass(JButton temp, boolean check)
+    private void deleteClass(JButton temp, boolean check)//Xoá 1 lớp học
     {
         String idDeleteClass = getIDofClassroomButton(temp);
 
@@ -290,7 +290,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
     @Override
     public void actionPerformed(ActionEvent e)  // when clicked
     {
-        if(e.getSource() == btnJoin) // when click button join
+        if(e.getSource() == btnJoin) //Bấm vào nút gia nhập lớp học
         {
             ClassroomManager.readData();
 
@@ -304,13 +304,13 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
 
             String idClassroom = tfIDclassroom.getText();
             Classroom classroomTemp = ClassroomManager.findClassroomById(idClassroom);
-            if(classroomTemp != null)
+            if(classroomTemp != null)//Đã tham gia lớp học này
             {
                 if(arrLClassroom.containsKey(idClassroom))
                 {
                     JOptionPane.showMessageDialog(null, "Bạn đã tham gia lớp học này", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
-                else
+                else//Tham gia lớp học thành công
                 {
                     JOptionPane.showMessageDialog(null, "Tham gia lớp học thành công", "Thông báo", JOptionPane.PLAIN_MESSAGE);
                     
@@ -327,20 +327,20 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                     updatePanel(tableOfClassrooms);
                 }
             }
-            else
+            else//Lớp học đang tìm kiếm không tồn tái
             {
                 JOptionPane.showMessageDialog(null, "Không tìm thấy lớp học!", "Thông báo",JOptionPane.ERROR_MESSAGE);
             }
         }
         
-        else if(e.getSource() == btnLogOut)
+        else if(e.getSource() == btnLogOut) //Đăng xuất
         {
             App.studentUser = null;
             this.dispose();
             new LogInFrame();
         }
 
-        else
+        else //Nếu bấm vào 1 lớp học
         {
             ClassroomManager.readData();
 
@@ -349,7 +349,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             Boolean checkExitsClassroom = false;
             
             Classroom openClassroom = ClassroomManager.findClassroomById(classroomID);
-
+            //Nếu lớp học này đã bị xoá hoặc bị thay đổi dữ liệu
             if(openClassroom == null)
             {
                 JOptionPane.showMessageDialog(null, "Lớp học này không tồn tại!"," Thông báo",JOptionPane.ERROR_MESSAGE);
@@ -365,7 +365,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
             }
 
             ArrayList<Pair<Student, Double>> studentList = openClassroom.getStudentResult();
-
+            //Kiểm tra sinh viên này có thuộc lớp học hay không
             for(Pair<Student, Double> i: studentList)
             {
                 if(i.getFirst().getId().equals(App.studentUser.getId()))
@@ -376,7 +376,7 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
                     break;
                 }
             }
-            if(!checkExitsClassroom)
+            if(!checkExitsClassroom)//Nếu sinh viên không thuộc lớp học này
             {
                 JOptionPane.showMessageDialog(null, "Bạn không phải là thành viên của lớp học này","Thông báo",JOptionPane.ERROR_MESSAGE);
                 
@@ -387,13 +387,13 @@ public class StudentFrame extends JFrame implements ActionListener, MouseListene
         }
     } 
 
-    protected void updatePanel(Object temp)
+    protected void updatePanel(Object temp)//Cập nhật lại panel
     {
         ((Component) temp).revalidate(); 
         ((Component) temp).repaint();
     }
 
-    private static ImageIcon resizeImage(ImageIcon imageIcon)  // resize icon to fit in the frame
+    private static ImageIcon resizeImage(ImageIcon imageIcon)  // Thay đổi kích thước của ảnh cho vừa với khung
     {
         Image image = imageIcon.getImage(); // transform it 
         Image newImage = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH); // scale it the smooth way  

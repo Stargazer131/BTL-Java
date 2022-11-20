@@ -16,7 +16,7 @@ import entity.*;
 
 public class ClassroomFrame extends JFrame implements ActionListener, MouseListener
 {
-    protected Classroom classroom;
+    protected Classroom classroom; //classroom của frame này
 
     protected ArrayList<Exercise> listOfExercises; // danh sach bai tap 
 
@@ -24,11 +24,11 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     protected ArrayList<Pair<String, Double>> rankingOfStudent; // bang xep hang
 
-    protected ArrayList<JPanel> pnOfThisClassroom = new ArrayList<>();
+    protected ArrayList<JPanel> pnOfThisClassroom = new ArrayList<>(); //Các panel chính
 
     protected JPanel pnMain, //Panel chứa các panel chính
-                     pnLeft,
-                     pnCurrentDisplay; 
+                     pnLeft, //Panel bên trái
+                     pnCurrentDisplay; //Panel đang hiển thị
 
     protected JScrollPane spForPanel;
 
@@ -42,36 +42,36 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     protected JButton btnListOfStudent, 
                       btnPendingStudents;
 
-    protected JButton btnEventOfClass = new JButton(),    
-                      btnExercise = new JButton(),
-                      btnScoreBoard = new JButton(),
-                      btnTurnBack = new JButton();
+    protected JButton btnEventOfClass = new JButton(), //Nút bấm hoạt động gần đây
+                      btnExercise = new JButton(),     //Nút bấm danh sách bài tập
+                      btnScoreBoard = new JButton(),   //Nút bấm bảng xếp hạng
+                      btnTurnBack = new JButton();     //Nút bấm quay lại
 
-    protected ArrayList<EventMessage> event_Messages;
+    protected ArrayList<EventMessage> event_Messages;  //Danh sách tin nhắn
 
-    protected int indexOfPanelDisplay;
+    protected int indexOfPanelDisplay;                 //Chỉ số của panel đang hiển thị
 
-    protected ArrayList<JScrollPane> scroll;
+    protected ArrayList<JScrollPane> scroll;           //Danh sách scroll của panel chính
 
-    protected JScrollPane scrollCurrent;
+    protected JScrollPane scrollCurrent;               //Scroll hiện tại đang trình chiếu
 
-    protected ArrayList<Pair<Student, Double>> studentResult;
+    protected ArrayList<Pair<Student, Double>> studentResult;  //Danh sách pair student và điểm
 
     protected void readDataOfClassroom()
     {
         ClassroomManager.readData();
-        this.classroom = ClassroomManager.findClassroomById(classroom.getId());
+        this.classroom = ClassroomManager.findClassroomById(classroom.getId()); //Cập nhật dữ liệu cho lớp học
 
-        this.event_Messages = classroom.getEventMessage();
-        this.listOfExercises = classroom.getExercise();
-        this.studentResult = classroom.getStudentResult();
+        this.event_Messages = classroom.getEventMessage(); //Khởi tạo danh sách tin nhắn
+        this.listOfExercises = classroom.getExercise();    //Khởi tạo danh sách bài tập
+        this.studentResult = classroom.getStudentResult(); //Lấy dữ liệu sinh viên và điểm
     }
 
     public ClassroomFrame(Classroom classroom)
     {
         //Lấy dữ liệu từ classroom
         this.classroom = classroom;
-        readDataOfClassroom();
+        readDataOfClassroom(); //Đọc dữ liệu
 
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,5,10, 15);
@@ -94,7 +94,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         this.setVisible(true);
     }
 
-    private void initFrame()
+    private void initFrame()//Khởi tạo frame này
     {
 
         this.setBounds(200, 50, 1200,750);
@@ -107,7 +107,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         this.setIconImage(icon.getImage());
     }
 
-    protected void initButtonOfLeftPanel(JButton button,String title, int y)
+    protected void initButtonOfLeftPanel(JButton button,String title, int y) //Khởi tạo các nút bấm của panel bên trái
     {
         button.setText(title);
         button.setBounds(10,y,160,30);
@@ -145,6 +145,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     protected void initLeftFrame() 
     {
+        //Khởi tạo panel bên trái
         pnLeft = new JPanel();
         pnLeft.setLayout(null);
         pnLeft.setBounds(10,10,180,690);
@@ -155,7 +156,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         pnClassInfo.setLayout(null);
         pnClassInfo.setBounds(1,1,178,160);
 
-
+        //Tên của lớp
         JTextArea lbClassName = new JTextArea();
         lbClassName.setEditable(false);
         lbClassName.setFocusable(false);
@@ -165,12 +166,12 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         initMultiLineString(classroom.getName(), 178, lbClassName);
         pnClassInfo.add(lbClassName);
 
-
+        //ID của lớp
         JLabel lbClassId = new JLabel("ID lớp: " + classroom.getId());
         lbClassId.setBounds(0,81,178,20);
         pnClassInfo.add(lbClassId);
 
-
+        //Tên giáo viên
         JTextArea lbTeacherName = new JTextArea();
         lbTeacherName.setEditable(false);
         lbTeacherName.setFocusable(false);
@@ -180,7 +181,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         initMultiLineString("Giáo viên: " + classroom.getTeacherName(), 178, lbTeacherName);
         pnClassInfo.add(lbTeacherName);
 
-
+        //Vạch ngang ngăn cách phần thông tin và phần nút bấm
         JLabel lbLine = new JLabel();
         lbLine.setBounds(0,159,178,1);
         lbLine.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -207,15 +208,9 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
     protected void initFrameOfClass(int i)
     {
+        //Khởi tạo phần khung con của khung chính
         JPanel pnTemp = new JPanel();
         pnTemp.setLayout(new GridBagLayout());
-        //pnTemp.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        //Test
-        // JLabel test = new JLabel(i + "");
-        // test.setBounds(100,100,100,100);
-        // test.setBorder(BorderFactory.createLineBorder(Color.green));
-        // pnTemp.add(test);
 
         JScrollPane scrollTemp = new JScrollPane(pnTemp);
         scrollTemp.setPreferredSize(new Dimension(940,670));
@@ -230,10 +225,13 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         scroll.add(scrollTemp);
     }
 
+    //Phần panel chính
     protected void initMainFrame()
     {
+        //Cách scroll
         scroll = new ArrayList<>();
 
+        //panel main chính
         pnMain = new JPanel();
         pnMain.setBounds(200,10,970,690);
         pnMain.setLayout(new GridBagLayout());
@@ -242,6 +240,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         gbc.gridx = 0;
         gbc.gridy = 0;
 
+        //Khởi tạo các panel con
         for(int i = 0 ; i < 3; i++)
         {
             initFrameOfClass(i);
@@ -249,13 +248,14 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
 
         this.add(pnMain);
 
-        //Mặc định hiện thị panel hoạt động
+        //Mặc định hiện thị panel con 1 hoạt động
         indexOfPanelDisplay = 0;
         scroll.get(indexOfPanelDisplay).setVisible(true);
         scrollCurrent = scroll.get(indexOfPanelDisplay);
         pnCurrentDisplay = pnOfThisClassroom.get(indexOfPanelDisplay);
     }
 
+    //Khởi tạo 1 cái tin nhắn
     protected void initMessageFrame(JPanel temp, int index,String content, String date,String option)
     {
         gbc2.gridx = 0;
@@ -264,7 +264,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         JLabel lbContent = new JLabel(content);
         lbContent.setBounds(10,5,1000,40);
         
-
+        //Thời gian
         JLabel lbTime = new JLabel(date);
         lbTime.setFont(new Font("Arial",100,10));
         lbTime.setBounds(770,75,200,20);
@@ -295,16 +295,17 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         temp.add(lbTemp,gbc2);
     }
 
+    //Khởi tạo các tin nhắn hoặc các bài tập
     protected void initEventFrame(String option)
     {
-        if(option.equals("Message"))
+        if(option.equals("Message"))//Khởi tạo các tin nhắn
         {
             for(int i = 0; i < event_Messages.size(); i++)
             {
                 initMessageFrame(pnOfThisClassroom.get(0), event_Messages.size() - i, event_Messages.get(i).getContent(), event_Messages.get(i).getTime(),option);
             }
         }
-        else 
+        else //Khởi taọ các bài tập
         {
             for(int i = 0 ; i < listOfExercises.size(); i++)
             {
@@ -313,6 +314,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         }
     }
 
+    //Tạo ra các tin nhắn và bài tập
     protected void initMessageOfFrame()
     {
         gbc2 = new GridBagConstraints();
@@ -321,6 +323,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         initEventFrame("Exercise");
     }
 
+    //Sắp xếp danh sách sinh viên theo điểm
     private void sortStudentByPoint()
     {
         Collections.sort(studentResult, new Comparator<Pair<Student,Double>>() {
@@ -334,10 +337,12 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         });
     }
 
-    protected void initRakingOfStudentTable()  // tao bang bang xep hang
+    protected void initRakingOfStudentTable()  // Tạo bảng xếp hạng
     {
+        //Đọc lại dữ liệu
         this.readDataOfClassroom();
 
+        //Sắp xếp danh sách sinh viên
         sortStudentByPoint();
 
         pnOfThisClassroom.get(2).setLayout(null);
@@ -437,7 +442,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     //     return new ImageIcon(newImage);
     // }
 
-    protected void hideAndShowAnPanel()
+    protected void hideAndShowAnPanel() //Ẩn hoặc hiện 1 panel con
     {
         pnCurrentDisplay = pnOfThisClassroom.get(indexOfPanelDisplay);
         scrollCurrent.setVisible(false);
@@ -447,7 +452,7 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
         updatePanel(pnMain);
     }
 
-    protected void updatePanel(Object temp)
+    protected void updatePanel(Object temp) //Cập nhật lại 1 panel
     {
         ((Component) temp).revalidate(); 
         ((Component) temp).repaint();
@@ -456,17 +461,17 @@ public class ClassroomFrame extends JFrame implements ActionListener, MouseListe
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        if(e.getSource() == btnEventOfClass)
+        if(e.getSource() == btnEventOfClass)//Nếu nút bấm là tin nhắn
         {
             indexOfPanelDisplay = 0;
             hideAndShowAnPanel();
         }
-        else if(e.getSource() == btnExercise)
+        else if(e.getSource() == btnExercise)//Nếu nút bấm là tin nhắn
         {
             indexOfPanelDisplay = 1;
             hideAndShowAnPanel();
         }
-        else if(e.getSource() == btnScoreBoard)
+        else if(e.getSource() == btnScoreBoard) //Nếu nút bấm là bảng xếp hạng
         {
             indexOfPanelDisplay = 2;
             hideAndShowAnPanel();

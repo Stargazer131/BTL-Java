@@ -569,7 +569,7 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
         temp.repaint();
     }
     
-    private int kiemTraIDTonTai(String IDCLASS, String NAMECLASS)
+    private int kiemTraIDTonTai(String IDCLASS, String NAMECLASS)//Kiểm tra lớp học tồn tại
     {
         if(!ClassroomManager.checkIDExist(IDCLASS))
             return 1;
@@ -611,27 +611,11 @@ public class TeacherFrame extends JFrame implements ActionListener, MouseListene
 
     private void showPopUpMenu(MouseEvent e)
     {
-        if(e.isPopupTrigger())
+        if(e.isPopupTrigger())//Nếu click chuột là chuột phải
         {
             this.btnClassRightClick = (JButton) e.getSource();
-            pmClassRightClick.show(e.getComponent(),e.getX(),e.getY());
+            pmClassRightClick.show(e.getComponent(),e.getX(),e.getY()); //Hiển thị menu chuột phải
         }
     }
     //Kết thúc phần sự kiện chuột
-
-    public static void main(String[] args) { // start the frame directly
-        java.awt.EventQueue.invokeLater(new Runnable() 
-        {
-            public void run() 
-            {   
-                //Dùng để lấy danh sách lớp, chỉ cần dùng 1 lần duy nhất trong cả chương trình, sau này sẽ bỏ đi
-                ClassroomManager.readData();
-
-                //Dùng để test, sau này gộp file lại có thể bỏ đi
-                TeacherManager.readData();
-                Teacher temp = TeacherManager.findTeacherById("PHUC2405");//Do idsau khi tạo tài khoản sẽ tự động viết hoa tất cả
-                new TeacherFrame(temp);
-            }
-        });
-    }
 }

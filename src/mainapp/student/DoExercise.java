@@ -90,7 +90,7 @@ public class DoExercise extends JFrame implements ActionListener
         checkTimeRemain();
     }
 
-    private void checkTimeRemain()
+    private void checkTimeRemain()//Kiểm tra thời gian làm bài còn lại
     {
         class TimeCounter extends Thread 
         {
@@ -123,7 +123,7 @@ public class DoExercise extends JFrame implements ActionListener
         new TimeCounter().start();
     }
 
-    private void countQuestionFinished()
+    private void countQuestionFinished() //Đếm số lượng câu hỏi đã hoàn thành
     {
         questionsFinish = 0;
 
@@ -147,7 +147,7 @@ public class DoExercise extends JFrame implements ActionListener
         lbQuestionFinished.setText("Số câu hỏi đã hoàn thành: " + questionsFinish + "/" + questions.size());
     }
 
-    private void initQuestionListPanel()
+    private void initQuestionListPanel() //Tạo ra ô vuông phím tất câu hỏi
     {
         pnQuestion.setBounds(220, 10, 950, 690);
         pnQuestion.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -184,7 +184,7 @@ public class DoExercise extends JFrame implements ActionListener
         questionPanel = pnQuestion.getComponents();//Lấy các Jpanel chứa câu hỏi
     }
 
-    private void initLeftFrame()
+    private void initLeftFrame()//Phần panel bên trái
     {
         pnleftFrame = new JPanel();
         pnleftFrame.setBounds(9,10,205,690);
@@ -212,7 +212,7 @@ public class DoExercise extends JFrame implements ActionListener
         this.add(pnleftFrame);
     }
 
-    private void initQuestionFrame(int index, Question q)
+    private void initQuestionFrame(int index, Question q) //Tạo ra các câu hỏi
     {
         JPanel pntemp = new JPanel();
         pntemp.setPreferredSize(new Dimension(870,670));
@@ -235,6 +235,7 @@ public class DoExercise extends JFrame implements ActionListener
         pntemp.add(lbQuestionID);
         pntemp.add(llbQuestionTitle);
 
+        //Phần lựa chọn đáp án
         for(int i = 0; i < 4 ; i++)
         {
             rbtnAnswer[i] = new JRadioButton();
@@ -280,6 +281,7 @@ public class DoExercise extends JFrame implements ActionListener
         btnNextQuestion.setBounds(1050,600,100,30);
         btnNextQuestion.addActionListener(this);
 
+        //Kiểm tra câu hỏi này là câu hỏi đầu tiên hay câu hỏi cuối cùng
         hideOrShowPreAndNextButton();
 
         this.setBounds(250, 100, 1200,750);
@@ -296,6 +298,7 @@ public class DoExercise extends JFrame implements ActionListener
 
     }
 
+    //Ẩn câu hỏi này và hiện câu hỏi tiếp theo 
     private void displayNextOrPreQuestion()
     {
         currentQuestion.setVisible(false);
@@ -304,6 +307,7 @@ public class DoExercise extends JFrame implements ActionListener
         updatePanel(pnQuestion);
     }
 
+    //Tính điểm của sinh viên đạt được
     private void collectData()
     {
         if(isSubmit)
@@ -365,7 +369,7 @@ public class DoExercise extends JFrame implements ActionListener
             countQuestionFinished();
         }
 
-        if(e.getSource() == btnSubmit)
+        if(e.getSource() == btnSubmit) //Nộp bài tập
         {
             if(exerciseTimeRemain > 0)
             {
@@ -377,17 +381,17 @@ public class DoExercise extends JFrame implements ActionListener
                 }
             }
         }   
-        else if(e.getSource() == btnPreQuestion)
+        else if(e.getSource() == btnPreQuestion)//Câu hỏi phía trước
         {
             indexOfQuestionDisplay--;
             displayNextOrPreQuestion();
         }
-        else if(e.getSource() == btnNextQuestion)
+        else if(e.getSource() == btnNextQuestion) //Câu hỏi tiếp theo
         {
             indexOfQuestionDisplay++;
             displayNextOrPreQuestion();
         }
-        else
+        else //Nếu bấm vào phần phím tắt chuyển câu hỏi
         {
             Component arTemp[] = pnQuestionList.getComponents();
             for(int i = 0 ; i < arTemp.length; i++)
@@ -402,8 +406,10 @@ public class DoExercise extends JFrame implements ActionListener
         }
     }
 
-    private void hideOrShowPreAndNextButton()
+    private void hideOrShowPreAndNextButton()//Kiểm tra xem câu hỏi này là câu hỏi đầu tiên hoặc cuối cùng
     {
+        //Nếu là câu hỏi đầu thì sẽ không có nút bấm câu hỏi phía trước
+        //Nếu là câu hỏi cuối thì sẽ không có nút bấm câu hỏi tiếp theo
         if(indexOfQuestionDisplay == 0)
         {
             btnPreQuestion.setVisible(false);
@@ -419,6 +425,7 @@ public class DoExercise extends JFrame implements ActionListener
             btnNextQuestion.setVisible(true);
     }
 
+    //Cập nhật lại panel
     private void updatePanel(JPanel temp)
     {
         this.revalidate(); 

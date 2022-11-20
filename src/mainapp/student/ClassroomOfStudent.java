@@ -70,8 +70,9 @@ public class ClassroomOfStudent extends ClassroomFrame
     @Override
     public void mousePressed(MouseEvent e) 
     {
-        if(e.getSource().getClass() == JLabel.class)
+        if(e.getSource().getClass() == JLabel.class) //Làm bài tập
         {
+            //Tìm vị trí của bài tập được chọn
             int indexOfExerciseToDo = 0;
             for(Component i: pnOfThisClassroom.get(1).getComponents())
             {
@@ -88,6 +89,7 @@ public class ClassroomOfStudent extends ClassroomFrame
 
             Boolean checkThisStudentInThisClassroom = true;
 
+            //Kiểm tra xem sinh viên này có thuộc danh sách lóp hay không
             for(Pair<Student,Double> i: studentResult)
             {
                 if(i.getFirst().getId().equals(App.studentUser.getId()))
@@ -99,6 +101,7 @@ public class ClassroomOfStudent extends ClassroomFrame
                 }
             }
 
+            //Nếu sinh viên này không thuộc lớp học thì sẽ thoát ra màn hình chính
             if(checkThisStudentInThisClassroom)
             {
                 JOptionPane.showMessageDialog(null, "Bạn phải thành viên của lớp học này","Thông báo", JOptionPane.ERROR_MESSAGE);
